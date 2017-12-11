@@ -4,7 +4,8 @@ class API {
 		sendactivemsg: '/openapi/index/sendactivemsg', //短信发送验证码
 		gettoken: '/openapi/api/get_token',            //token
 		index:'/openapi/index/index',				   //首页
-		articlelList:'/openapi/index/artcitlList'
+		articlelList:'/openapi/index/artcitlList',      //文章列表
+		myProperty:'/openapi/member/myProperty'        //我的资产
 
 	}
 	appConfig={

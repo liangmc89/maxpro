@@ -1,6 +1,6 @@
 <template>
-	<pull-to :top-load-method="refresh" id='pullto'>
-		<div id="home" class="layout-padding">
+	<pull-to :top-load-method="refresh" >
+		<div id="home" >
 			<div class="head-bg">
 				<h4 class="page-title">首页</h4>
 			</div>
@@ -67,6 +67,7 @@
 				</div>
 
 			</div>
+			
 
 		</div>
 	</pull-to>
@@ -116,7 +117,7 @@
 			}
 		},
 		components: {
-			QIcon,
+			
 			QCarousel,
 			QIcon,
 			Toast,
@@ -139,7 +140,7 @@
 		},
 		methods: {
             goArticleList(){
-            	this.$router.push('/maxpro/articleList');
+            	this.$router.push('/maxpro/home/articleList');
             },
             goArticleDetail(item){
             	this.$router.push({name:'articleDetail',params:{articleDetail:item}});
@@ -197,20 +198,18 @@
 		mounted: function() {
 
 			this.fetchData();
-			var a = document.getElementsByClassName('layout-page');
-			var b = document.getElementById("pullto");
-			b.style.height = a[0].clientHeight + 'px';
+//			var a = document.getElementsByClassName('layout-page');
+//			var b = document.getElementById("pullto");
+//			b.style.height = a[0].clientHeight + 'px';
 		}
 	}
 </script>
 
 <style lang="less">
-	.pull-to-refresh {
-		/*max-height: none !important;*/
-	}
 	
 	#home {
 		position: relative;
+		padding: .5rem 1.2rem;		
 		.q-carousel-track>div {
 			min-height: 0;
 			padding: 0;
@@ -250,12 +249,7 @@
 			color: rgba(255, 255, 255, .6);
 		}
 		
-		.section {
-			background: white;
-			position: relative;
-			margin: 0 0 1rem 0;
-			border-radius: .3rem;
-		}
+		
 		.echarts {
 			height: 30rem;
 			position: relative;

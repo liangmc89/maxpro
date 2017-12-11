@@ -5,8 +5,8 @@ import Vue from 'vue'
 import Qs from 'qs'
 
 Vue.prototype.$http = axios;
-axios.defaults.baseURL = 'http://ib.fxclouds.com';
-//axios.defaults.baseURL = '/api';
+//axios.defaults.baseURL = 'http://ib.fxclouds.com';
+axios.defaults.baseURL = '/api';
 
 axios.interceptors.request.use(
 	config => {

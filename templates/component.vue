@@ -1,14 +1,17 @@
 <template>
-  <div></div>
+	<div></div>
 </template>
 
 <script>
-export default {
-  data () {
-    return {}
-  }
-}
+	import { QCarousel, QIcon, Toast, QPopover QBtn } from 'quasar'
+	import PullTo from 'vue-pull-to'
+	export default {
+		data() {
+			return {}
+		}
+	}
 </script>
 
 <style>
+
 </style>

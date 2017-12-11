@@ -26,20 +26,22 @@ export default new VueRouter({
 	scrollBehavior: () => ({
 		y: 0
 	}),
-
 	routes: [{
 			path: '/',
 			component: load('login')
+		}, {
+			path: '/home',
+			component: load('home')
 		},
 		{
 			path: '/login',
 			component: load('login')
 		},
-		{
-			path: '/maxpro/articleList',
-			component: load('articleList')
-
-		},
+//		{
+//			path: '/maxpro/articleList',
+//			component: load('articleList')
+//
+//		},
 		{
 			path: '/maxpro/articleDetail',
 			component: load('articleDetail'),
@@ -49,17 +51,18 @@ export default new VueRouter({
 			path: '/maxpro',
 			component: load('maxpro'),
 			children: [{
-					path: '',
-					component: load('home')
-				},
-				{
 					path: 'home',
 					component: load('home')
 				}, {
+					path: '',
+					redirect: 'home'
+
+				},
+				{
 					path: 'test',
 					component: load('test')
 				}, {
-					path: 'articleList',
+					path: 'home/articleList',
 					component: load('articleList'),
 
 				},

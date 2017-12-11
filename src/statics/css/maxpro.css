@@ -35,6 +35,10 @@
 		height: 6rem;
 	}
 	
+	.padding-content{
+		padding: 1.2rem;
+	}
+	
 	.padding-1rem {
 		padding: 1rem;
 	}
@@ -53,6 +57,13 @@
 		padding: 2rem 0;
 		z-index: 2;
 	}
+	
+	.section {
+			background: white;
+			position: relative;
+			margin: 0 0 1rem 0;
+			border-radius: .3rem;
+		}
 	
 	.account-info {
 		background: white;
@@ -83,6 +94,21 @@
 		padding: 0 .5rem;
 	}
 	
+	.account-detail hr {
+		width: 1;
+		height: 2rem;
+		float: left;
+		display: inline-block;
+		margin-top: 1.5rem;
+		border: none;
+		border-left: 1px solid rgb(227, 227, 227);
+	}
+	.account-detail:after{
+		clear: both;
+		display: block;
+		content: '';
+	}
+	
 	.account-detail {
 		width: 100%;
 	}
@@ -93,6 +119,8 @@
 		display: inline-block;
 		float: left;
 		padding-bottom: 1rem;
+		position: relative;
+		color: #F4873C;
 	}
 	
 	.account-detail h5 {
