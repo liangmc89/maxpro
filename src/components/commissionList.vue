@@ -2,7 +2,7 @@
 	<pull-to :top-load-method="refresh">
 		<div id="commissionList">
 			<div class="h-bg">
-				<h5 class="page-title">我的财务</h5>
+				<h5 class="page-title">返佣记录</h5>
 			</div>
 			<div class="section" style=" margin-bottom: 0;">
 				<div class="account-detail">
@@ -131,7 +131,7 @@
 					leftStickyColumns: 1,
 					rightStickyColumns: 0,
 					bodyStyle: {
-						maxHeight: '400px'
+						maxHeight: '420px'
 					},
 					rowHeight: '35px',
 					responsive: false,

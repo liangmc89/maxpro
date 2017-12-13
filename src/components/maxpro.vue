@@ -4,8 +4,9 @@
 			<transition mode="out-in" duration='100' name="custom-classes-transition" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
 				<keep-alive>
-					<router-view></router-view>
+					<router-view></router-view>					
 				</keep-alive>
+				 
 			</transition>
 			
 		</div>
@@ -39,6 +40,7 @@
 			QTab,
 			QTransition,
 			QScrollArea
+			
 		},
 		data() {
 			return {

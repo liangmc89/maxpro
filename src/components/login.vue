@@ -162,6 +162,10 @@
 											self.isEnableSend = false;
 										}
 									}, 1000);
+								}else{
+									Toast.create({
+										html:response.data.message
+									});
 								}
 							}).catch(function(err) {
 								Toast.create.negative({

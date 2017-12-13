@@ -37,6 +37,11 @@ export default new VueRouter({
 			path: '/login',
 			component: load('login')
 		},
+		
+		{
+			path:'/maxpro/myProperty/commissionList',
+			component:load('commissionList')
+		},
 //		{
 //			path: '/maxpro/articleList',
 //			component: load('articleList')

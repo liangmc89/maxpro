@@ -3,6 +3,12 @@ import router from '../router';
 import { getCookie, setCookie } from './cookie.js'
 import Vue from 'vue'
 import Qs from 'qs'
+import {
+	Loading,
+	// optional!, for example below
+	// with custom spinner
+	QSpinnerGears
+} from 'quasar'
 
 Vue.prototype.$http = axios;
 //axios.defaults.baseURL = 'http://ib.fxclouds.com';
@@ -23,6 +29,14 @@ axios.interceptors.request.use(
 				token: token
 			}
 		}
+		Loading.show({
+			spinner: QSpinnerGears,
+			message: '加载中...',
+			messageColor: 'white',
+			spinnerSize: 50, // in pixels
+			spinnerColor: 'white',
+			customClass: 'gray'
+		})
 		return config;
 	},
 	err => {
@@ -31,6 +45,8 @@ axios.interceptors.request.use(
 );
 //添加一个返回拦截器
 axios.interceptors.response.use(function(response) {
+	
+	Loading.hide()	
 	if(response.data.code == 40000 || response.data.code == 40001) {
 
 		router.push({
@@ -45,4 +61,5 @@ axios.interceptors.response.use(function(response) {
 }, function(error) {
 	//对返回的错误进行一些处理
 	return Promise.reject(error);
+	Loading.hide();
 });
