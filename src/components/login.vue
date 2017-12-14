@@ -82,9 +82,7 @@
 				isLogining: false,
 				isEnableSend: false,
 				curSecond: 0,
-				loginType: 'phone',
-				accountErrText: '',
-				passwordErrText: '',
+				loginType: 'phone',				
 				validateArray: ['phoneNum', 'password'],
 				loginMessage: '正在登陆...'
 			}
@@ -282,11 +280,7 @@
 			right: 4.5rem;
 			font-size: 1.6rem;
 		}
-		.my-button {
-			background: linear-gradient(to right, #f55970, #f4883b);
-			color: white;
-			letter-spacing: .4rem;
-		}
+		
 		.login-toggle {
 			margin-top: 6rem;
 			text-align: center;

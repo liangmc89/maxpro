@@ -48,6 +48,12 @@
 		height: 13rem;
 	}
 	
+	#q-app .my-button {
+			background: linear-gradient(to right, #f55970, #f4883b);
+			color: white;
+			letter-spacing: .4rem;
+		}
+	
 	.page-title {
 		text-align: center;
 		color: white;
