@@ -54,12 +54,14 @@
 						</div>
 					</div>
 					<div class="account-detail">
-						<div class="detail-item" v-ripple>
-							<h5>跟单</h5>
-							<p class="amount">{{top.follow|currencyFilter}}</p>
-						</div>
+						<router-link to='/maxpro/myProperty/followList' exact>
+							<div class="detail-item" v-ripple>
+								<h5>跟单</h5>
+								<p class="amount">{{top.follow|currencyFilter}}</p>
+							</div>
+						</router-link>
 						<hr />
-						<router-link to='/maxpro/myProperty/commissionList'>
+						<router-link to='/maxpro/myProperty/commissionList' exact>
 							<div class="detail-item" v-ripple>
 								<h5>返佣</h5>
 								<p class="amount">{{top.amount|currencyFilter}}</p>
@@ -67,36 +69,13 @@
 						</router-link>
 					</div>
 				</div>
-				<div class="account-info">
-					<img class="account-icon" src="../statics/images/account_icon.png" />
-					<p class="account-title">账号<span class="account linear-font">{{top.loginid}}</span>
-						<q-btn ref="target" icon="fa-angle-down" round small outline color="primary">
-
-							<q-popover ref="popover">
-								<q-list separator link>
-									<q-item>
-										hahahah
-									</q-item>
-								</q-list>
-							</q-popover>
-						</q-btn>
-					</p>
-					<q-carousel autoplay infinite dots>
-						<div slot="slide" class="account-detail">
-							<div class="detail-item">
-								<h5>余额</h5>
-								<p class="amount">${{top.balance}}</p>
-							</div>
-							<hr style="width: 1; height: 2rem; float: left;display: inline-block; margin-top: 1.5rem; border: none; border-left: 1px solid rgba(0,0,0,.5);" />
-							<div class="detail-item">
-								<h5>盈亏</h5>
-								<p class="amount">${{top.totalprofit}}</p>
-							</div>
-						</div>
-					</q-carousel>
+				<div style="margin-top: 3.5rem;">
+					<user-info></user-info>
 				</div>
+				
 			</div>
 		</div>
+		<router-view></router-view>
 	</pull-to>
 </template>
 
@@ -119,7 +98,7 @@
 			userInfo,
 			PullTo,
 			QCarousel,
-			QIcon,			
+			QIcon,
 			QPopover,
 			QList,
 			QItem,
@@ -131,7 +110,6 @@
 				let self = this;
 				self.$http.post(self.$api.url.myProperty, {}).then(response => {
 					if(response.data.code == 1) {
-
 						self.top = response.data.data;
 					}
 				}).catch(err => {});
@@ -141,7 +119,7 @@
 
 			}
 		},
-		filters: {
+		filters: {			
 			currencyFilter: function(value) {
 				return currencys(value);
 			}

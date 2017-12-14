@@ -69,7 +69,7 @@
 		flex: 1;
 		box-sizing: border-box;
 		overflow: hidden;
-		background: rgba(247,247,250,.6);
+		background: rgba(227,227,233,.6);
 	}
 	
 	#maxpro-footer {
@@ -87,27 +87,27 @@
 		background: rgb(246, 247, 250);
 	}
 	
-	.router-link-exact-active .fa-maxpro-home:before {
+	.router-link-active .fa-maxpro-home:before {
 		background: url(../statics/images/fa-maxpro-home-active.png) no-repeat top left/100% 100%;
 	}
 	
-	.router-link-exact-active .fa-maxpro-property {
+	.router-link-active .fa-maxpro-property {
 		background: url(../statics/images/fa-maxpro-property-active.png) no-repeat top left/100% 100%;
 	}
 	
-	.router-link-exact-active .fa-maxpro-deal {
+	.router-link-active .fa-maxpro-deal {
 		background: url(../statics/images/fa-maxpro-deal-active.png) no-repeat top left/100% 100%;
 	}
 	
-	.router-link-exact-active .fa-maxpro-follow {
+	.router-link-active .fa-maxpro-follow {
 		background: url(../statics/images/fa-maxpro-follow-active.png) no-repeat top left/100% 100%;
 	}
 	
-	.router-link-exact-active .fa-maxpro-my {
+	.router-link-active .fa-maxpro-my {
 		background: url(../statics/images/fa-maxpro-my-active.png) no-repeat top left/100% 100%;
 	}
 	
-	.router-link-exact-active .q-tab-label {
+	.router-link-active .q-tab-label {
 		color: #F4873C;
 	}
 	

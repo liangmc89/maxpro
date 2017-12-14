@@ -1,6 +1,6 @@
 <template>
-	<pull-to :top-load-method="refresh" >
-		<div id="home" >
+	<pull-to :top-load-method="refresh">
+		<div id="home">
 			<div class="head-bg">
 				<h4 class="page-title">首页</h4>
 			</div>
@@ -16,8 +16,8 @@
 									<h5 style="margin-top: 0;">{{item.title}}</h5>
 									<p class="notice-subtitle">{{item.create_time|dateFormat}}</p>
 								</div>
-								<div class="notice-right-icon">									
-								<q-icon name='fa-angle-right' size='2rem' class='notice-item-icon' @click="goArticleList"></q-icon>
+								<div class="notice-right-icon">
+									<q-icon name='fa-angle-right' size='2rem' class='notice-item-icon' @click="goArticleList"></q-icon>
 								</div>
 							</div>
 						</div>
@@ -26,34 +26,7 @@
 				</div>
 			</div>
 
-			<div class="account-info">
-				<img class="account-icon" src="../statics/images/account_icon.png" />
-				<p class="account-title">账号<span class="account linear-font">{{top.login}}</span>
-					<q-btn ref="target" icon="fa-angle-down" round small outline color="primary">
-
-						<q-popover ref="popover">
-							<q-list separator link>
-								<q-item>
-									hahahah
-								</q-item>
-							</q-list>
-						</q-popover>
-					</q-btn>
-				</p>
-				<q-carousel autoplay infinite dots>
-					<div slot="slide" class="account-detail">
-						<div class="detail-item">
-							<h5>余额</h5>
-							<p class="amount">${{top.balance}}</p>
-						</div>
-						<hr style="width: 1; height: 2rem; float: left;display: inline-block; margin-top: 1.5rem; border: none; border-left: 1px solid rgba(0,0,0,.5);" />
-						<div class="detail-item">
-							<h5>盈亏</h5>
-							<p class="amount">${{top.totalprofit}}</p>
-						</div>
-					</div>
-				</q-carousel>
-			</div>
+			<user-info></user-info>
 			<div class="section">
 				<!--<q-btn v-for="(item,index) in charts" outline="item.value==chartType" :flat="item.value!=chartType" rounded :outline="item.value==chartType" @click="ChangeChart(item.value)" :key="index" :color="item.value==chartType?'primary':''">{{item.name}}</q-btn>-->
 
@@ -67,7 +40,6 @@
 				</div>
 
 			</div>
-			
 
 		</div>
 	</pull-to>
@@ -77,6 +49,7 @@
 	import { QCarousel, QIcon, Toast, QPopover, QList, QItem, QBtn, date, QTab, QTabs, QTabPane } from 'quasar'
 	import IEcharts from 'vue-echarts-v3/src/full.js';
 	import PullTo from 'vue-pull-to'
+	import userInfo from './userInfo.vue'
 	export default {
 		data() {
 			return {
@@ -117,7 +90,7 @@
 			}
 		},
 		components: {
-			
+
 			QCarousel,
 			QIcon,
 			Toast,
@@ -130,7 +103,8 @@
 			QTabs,
 			QTabPane,
 			IEcharts,
-			PullTo
+			PullTo,
+			userInfo
 
 		},
 		filters: {
@@ -139,12 +113,17 @@
 			}
 		},
 		methods: {
-            goArticleList(){
-            	this.$router.push('/maxpro/home/articleList');
-            },
-            goArticleDetail(item){
-            	this.$router.push({name:'articleDetail',params:{articleDetail:item}});
-            },
+			goArticleList() {
+				this.$router.push('/maxpro/home/articleList');
+			},
+			goArticleDetail(item) {
+				this.$router.push({
+					name: 'articleDetail',
+					params: {
+						articleDetail: item
+					}
+				});
+			},
 			onReady(instance) {
 				console.log(instance);
 			},
@@ -196,20 +175,15 @@
 			}
 		},
 		mounted: function() {
-
 			this.fetchData();
-//			var a = document.getElementsByClassName('layout-page');
-//			var b = document.getElementById("pullto");
-//			b.style.height = a[0].clientHeight + 'px';
 		}
 	}
 </script>
 
 <style lang="less">
-	
 	#home {
 		position: relative;
-		padding: .5rem 1.2rem;		
+		padding: .5rem 1.2rem;
 		.q-carousel-track>div {
 			min-height: 0;
 			padding: 0;
@@ -224,32 +198,28 @@
 			/*overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;*/
-			
 			.notice-item-icon {
 				margin: 0 1rem;
 			}
-			.notice-left-icon{
+			.notice-left-icon {
 				width: 10%;
 				display: inline-block;
 			}
-			.notice-title{
+			.notice-title {
 				overflow: hidden;
 				flex: 1;
 				display: inline-block;
 			}
-			.notice-right-icon{
+			.notice-right-icon {
 				display: inline-block;
 				width: 10%;
 			}
 		}
 		.notice-subtitle {
-			
 			font-size: 1.4rem;
 			font-family: "century gothic";
 			color: rgba(255, 255, 255, .6);
 		}
-		
-		
 		.echarts {
 			height: 30rem;
 			position: relative;

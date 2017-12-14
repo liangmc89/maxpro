@@ -36,17 +36,7 @@ export default new VueRouter({
 		{
 			path: '/login',
 			component: load('login')
-		},
-		
-		{
-			path:'/maxpro/myProperty/commissionList',
-			component:load('commissionList')
-		},
-//		{
-//			path: '/maxpro/articleList',
-//			component: load('articleList')
-//
-//		},
+		},		
 		{
 			path: '/maxpro/articleDetail',
 			component: load('articleDetail'),
@@ -73,8 +63,17 @@ export default new VueRouter({
 				},
 				{
 					path: 'myProperty',
-					component: load('myProperty'),
+					component: load('myProperty')
 
+				},{
+					path:'myProperty/commissionList',
+			        component: load('commissionList')
+				},{
+					path:'myProperty/followList',
+			        component: load('followList')
+				},{
+					path:'myProperty/doWithDraw',
+			        component: load('doWithDraw')
 				}
 			]
 		},

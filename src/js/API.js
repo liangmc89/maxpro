@@ -6,7 +6,10 @@ class API {
 		index:'/openapi/index/index',				   			//首页
 		articlelList:'/openapi/index/artcitlList',      		//文章列表
 		myProperty:'/openapi/member/myProperty',        		//我的资产
-		commissionList:'/openapi/deposit/commissionList'		//返佣列表
+		commissionList:'/openapi/deposit/commissionList',		//返佣列表
+		followList:'/openapi/follow/index',						//跟单记录
+		withdraw:'/openapi/deposit/withdraw',					//佣金提现
+		dowithdraw:'/openapi/deposit/dowithdraw'                //佣金提现申请
 		
 
 	}

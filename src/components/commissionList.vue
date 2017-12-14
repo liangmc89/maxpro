@@ -11,23 +11,15 @@
 						<p class="amount">{{total.count}}</p>
 					</div>
 					<hr style="margin-top: 2.7rem;"/>
+					<router-link to='/maxpro/myProperty/doWithDraw'>
 					<div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
 						<h5>返佣总额</h5>
 						<p class="amount">{{total.AMOUNT|currencys}}</p>
-					</div>
+					</div></router-link>
 				</div>
 			</div>
 			<q-data-table :data="table" :config="config" :columns="columns" @refresh="refresh" @selection="selection" @rowclick="rowClick">
-				<template slot="col-message" slot-scope="cell">
-					<span class="light-paragraph">{{cell.data}}</span>
-				</template>
-				<template slot="col-source" slot-scope="cell">
-					<div v-if="cell.data === 'Audit'" class="my-label text-white bg-primary">
-						Audit
-						<q-tooltip>Some data</q-tooltip>
-					</div>
-					<div v-else class="my-label text-white bg-negative">{{cell.data}}</div>
-				</template>
+				
 
 				
 			</q-data-table>
@@ -136,13 +128,13 @@
 					rowHeight: '35px',
 					responsive: false,
 					pagination: {
-						rowsPerPage: 15
-						//options: [5, 10, 15, 30, 50, 500]
+						rowsPerPage: 15,
+						options: [5, 10, 15, 30, 50, 500]
 					},
 					selection: false,
 					messages: {
-						noData: '<i class="material-icons text-positive" style="font-size: 22px">info</i> 暂无数据！',
-						noDataAfterFiltering: '<i class="material-icons text-positive" style="font-size: 22px">info</i> Sorry ,没有查找到结果。'
+						noData: '<i class="material-icons text-warning" style="font-size: 22px">info</i> 暂无数据！',
+						noDataAfterFiltering: '<i class="material-icons text-warning" style="font-size: 22px">info</i> Sorry ,没有查找到结果。'
 					},
 					// (optional) Override default labels. Useful for I18n.
 					labels: {

@@ -145,8 +145,7 @@
 								phone: self.phoneNum,
 								mtserver: self.$api.appConfig.mtserver,
 								imgcode: self.$api.appConfig.imgcode
-							}).then(function(response) {
-								console.log(response);
+							}).then(function(response) {								
 								if(response.data.code == 1) {
 									Toast.create.positive({
 										html: '短信发送成功！'

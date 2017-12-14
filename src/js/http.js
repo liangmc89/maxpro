@@ -5,6 +5,7 @@ import Vue from 'vue'
 import Qs from 'qs'
 import {
 	Loading,
+	Toast,
 	// optional!, for example below
 	// with custom spinner
 	QSpinnerGears
@@ -40,6 +41,10 @@ axios.interceptors.request.use(
 		return config;
 	},
 	err => {
+		Loading.hide();
+		Toast.create.negative({
+						html: err.message
+					});
 		return Promise.reject(err);
 	}
 );
@@ -60,6 +65,7 @@ axios.interceptors.response.use(function(response) {
 	return response;
 }, function(error) {
 	//对返回的错误进行一些处理
-	return Promise.reject(error);
 	Loading.hide();
+	return Promise.reject(error);
+	
 });
