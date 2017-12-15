@@ -29,6 +29,9 @@ export default new VueRouter({
 	routes: [{
 			path: '/',
 			component: load('login')
+		},{
+			path: '/register',
+			component: load('register')
 		}, {
 			path: '/home',
 			component: load('home')
@@ -36,11 +39,16 @@ export default new VueRouter({
 		{
 			path: '/login',
 			component: load('login')
-		},		
+		},
 		{
 			path: '/maxpro/articleDetail',
 			component: load('articleDetail'),
 			name: 'articleDetail'
+		},
+		{
+			path: '/maxpro/myProperty/doWithDraw/actionResult',
+			component: load('actionResult'),
+			name: 'actionResult'
 		},
 		{
 			path: '/maxpro',
@@ -65,15 +73,15 @@ export default new VueRouter({
 					path: 'myProperty',
 					component: load('myProperty')
 
-				},{
-					path:'myProperty/commissionList',
-			        component: load('commissionList')
-				},{
-					path:'myProperty/followList',
-			        component: load('followList')
-				},{
-					path:'myProperty/doWithDraw',
-			        component: load('doWithDraw')
+				}, {
+					path: 'myProperty/commissionList',
+					component: load('commissionList')
+				}, {
+					path: 'myProperty/followList',
+					component: load('followList')
+				}, {
+					path: 'myProperty/doWithDraw',
+					component: load('doWithDraw')
 				}
 			]
 		},

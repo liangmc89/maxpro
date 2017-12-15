@@ -76,7 +76,7 @@
 		width: 100%;
 		box-sizing: border-box;
 		box-shadow: 0 -2px 4px -1px rgba(0, 0, 0, .2), 0 -4px 5px rgba(0, 0, 0, .14), 0 -1px 10px rgba(0, 0, 0, .12);
-		z-index: 9999;
+		z-index: 2;
 	}
 	
 	.maxpro-toolbar {

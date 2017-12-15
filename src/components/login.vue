@@ -36,7 +36,7 @@
 			<q-btn rounded :big="true" class="full-width my-button" :disable="isLogining" @click='login'>登录</q-btn>
 			<div class="login-help">
 				<q-btn :small="true" :flat="true">忘记密码</q-btn>|
-				<q-btn :small="true" :flat="true">注册账号</q-btn>
+				<q-btn :small="true" :flat="true" @click="$router.push('/register')" >注册账号</q-btn>
 			</div>
 
 		</div>
@@ -108,7 +108,7 @@
 			},
 			password: function(value) {
 				return Validator.value(value).required();
-			},
+			}
 
 		},
 

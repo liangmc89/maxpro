@@ -1,6 +1,7 @@
 class API {
 	url = {
-		login: '/openapi/index/checkLogin',
+		login: '/openapi/index/checkLogin',						//登陆
+		register:'/openapi/index/register',						//注册
 		sendactivemsg: '/openapi/index/sendactivemsg', 			//短信发送验证码
 		gettoken: '/openapi/api/get_token',            			//token
 		index:'/openapi/index/index',				   			//首页

@@ -4,62 +4,60 @@
 			<div class="h-bg">
 				<h5 class="page-title">佣金提现</h5>
 			</div>
-			
-				<div class="section padding-content">
-					<div class="row no-wrap">
-						<div class="col-4 relative-position">
-							<span class="lbl">服  务  器</span>
-						</div>
-						<div class="col-8">
-							<q-field>
-								<q-input type="text" readonly :value='withDraw.server_name' disable/>
-							</q-field>
-						</div>
-					</div>
-					
-					
-					<div class="row no-wrap">
-						<div class="col-4 relative-position"><span :class='["lbl",{errlbl:validation.hasError("amount")}]'>提现金额</span></div>
-						<div class="col-8">
-							<q-field autofocus  :error-label="validation.firstError('amount')" class='my-field'>
-								<q-input type="number" placeholder='' class='amount' prefix='$'  v-model="amount" :clearable="true"  :error="validation.hasError('amount')" />
-							</q-field>
-						</div>
 
+			<div class="section padding-content">
+				<div class="row no-wrap">
+					<div class="col-4 relative-position">
+						<span class="lbl">服  务  器</span>
 					</div>
-					<div class="row no-wrap">
-						<div class="col-4 relative-position"><span class='lbl'>最高额度</span></div>
-						<div class="col-8">
-							<q-field>
-								<q-input readonly type="text" :value='maxAmount' disable />
-							</q-field>
-						</div>
+					<div class="col-8">
+						<q-field>
+							<q-input type="text" readonly :value='withDraw.server_name' disable/>
+						</q-field>
 					</div>
-
-					<div class="row no-wrap">
-						<div class="col-4 relative-position"><span class='lbl'>MT账号</span></div>
-						<div class="col-8">
-							<q-field>
-								<q-input readonly type="text" :value='withDraw.login' disable />
-							</q-field>
-						</div>
-					</div>
-
-					<div class="row no-wrap">
-						<div class="col-4 relative-position"><span :class='["lbl",{errlbl:validation.hasError("password")}]'>交易密码</span></div>
-						<div class="col-8">
-							<q-field :error-label="validation.firstError('password')">
-								<q-input type="password" v-model="password" :clearable="true" key='mtpwdInput' :error="validation.hasError('password')" />
-							</q-field>
-						</div>
-					</div>
-
-					
 				</div>
-				<div style="padding: 4rem;"><q-btn rounded :big="true" class="full-width my-button" @click='doWithDraw'>提  现</q-btn></div>
-				
 
-		
+				<div class="row no-wrap">
+					<div class="col-4 relative-position"><span :class='["lbl",{errlbl:validation.hasError("amount")}]'>提现金额</span></div>
+					<div class="col-8">
+						<q-field autofocus :error-label="validation.firstError('amount')" class='my-field'>
+							<q-input type="number" placeholder='' class='amount' prefix='$' v-model="amount" :clearable="true" :error="validation.hasError('amount')" />
+						</q-field>
+					</div>
+
+				</div>
+				<div class="row no-wrap">
+					<div class="col-4 relative-position"><span class='lbl'>最高额度</span></div>
+					<div class="col-8">
+						<q-field>
+							<q-input readonly type="text" :value='maxAmount' disable />
+						</q-field>
+					</div>
+				</div>
+
+				<div class="row no-wrap">
+					<div class="col-4 relative-position"><span class='lbl'>MT账号</span></div>
+					<div class="col-8">
+						<q-field>
+							<q-input readonly type="text" :value='withDraw.login' disable />
+						</q-field>
+					</div>
+				</div>
+
+				<div class="row no-wrap">
+					<div class="col-4 relative-position"><span :class='["lbl",{errlbl:validation.hasError("password")}]'>交易密码</span></div>
+					<div class="col-8">
+						<q-field :error-label="validation.firstError('password')">
+							<q-input type="password" v-model="password" :clearable="true" key='mtpwdInput' :error="validation.hasError('password')" />
+						</q-field>
+					</div>
+				</div>
+
+			</div>
+			<div style="padding: 4rem;">
+				<q-btn :disable='isDisable' rounded :big="true" class="full-width my-button" @click='doWithDraw'>提 现</q-btn>
+			</div>
+
 		</div>
 
 	</pull-to>
@@ -68,15 +66,15 @@
 prefix
 
 <script>
-	import { QField, QInput, Toast, Ripple, QCarousel, QIcon, QPopover, QList, QItem, QBtn, QSelect } from 'quasar'
+	import { QField, QInput, Toast, Ripple, QIcon, QPopover, QList, QItem, QBtn, QSelect } from 'quasar'
 	import PullTo from 'vue-pull-to'
 	import { currencys } from '../js/filter'
 	import Vue from 'vue'
 	var SimpleVueValidation = require('simple-vue-validator');
 	var Validator = SimpleVueValidation.Validator.create({
 		templates: {
-			required: '字段不能为空！',			
-			between:'金额必须介于 {0} 和 {1} 之间。'
+			required: '字段不能为空！',
+			between: '金额必须介于 {0} 和 {1} 之间。'
 
 		}
 	});
@@ -87,29 +85,26 @@ prefix
 		},
 		data() {
 			return {
-				withDraw: {},
-				select: {
-					label: 'Bucharest',
-					value: 'bucharest'
-				},				
-				amount:0.00,
-				password: ''
-				
+				withDraw: {
+					amount:0
+				},
+				amount: 0.00,
+				password: '',
+                isDisable:false
 			}
 		},
-		validators: {			
+		validators: {
 			password: function(value) {
 				return Validator.value(value).required();
 			},
-			amount:function(value){
-				return Validator.value(value).required().between(1,parseFloat(this.withDraw.amount));
+			amount: function(value) {
+				return Validator.value(value).required().between(1, parseFloat(this.withDraw.amount));
 			}
 
 		},
 		components: {
 			Toast,
-			PullTo,
-			QCarousel,
+			PullTo,			
 			QIcon,
 			QPopover,
 			QList,
@@ -120,8 +115,8 @@ prefix
 			QField
 
 		},
-		computed:{
-			maxAmount:function(){
+		computed: {
+			maxAmount: function() {
 				return currencys(this.withDraw.amount);
 			}
 		},
@@ -129,37 +124,61 @@ prefix
 			refresh: function(done) {
 				let self = this;
 				self.$http.post(self.$api.url.withdraw, {}).then(response => {
+
 					if(response.data.code == 1) {
 						self.withDraw = response.data.data;
+					} else {
+						self.isDisable=true;
+						Toast.create.negative({
+							html: response.data.message
+						});
 					}
-				}).catch(err => {});
+				}).catch(err => {
+					self.isDisable=true;
+					Toast.create.negative({
+						html: err.message
+					});
+				});
 				if(done) {
 					done();
 				}
 
 			},
 			doWithDraw: function() {
-				let self=this;
+				let self = this;
 				this.$validate()
 					.then(function(success) {
 						if(success) {
-							
-							self.$http.post(self.$api.url.dowithdraw,{
-								amount:self.amount,
-								mt4server:self.withDraw.server_id,
-								mt4login:self.withDraw.login,
-								password:self.password
-							}).then(response=>{
-								debugger;
-								if(response.data.code==1){
-									console.log(response.data.data);
-								}else{
-									
+
+							self.$http.post(self.$api.url.dowithdraw, {
+								amount: self.amount,
+								mt4server: self.withDraw.server_id,
+								mt4login: self.withDraw.login,
+								password: self.password
+							}).then(response => {
+								let ar;
+								if(response.data.code == 1) {
+									ar = {
+										type: 'success',
+										message: response.data.message
+									};
+
+								} else {
+									ar = {
+										type: 'fail',
+										message: response.data.message
+									}
 								}
-							}).catch(err=>{
+								self.$router.push({
+									name: 'actionResult',
+									params: {
+										actionResult: ar
+									}
+								});
+							}).catch(err => {
 								Toast.create.negative({
-											html: err.message
-										});
+									html: err.message
+								});
 							});
 						}
 					});
@@ -202,7 +221,8 @@ prefix
 		font-size: 16px;
 		text-align: left;
 	}
-	.amount{
+	
+	.amount {
 		/*font-size: 2rem;*/
 	}
 </style>
