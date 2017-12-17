@@ -1,4 +1,4 @@
-export function currencys(x) {
+export function currencys(x,c) {
 	let f_x = parseFloat(x);
 	if(isNaN(f_x)) {
 
@@ -19,9 +19,12 @@ export function currencys(x) {
 	while(s_x.length <= pos_decimal + 2) {
 		s_x += '0';
 	}
+	if(c==undefined||c==''){
+		c='$';
+	}
 	if(isMoreThanZero) {
-		return '-$' + s_x;
+		return '-'+c + s_x;
 	} else {
-		return '$' + s_x;
+		return c + s_x;
 	}
 }
