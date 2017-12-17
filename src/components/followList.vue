@@ -83,9 +83,9 @@
 							self.table = response.data.data.list;
 							self.total = response.data.data.data;
 						} else {
-							Toast.create({
-								html: response.data.message
-							});
+							//							Toast.create({
+							//								html: response.data.message
+							//							});
 						}
 					}).catch(err => {
 						Toast.create.negative({
@@ -96,7 +96,7 @@
 						done();
 					}
 
-				}, 5000)
+				}, 2000)
 			},
 			selection(number, rows) {
 				console.log(`selected ${number}: ${rows}`)
@@ -112,8 +112,8 @@
 			return {
 				table: [],
 				total: {
-					count:0,
-					AMOUNT:0
+					count: 0,
+					AMOUNT: 0
 				},
 				config: {
 					title: '',
@@ -133,8 +133,9 @@
 					},
 					selection: false,
 					messages: {
-						noData: '<i class="material-icons text-warning" style="font-size: 22px">info</i> 暂无数据！',
-						noDataAfterFiltering: '<i class="material-icons text-warning" style="font-size: 22px">info</i> Sorry ,没有查找到结果。'
+						loading:'loading',
+						noData: '<div class="nodata"><i class="material-icons text-warning" style="font-size: 22px">info</i> 暂无数据！</div>',
+						noDataAfterFiltering: '<div class="nodata"><i class="material-icons text-warning" style="font-size: 22px">info</i> Sorry ,没有查找到结果。</div>'
 					},
 					// (optional) Override default labels. Useful for I18n.
 					labels: {
@@ -223,5 +224,13 @@
 		padding: 5px;
 		border-radius: 3px;
 		display: inline-block;
+	}
+	
+	.nodata {
+		background: white;
+		height: 200px;
+		width: 100%;
+		text-align: center;
+		padding-top: 50px
 	}
 </style>

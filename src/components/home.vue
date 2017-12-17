@@ -7,7 +7,7 @@
 			<div class="head">
 				<div class="sys-notice padding-1rem">
 					<q-carousel class="text-white" autoplay infinite>
-						<div slot="slide" v-for='(item,index) in notice' :key='item.cid' style="width: 100%;">
+						<div slot="slide" v-for='(item,index) in notice' :key='index' style="width: 100%;">
 							<div class="notice-item">
 								<div class="notice-left-icon">
 									<q-icon name='fa-volume-down' size='2rem' class='notice-item-icon'></q-icon>

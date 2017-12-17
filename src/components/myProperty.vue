@@ -32,15 +32,19 @@
 						</div>
 					</div>
 					<div class="account-detail">
-						<div class="detail-item" v-ripple>
-							<h5>入金</h5>
-							<p class="amount">{{top.innumber|currencyFilter}}</p>
-						</div>
+						<router-link to='/maxpro/myProperty/depositInList' exact>
+							<div class="detail-item" v-ripple>
+								<h5>入金</h5>
+								<p class="amount">{{top.innumber|currencyFilter}}</p>
+							</div>
+						</router-link>
 						<hr />
-						<div class="detail-item" v-ripple>
-							<h5>出金</h5>
-							<p class="amount">{{top.outnumber|currencyFilter}}</p>
-						</div>
+						<router-link to='/maxpro/myProperty/depositOutList' exact>
+							<div class="detail-item" v-ripple>
+								<h5>出金</h5>
+								<p class="amount">{{top.outnumber|currencyFilter}}</p>
+							</div>
+						</router-link>
 					</div>
 					<div class="account-detail">
 						<div class="detail-item" v-ripple>
@@ -72,7 +76,7 @@
 				<div style="margin-top: 3.5rem;">
 					<user-info></user-info>
 				</div>
-				
+
 			</div>
 		</div>
 		<router-view></router-view>
@@ -119,7 +123,7 @@
 
 			}
 		},
-		filters: {			
+		filters: {
 			currencyFilter: function(value) {
 				return currencys(value);
 			}
@@ -138,4 +142,5 @@
 		font-size: 1.8rem;
 		border-bottom: 1px solid rgb(227, 227, 227);
 	}
+	
 </style>

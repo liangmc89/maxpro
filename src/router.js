@@ -73,15 +73,24 @@ export default new VueRouter({
 					path: 'myProperty',
 					component: load('myProperty')
 
-				}, {
-					path: 'myProperty/commissionList',
-					component: load('commissionList')
-				}, {
-					path: 'myProperty/followList',
-					component: load('followList')
-				}, {
-					path: 'myProperty/doWithDraw',
-					component: load('doWithDraw')
+				},{
+					path:'myProperty/commissionList',
+			        component: load('commissionList')
+				},{
+					path:'myProperty/followList',
+			        component: load('followList')
+				},{
+					path:'myProperty/doWithDraw',
+			        component: load('doWithDraw')
+				},{
+					path:'myProperty/depositInList',
+			        component: load('depositInList')
+				},{
+					path:'myProperty/addDepositIn',
+			        component: load('addDepositIn')
+				},{
+					path:'followList',
+			        component: load('followList')
 				}
 			]
 		},
