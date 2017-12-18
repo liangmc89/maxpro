@@ -80,7 +80,7 @@
 	});
 	Vue.use(SimpleVueValidation);
 
-	import { QSelect, QList, QItem, Toast, QBtn, QIcon, QField, QInput, Loading, QSpinnerFacebook, QTabs, QTab, QTabPane } from 'quasar'
+	import { QSelect, QList, QItem, Toast, QBtn, QIcon, QField, QInput, Loading, QSpinnerFacebook, QTabs, QTab, QTabPane, Dialog } from 'quasar'
 	import { required, email } from 'vuelidate/lib/validators'
 	export default {
 		data() {
@@ -167,6 +167,7 @@
 			QSelect,
 			QList,
 			QItem
+			
 		},
 
 		methods: {
@@ -221,11 +222,13 @@
 				this.$validate(this.validateArray[this.registerType])
 					.then(function(success) {
 						if(success) {
-							alert(success);
+
 							let params = {};
-							if(registerType == 0) {
+							if(self.registerType == 0) {
+								debugger
 								params = {
-									mtserver: self.$api.config.mtserver,
+
+									mtserver: self.$api.appConfig.mtserver,
 									type: self.registerType + 1,
 									phone: self.phone,
 									phone_code: self.phone_code,
@@ -253,9 +256,22 @@
 										password: self.password
 									}).then(response => {
 										if(response.data.code == 1) {
-											self.loginMessage = '登陆成功';
-											setCookie('token', response.data.data, 'h1.5');
-											self.$router.push('/maxpro');
+
+											Dialog.create({
+												title: '注册',
+												message: '恭喜你注册成功！',
+												buttons: [
+													{
+														label: '立即登陆',
+														color:'primary',
+														handler() {
+															self.$router.push('/login');
+														}
+													}
+												]
+											})
+
+											
 
 										} else {
 											Toast.create.negative({
