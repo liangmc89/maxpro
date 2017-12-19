@@ -12,7 +12,7 @@ class API {
 		withdraw:'/openapi/deposit/withdraw',					//佣金提现
 		dowithdraw:'/openapi/deposit/dowithdraw',               //佣金提现申请
 		depositInList:'/openapi/deposit/addmoney',			    //入金列表
-        depositOutList:'/openapi/deposit/addmoney',				//出金列表
+        depositOutList:'/openapi/deposit/outmoney',				//出金列表
         depositDoin:'/openapi/deposit/doin',					//入金申请
         depositDoout:'/openapi/deposit/doout',					//出金申请
         depositIn:'/openapi/deposit/in',						//入金界面

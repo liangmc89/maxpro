@@ -18,6 +18,7 @@
 			</div>
 		</div>
 		<pull-to :top-load-method="refresh" :bottom-load-method='loadmore'>
+			<div class="no-data" v-show="listIn.length==0"></div>
 			<ul id='in-List'>
 				<li v-for="(item,index) in listIn" :key="index" v-ripple>
 					<div class="row no-wrap">
@@ -41,11 +42,11 @@
 						<div class="col-5 order-content">{{item.create_time|dateFormat}}</div>
 						<div class="col-4 order-status text-primary"></div>
 					</div>
-					
+
 				</li>
 			</ul>
 		</pull-to>
-		<q-btn round inversted color='white' @click="$router.push('/maxpro/myProperty/addDepositIn')"  class="fixed" style="right: 1.5rem; bottom: 8rem">
+		<q-btn round inversted color='white' @click="$router.push('/maxpro/myProperty/addDepositIn')" class="fixed" style="right: 1.5rem; bottom: 8rem">
 			<q-icon name="fa-addDepositIn" />
 		</q-btn>
 	</div>
@@ -119,14 +120,11 @@
 			}
 
 		},
-		methods: {
-			addDepositIn(){
-				
-			},
+		methods: {			
 			loadmore(done) {
 				this.fetchData(done);
 				this.page++;
-
+                
 			},
 			refresh(done) {
 				this.page = 1;
@@ -145,7 +143,7 @@
 						if(response.data.code == 1) {
 							self.vtotal = response.data.data.data.vtotal;
 							self.listIn = self.listIn.concat(response.data.data.list);
-						} else {
+						} else if(response.data.code != 40007) {
 							Toast.create({
 								html: response.data.message
 							});
@@ -166,101 +164,22 @@
 		data() {
 			return {
 				ticket: '',
-				vtotal: {},
-				listIn: {},
+				vtotal: {
+					TNUM:0,
+					TDOLLOR:0
+				},
+				listIn: [],
 				page: 1,
 				search: ''
 
 			}
 		},
-		mounted: function() {
+		created: function() {
 			this.refresh();
 		}
 	}
 </script>
 
 <style>
-	#in-List {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		padding: 1rem;
-		font-size: 1.4rem;
-	}
-	
-	#deposiInList .detail-item {
-		padding-bottom: 0;
-	}
-	
-	#in-List li {
-		margin-bottom: 1rem;
-		background: white;
-		padding: 1rem .5rem;
-		line-height: 2rem;
-		position: relative;
-	}
-	
-	#in-List li:nth-child(even) .list-style {
-		background: url(../statics/images/list-style-green.png) no-repeat left center/1.4rem;
-	}
-	
-	#in-List li:nth-child(odd) .list-style {
-		background: url(../statics/images/list-style-orange.png) no-repeat left center/1.4rem;
-	}
-	
-	.order-num {
-		text-align: right;
-		position: relative;
-		padding: 0 1rem;
-	}
-	
-	.order-content {
-		text-align: left;
-		color: darkgray;
-		padding: 0 .3rem;
-	}
-	
-	.order-status {
-		text-align: right;
-		padding: 0 .3rem;
-	}
-	
-	.bg-white {
-		background: white;
-	}
-	
-	.my-bg {
-		z-index: 2;
-	}
-	
-	#deposiInList {
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-	
-	.total-info {
-		border-radius: 0;
-		margin-bottom: 0;
-		z-index: 2;
-		padding: 0 1.2rem;
-		box-shadow: 0px .4rem .2rem rgba(0, 0, 0, .2)
-	}
-	
-	.rmb {
-		color: gray;
-	}
-	
-	.usd {
-		font-size: 2rem;
-	}
-	.fa-addDepositIn:before{
-		/*position: absolute;*/
-		background:url(../statics/images/addDepositIn.png) no-repeat center center/26px 26px ;
-		content: '';
-		width: 26px;
-		height: 26px;
-		/*left: 0;
-		top: 0;*/
-	}
+
 </style>

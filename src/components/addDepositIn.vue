@@ -257,7 +257,7 @@
 
 			}
 		},
-		mounted: function() {
+		create: function() {
 			this.refresh();
 		}
 	}

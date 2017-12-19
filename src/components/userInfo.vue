@@ -118,7 +118,7 @@
 				return currencys(value);
 			}
 		},
-		mounted: function() {
+		created: function() {
 			this.refresh();
 		}
 		//		props: ['userInfo']
@@ -134,18 +134,22 @@
 	#userinfo .q-carousel-toolbar {
 		color: #F4873C;
 	}
-	#account-btn{
+	
+	#account-btn {
 		width: 18px;
 		height: 18px;
 		min-height: 0;
 		margin-bottom: .3rem;
-		
 		font-size: 12px;
 	}
-	#account-btn .q-icon{
+	
+	#account-btn .q-icon {
 		width: 12px;
 		height: 12px;
 		font-size: 12px;
-		
+	}
+	
+	#userinfo .account-detail {
+		padding-bottom: 2rem !important;
 	}
 </style>

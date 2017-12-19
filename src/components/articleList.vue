@@ -20,13 +20,13 @@
 					</router-link>
 					
 
-					<h5 style="text-align: center;" v-if="art[0].list.length==0">暂无数据！</h5>
+					<div class="no-data" v-show="art[0].list.length==0"></div>
 				</q-tab-pane>
 				<q-tab-pane name="tab-2" class='no-border'>
 					<router-link :key="index" :to="{name:'articleDetail',params:{articleDetail:item}}" v-for="(item,index) in art[1].list">
 						<Article-Item :article="item"  ></Article-Item>
 					</router-link>
-					<h5 style="text-align: center;" v-if="art[1].list.length==0">暂无数据！</h5>
+					<div class="no-data" v-show="art[1].list.length==0"></div>
 				</q-tab-pane>
 
 			</q-tabs></div>

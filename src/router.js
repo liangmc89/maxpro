@@ -91,6 +91,14 @@ export default new VueRouter({
 				},{
 					path:'followList',
 			        component: load('followList')
+				},
+				{
+					path:'myProperty/depositOutList',
+			        component: load('depositOutList')
+				},
+				{
+					path:'myProperty/addDepositOut',
+			        component: load('addDepositOut')
 				}
 			]
 		},
