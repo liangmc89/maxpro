@@ -4,18 +4,18 @@
 			<img src="../statics/images/logo.png" />
 		</div>
 		<div class="login-form">
-			<div v-show='loginType=="phone"'>
+			<div v-show='loginType=="1"'>
 				<q-field :error-label="validation.firstError('phoneNum')" class='my-field'>
 					<q-input type="number" placeholder="手机号码" v-model="phoneNum" :clearable="true" key='phoneInput' :error="validation.hasError('phoneNum')" />
 				</q-field>
-				<q-field class="pass my-field" :error-label="validation.firstError('password')">
-					<q-input type="password" placeholder="请输入动态密码" v-model="password" :clearable="true" key='phonepwdInput' :error="validation.hasError('password')" />
+				<q-field class="pass my-field" :error-label="validation.firstError('code')">
+					<q-input type="text" placeholder="请输入短信验证码" v-model="code" :clearable="true" key='phonepwdInput' :error="validation.hasError('code')" />
 					<q-btn class='sendHelp' color="primary" :flat='true' :disable="isEnableSend" @click="getValidateNum">{{validateHelpText}}</q-btn>
 				</q-field>
 
 			</div>
 
-			<div v-show='loginType=="email"'>
+			<div v-show='loginType=="3"'>
 				<q-field :error-label="validation.firstError('email')" class='my-field'>
 					<q-input type="text" placeholder="电子邮箱" v-model="email" :clearable="true" key='emailInput' :error="validation.hasError('email')" />
 				</q-field>
@@ -25,7 +25,7 @@
 
 			</div>
 
-			<div v-show='loginType=="mt"'>
+			<div v-show='loginType=="2"'>
 				<q-field :error-label="validation.firstError('mtId')" class='my-field'>
 					<q-input type="text" placeholder="MT账号" v-model="mtId" :clearable="true" key='mtInput' :error="validation.hasError('mtId')" />
 				</q-field>
@@ -43,13 +43,13 @@
 		<div class="login-toggle">
 			<p class="or">or</p>
 			<div class="toggle-btn">
-				<q-btn round class='phone-btn' @click="toggleLoginType('phone')"></q-btn>
+				<q-btn round class='phone-btn' @click="toggleLoginType('1')"></q-btn>
 			</div>
 			<div class="toggle-btn">
-				<q-btn round class='email-btn' @click="toggleLoginType('email')"></q-btn>
+				<q-btn round class='email-btn' @click="toggleLoginType('3')"></q-btn>
 			</div>
 			<div class="toggle-btn">
-				<q-btn round class='mt-btn' @click="toggleLoginType('mt')"></q-btn>
+				<q-btn round class='mt-btn' @click="toggleLoginType('2')"></q-btn>
 			</div>
 
 		</div>
@@ -70,21 +70,24 @@
 	Vue.use(SimpleVueValidation);
 
 	import { Toast,QBtn, QIcon, QField, QInput, Loading, QSpinnerFacebook } from 'quasar'
-	import { required, email } from 'vuelidate/lib/validators'	
+	import { required, email } from 'vuelidate/lib/validators'
 	export default {
 		data() {
 			return {
 				phoneNum: '',
 				mtId: '887735',
 				email: '',
+        code:'',
 				account: '887735',
 				password: 'Ss123456',
 				isLogining: false,
 				isEnableSend: false,
 				curSecond: 0,
-				loginType: 'phone',				
+				loginType: '1',
 				validateArray: ['phoneNum', 'password'],
-				loginMessage: '正在登陆...'
+				loginMessage: '正在登陆...',
+        login_type:"",
+        login_account:''
 			}
 		},
 		validators: {
@@ -103,6 +106,9 @@
 					}
 				})
 			},
+      code:function(value) {
+        return Validator.value(value).required();
+      },
 			mtId: function(value) {
 				return Validator.value(value).required();
 			},
@@ -118,7 +124,7 @@
 				if(this.curSecond > 0) {
 					text = this.curSecond + ' 秒后可重新发送';
 				} else {
-					text = '获取动态密码';
+					text = '获取验证码';
 				}
 				return text;
 
@@ -139,18 +145,18 @@
 					.then(function(success) {
 						if(success) {
 
-							self.$http.post(self.$api.url.sendactivemsg, {
+							self.$http.post(self.$api.url.sendloginmsg, {
 								phone: self.phoneNum,
 								mtserver: self.$api.appConfig.mtserver,
 								imgcode: self.$api.appConfig.imgcode
-							}).then(function(response) {								
+							}).then(function(response) {
 								if(response.data.code == 1) {
 									Toast.create.positive({
 										html: '短信发送成功！'
 									});
 
 									self.isEnableSend = true;
-									const limt = 60;
+									const limt = 90;
 									self.curSecond = limt;
 									var intervalId = setInterval(function() {
 										self.curSecond--;
@@ -176,16 +182,34 @@
 			},
 			toggleLoginType: function(type) {
 				this.loginType = type;
-				if(type == 'phone') {
-					this.validateArray = ['phoneNum', 'password'];
-				} else if(type == 'email') {
+				if(type == '1') {
+					this.validateArray = ['phoneNum', 'code'];
+				} else if(type == '3') {
+
 					this.validateArray = ['email', 'password'];
-				} else if(type == 'mt') {
+				} else if(type == '2') {
 					this.validateArray = ['mtId', 'password'];
 				}
 
 			},
 			login: function() {
+
+        if(this.loginType == '1') {
+          this.login_type=this.loginType;
+          this.login_account=this.phoneNum;
+
+        } else if(this.loginType=='3') {
+          this.login_type='2';
+          this.login_account=this.email;
+
+        } else if(this.loginType == '2') {
+          this.login_type=this.loginType;
+          this.login_account=this.account;
+
+        }
+
+
+
 				let self = this;
 				this.$validate(this.validateArray)
 					.then(function(success) {
@@ -197,23 +221,25 @@
 							});
 
 							self.$http.post(self.$api.url.login, {
-								account: self.account,
-								password: self.password
+								account: self.login_account,
+								password: self.password,
+                type:self.login_type,
+                code:self.code
 							}).then(response => {
-								
+
 								if(response.data.code == 1) {
-                                   
+
 									self.$http.post(self.$api.url.gettoken, {
 										appID: self.$api.appConfig.appID,
 										appsecret: self.$api.appConfig.appsecret,
 										userid: response.data.data.id,
-										password: self.password
+										password: response.data.data.password
 									}).then(response => {
 										if(response.data.code == 1) {
-                                             self.loginMessage = '登陆成功';                                             
-                                             setCookie('token',response.data.data,'h1.5'); 
+                                             self.loginMessage = '登陆成功';
+                                             setCookie('token',response.data.data,'h1.5');
                                              self.$router.push('/maxpro');
-                                             
+
 										} else {
 											Toast.create.negative({
 												html: response.data.message
@@ -225,7 +251,7 @@
 										});
 									});
 
-									
+
 								} else {
 									Toast.create.negative({
 										html: response.data.message
@@ -280,7 +306,7 @@
 			right: 4.5rem;
 			font-size: 1.6rem;
 		}
-		
+
 		.login-toggle {
 			margin-top: 6rem;
 			text-align: center;

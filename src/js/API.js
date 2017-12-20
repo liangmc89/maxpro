@@ -3,6 +3,7 @@ class API {
 		login: '/openapi/index/checkLogin',						//登陆
 		register:'/openapi/index/register',						//注册
 		sendactivemsg: '/openapi/index/sendactivemsg', 			//短信发送验证码
+    sendloginmsg: '/openapi/index/sendloginmsg',         //登录验证码
 		gettoken: '/openapi/api/get_token',            			//token
 		index:'/openapi/index/index',				   			//首页
 		articlelList:'/openapi/index/artcitlList',      		//文章列表
@@ -17,8 +18,9 @@ class API {
         depositDoout:'/openapi/deposit/doout',					//出金申请
         depositIn:'/openapi/deposit/in',						//入金界面
         depositOut:'/openapi/deposit/out',						//出金界面
-        getinfee:'/openapi/deposit/getinfee'					//入金手续费
-		
+        getinfee:'/openapi/deposit/getinfee',					//入金手续费
+    getoutfee:'/openapi/deposit/getoutfee'            //出金手續費
+
 
 	}
 	appConfig={

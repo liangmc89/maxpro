@@ -96,6 +96,11 @@ export default new VueRouter({
 					path:'myProperty/depositOutList',
 			        component: load('depositOutList')
 				},
+        {
+          name:'doDepositOut',
+          path:'myProperty/doDepositOut',
+          component:load('doDepositOut')
+        },
 				{
 					path:'myProperty/addDepositOut',
 			        component: load('addDepositOut')

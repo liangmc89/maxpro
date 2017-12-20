@@ -5,20 +5,20 @@
 		height: 100%;
 		width: 100%;
 	}
-	
+
 	.linear-font {
 		color: #f4873c;
 		background-image: linear-gradient(to right, #f55970, #f4883b);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 	}
-	
+
 	.amount {
 		color: #F4873C;
 		font-family: "century gothic";
 		font-size: 1.6rem;
 	}
-	
+
 	.head-bg {
 		width: 100%;
 		height: 20rem;
@@ -28,32 +28,32 @@
 		left: 0;
 		right: 0;
 	}
-	
+
 	.h-bg {
 		width: 100%;
 		background: linear-gradient(to right, #f55970, #f4883b);
 	}
-	
+
 	.padding-content {
 		padding: 1.2rem;
 	}
-	
+
 	.padding-1rem {
 		padding: 1rem;
 	}
-	
+
 	.head {
 		padding-top: 4rem;
 		padding-bottom: 1rem;
 		height: 13rem;
 	}
-	
+
 	#q-app .my-button {
 		background: linear-gradient(to right, #f55970, #f4883b);
 		color: white;
 		letter-spacing: .4rem;
 	}
-	
+
 	.page-title {
 		text-align: center;
 		color: white;
@@ -62,21 +62,21 @@
 		padding: 1.8rem 0;
 		z-index: 2;
 	}
-	
+
 	.section {
 		background: white;
 		position: relative;
 		margin: 0 0 1rem 0;
 		border-radius: .3rem;
 	}
-	
+
 	.account-info {
 		background: white;
 		position: relative;
 		margin: 0 0 1rem 0;
 		border-radius: .3rem;
 	}
-	
+
 	.account-icon {
 		position: absolute;
 		top: -3.5rem;
@@ -86,7 +86,7 @@
 		height: 8rem;
 		width: 8rem;
 	}
-	
+
 	.account-title {
 		text-align: center;
 		padding-top: 2.5rem;
@@ -94,11 +94,11 @@
 		font-weight: bold;
 		font-size: 1.8rem;
 	}
-	
+
 	.account {
 		padding: 0 .5rem;
 	}
-	
+
 	.account-detail hr {
 		width: 1;
 		height: 2rem;
@@ -108,17 +108,17 @@
 		border: none;
 		border-left: 1px solid rgb(227, 227, 227);
 	}
-	
+
 	.account-detail:after {
 		clear: both;
 		display: block;
 		content: '';
 	}
-	
+
 	.account-detail {
 		width: 100%;
 	}
-	
+
 	.detail-item {
 		width: 49.5%;
 		text-align: center;
@@ -127,11 +127,11 @@
 		position: relative;
 		color: #F4873C;
 	}
-	
+
 	.account-detail h5 {
 		color: rgba(0, 0, 0, .6);
 	}
-	
+
 	#in-List {
 		list-style: none;
 		padding: 0;
@@ -139,11 +139,11 @@
 		padding: 1rem;
 		font-size: 1.4rem;
 	}
-	
+
 	#deposiInList .detail-item {
 		padding-bottom: 0;
 	}
-	
+
 	#in-List li {
 		margin-bottom: 1rem;
 		background: white;
@@ -151,46 +151,46 @@
 		line-height: 2rem;
 		position: relative;
 	}
-	
+
 	#in-List li:nth-child(even) .list-style {
 		background: url(../images/list-style-green.png) no-repeat left center/1.4rem;
 	}
-	
+
 	#in-List li:nth-child(odd) .list-style {
 		background: url(../images/list-style-orange.png) no-repeat left center/1.4rem;
 	}
-	
+
 	.order-num {
 		text-align: right;
 		position: relative;
-		padding: 0 1rem;
+		padding: 0 .5rem;
 	}
-	
+
 	.order-content {
 		text-align: left;
 		color: darkgray;
 		padding: 0 .3rem;
 	}
-	
+
 	.order-status {
 		text-align: right;
 		padding: 0 .3rem;
 	}
-	
+
 	.bg-white {
 		background: white;
 	}
-	
+
 	.my-bg {
 		z-index: 2;
 	}
-	
+
 	#deposiInList {
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 	}
-	
+
 	.total-info {
 		border-radius: 0;
 		margin-bottom: 0;
@@ -198,22 +198,22 @@
 		padding: 0 1.2rem;
 		box-shadow: 0px .4rem .2rem rgba(0, 0, 0, .2)
 	}
-	
+
 	.rmb {
 		color: gray;
 	}
-	
+
 	.usd {
 		font-size: 2rem;
 	}
-	
+
 	.fa-addDepositOut:before {
 		background: url(../images/addDepositOut.png) no-repeat center center/26px 26px;
 		content: '';
 		width: 26px;
 		height: 26px;
 	}
-	
+
 	.fa-addDepositIn:before {
 		background: url(../images/addDepositIn.png) no-repeat center center/26px 26px;
 		content: '';
@@ -239,5 +239,5 @@
 		content: '暂无数据！';
 		text-align: center;
 		color: grey;
-		
+
 	}
