@@ -130,11 +130,11 @@
 		min-height: 0;
 		padding: 0;
 	}
-	
+
 	#userinfo .q-carousel-toolbar {
 		color: #F4873C;
 	}
-	
+
 	#account-btn {
 		width: 18px;
 		height: 18px;
@@ -142,13 +142,13 @@
 		margin-bottom: .3rem;
 		font-size: 12px;
 	}
-	
+
 	#account-btn .q-icon {
 		width: 12px;
 		height: 12px;
 		font-size: 12px;
 	}
-	
+
 	#userinfo .account-detail {
 		padding-bottom: 2rem !important;
 	}

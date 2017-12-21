@@ -81,10 +81,10 @@
 
 	import { required, email } from 'vuelidate/lib/validators'
 	import {
-		
+
 		QField,
-		QInput,		
-		QSelect,		
+		QInput,
+		QSelect,
 		QBtn,
 		QIcon,
 		Toast,
@@ -101,12 +101,12 @@
 			Ripple
 		},
 		components: {
-			
+
 			QField,
-			QInput,			
-			QSelect,			
+			QInput,
+			QSelect,
 			QBtn,
-			QIcon,	
+			QIcon,
 			Toast,
 			PullTo,
 			QRadio,
@@ -205,6 +205,7 @@
 				this.banklist = [];
 				let self = this;
 				this.timeout = setTimeout(() => {
+				  debugger
 					self.$http.post(self.$api.url.depositIn, {}).then(response => {
 						if(response.data.code == 1) {
 							self.exchangerate = response.data.data.exchangerate;
@@ -251,13 +252,13 @@
 				exchangerate: 0, //当前汇率
 				banklist: [],
 				inmoney: 0, //入金金额
-				inmoneytype: '', //支付方式，				
+				inmoneytype: '', //支付方式，
 				pay: {},
 				infee: 100 //手续费
 
 			}
 		},
-		create: function() {
+		mounted: function() {
 			this.refresh();
 		}
 	}
@@ -268,7 +269,7 @@
 		text-align: right;
 		position: relative;
 	}
-	
+
 	.lb {
 		margin: auto;
 		position: absolute;
@@ -278,11 +279,11 @@
 		bottom: 0;
 		height: 50%;
 	}
-	
+
 	.radio {
 		padding: .4rem;
 	}
-	
+
 	.modal-content {
 		display: flex;
 		flex-direction: column;

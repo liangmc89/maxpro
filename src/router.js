@@ -45,6 +45,7 @@ export default new VueRouter({
 			component: load('articleDetail'),
 			name: 'articleDetail'
 		},
+
 		{
 			path: '/maxpro/myProperty/doWithDraw/actionResult',
 			component: load('actionResult'),
@@ -61,6 +62,10 @@ export default new VueRouter({
 					redirect: 'home'
 
 				},
+        {
+          path:'member',
+          component:load('member')
+        },
 				{
 					path: 'test',
 					component: load('test')

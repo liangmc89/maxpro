@@ -1,5 +1,5 @@
 <template>
-	<div class="artItem">
+	<div class="artItem relative-position" v-ripple>
 		<div class="first-img" v-if='firstImg!=""'>
 			<!--<img src="../statics/quasar-logo.png" />-->
 			<img :src="firstImg" />
@@ -15,22 +15,25 @@
 </template>
 
 <script>
-	import { date, QIcon } from 'quasar'
+	import { date, QIcon,Ripple } from 'quasar'
 	export default {
 		data() {
 			return {}
 		},
+    directives: {
+      Ripple
+    },
 		props: ['article'],
 		computed: {
 			firstImg: function() {
-				
+
                 var str = this.htmlDecode(this.article.content);
 				let imgReg = /<img.*?(?:>|\/&gt;)/gi;
 				//匹配src属性
 				let srcReg = /src=[\'\"]?([^\'\"]*)[\'\"]?/i;
 				let arr = str.match(imgReg);
-				
-				if(arr.length > 0 && arr[0].match(srcReg).length > 0) {
+
+				if(arr&&arr.length > 0 && arr[0].match(srcReg).length > 0) {
                     console.log(arr[0].match(srcReg)[1])
 					return arr[0].match(srcReg)[1];
 				} else {
@@ -68,7 +71,8 @@
 
 <style lang="less">
 	.artItem {
-		padding-bottom: 2rem;
+		margin-bottom: 1rem;
+    padding-bottom: 1rem;
 		border-bottom: 1px solid rgba(227, 227, 227, .5);
 		display: flex;
 		.first-img {
