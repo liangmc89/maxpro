@@ -30,14 +30,14 @@ axios.interceptors.request.use(
 				token: token
 			}
 		}
-		Loading.show({
-			spinner: QSpinnerGears,
-			message: '加载中...',
-			messageColor: 'white',
-			spinnerSize: 50, // in pixels
-			spinnerColor: 'white',
-			customClass: 'gray'
-		})
+		// Loading.show({
+		// 	spinner: QSpinnerGears,
+		// 	message: '加载中...',
+		// 	messageColor: 'white',
+		// 	spinnerSize: 50, // in pixels
+		// 	spinnerColor: 'white',
+		// 	customClass: 'gray'
+		// })
 		return config;
 	},
 	err => {
@@ -50,8 +50,8 @@ axios.interceptors.request.use(
 );
 //添加一个返回拦截器
 axios.interceptors.response.use(function(response) {
-	
-	Loading.hide()	
+
+	// Loading.hide()
 	if(response.data.code == 40000 || response.data.code == 40001) {
 
 		router.push({
@@ -65,7 +65,7 @@ axios.interceptors.response.use(function(response) {
 	return response;
 }, function(error) {
 	//对返回的错误进行一些处理
-	Loading.hide();
+	// Loading.hide();
 	return Promise.reject(error);
-	
+
 });

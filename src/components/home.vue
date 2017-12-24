@@ -148,29 +148,34 @@
 			},
 			fetchData: function() {
 				let self = this;
-				this.$http.post(this.$api.url.index, {
-					date: this.chartType
-				}).then(response => {
-					if(response.data.code == 1) {
-						this.notice = response.data.data.notice;
-						this.top = response.data.data.top;
+				self.$showloading();
+				setTimeout(()=>{
+          this.$http.post(this.$api.url.index, {
+            date: this.chartType
+          }).then(response => {
+            if(response.data.code == 1) {
+              this.notice = response.data.data.notice;
+              this.top = response.data.data.top;
 
-						if(response.data.data.line) {
-							response.data.data.line.forEach(function(item, index) {
-								self.bar.xAxis.data.push(item.newtime);
-								self.bar.series[0].data.push(parseFloat(item.PROFIT));
-							});
+              if(response.data.data.line) {
+                response.data.data.line.forEach(function(item, index) {
+                  self.bar.xAxis.data.push(item.newtime);
+                  self.bar.series[0].data.push(parseFloat(item.PROFIT));
+                });
 
-						}
+              }
 
-					}
+            }
 
-				}).catch(err => {
-					Toast.create.negative({
-						html: err.message
-					});
-				});
-				this.loading = false;
+          }).catch(err => {
+            Toast.create.negative({
+              html: err.message
+            });
+          });
+          this.loading = false;
+          this.$hideloading();
+        },1000);
+
 
 			}
 		},

@@ -275,21 +275,6 @@
 </script>
 
 <style>
-  .f-label {
-    text-align: right;
-    position: relative;
-  }
-
-  .lb {
-    margin: auto;
-    position: absolute;
-    top: 18%;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 50%;
-    font-size: 1.4rem;
-  }
 
   .radio {
     padding: .4rem;

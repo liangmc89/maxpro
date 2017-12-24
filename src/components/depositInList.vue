@@ -120,11 +120,11 @@
 			}
 
 		},
-		methods: {			
+		methods: {
 			loadmore(done) {
 				this.fetchData(done);
 				this.page++;
-                
+
 			},
 			refresh(done) {
 				this.page = 1;
@@ -134,6 +134,7 @@
 			},
 			fetchData(done) {
 				let self = this;
+				self.$showloading();
 				this.timeout = setTimeout(() => {
 					self.$http.post(self.$api.url.depositInList, {
 						page: self.page,
@@ -156,6 +157,7 @@
 					if(done) {
 						done();
 					}
+					self.$hideloading();
 
 				}, 1000)
 			}

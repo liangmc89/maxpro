@@ -1,4 +1,4 @@
-	html,
+html,
 	body {
 		font-size: 62.5%;
 		background: rgb(247, 247, 250);
@@ -48,7 +48,7 @@
 		height: 13rem;
 	}
 
-	#q-app .my-button {
+	#q-app .my-button,.modal .my-button {
 		background: linear-gradient(to right, #f55970, #f4883b);
 		color: white;
 		letter-spacing: .4rem;
@@ -241,4 +241,23 @@
 		color: grey;
 
 	}
+  .loading-bg{
+    font-size: 1.8rem;
+  }
+
+.f-label {
+  text-align: right;
+  position: relative;
+}
+
+.lb {
+  margin: auto;
+  position: absolute;
+  top: 18%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  font-size: 1.4rem;
+}
 

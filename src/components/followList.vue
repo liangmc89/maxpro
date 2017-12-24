@@ -71,7 +71,7 @@
 
 			refresh(done) {
 				let self = this;
-
+        self.$showloading();
 				this.timeout = setTimeout(() => {
 
 					self.$http.post(self.$api.url.followList, {
@@ -95,8 +95,8 @@
 					if(done) {
 						done();
 					}
-
-				}, 2000)
+           self.$hideloading();
+				}, 1000)
 			},
 			selection(number, rows) {
 				console.log(`selected ${number}: ${rows}`)
@@ -225,7 +225,7 @@
 		border-radius: 3px;
 		display: inline-block;
 	}
-	
+
 	.nodata {
 		background: white;
 		height: 200px;

@@ -24,40 +24,37 @@ import API from './js/API';
 const api = new API();
 Vue.prototype.$api = api;
 
+import {
+  Loading,
+  QSpinnerFacebook
+} from 'quasar'
+
+Vue.prototype.$showloading=(option)=>{
+  let obj={
+    spinner: (option&&option.spinner)|| QSpinnerFacebook,
+    message:(option&&option.message)|| 'loading…',
+    messageColor:(option&&option.messageColor)|| 'white',
+    spinnerSize:(option&&option.spinnerSize)|| 50, // in pixels
+    spinnerColor:(option&&option.spinnerColor)|| 'white',
+    customClass :(option&&option.customClass)|| 'loading-bg'
+  }
+  Loading.show(obj);
+}
+
+Vue.prototype.$hideloading=()=>{
+  Loading.hide();
+}
+
+
+
+
+
+
+
+
+
 Vue.config.productionTip = false
 Vue.use(Quasar) // Install Quasar Framework
-
-
-
-//Vue.filter('currency', function (x) {
-// let f_x = parseFloat(x);
-//  if (isNaN(f_x)) {
-//      
-//      return '$0';
-//  }
-//  let isMoreThanZero=f_x<0;
-//  if(isMoreThanZero){
-//  	
-//  	x*=-1;
-//  }
-//   f_x = Math.round(x * 100) / 100;
-//  let s_x = f_x.toString();
-//  let pos_decimal = s_x.indexOf('.');
-//  if (pos_decimal < 0) {
-//      pos_decimal = s_x.length;
-//      s_x += '.';
-//  }
-//  while (s_x.length <= pos_decimal + 2) {
-//      s_x += '0';
-//  }
-//  if(isMoreThanZero){
-//  	return '-$'+s_x;
-//  }else{
-//  	return '$'+s_x;
-//  }
-//  
-//})
-
 
 if (__THEME === 'mat') {
   require('quasar-extras/roboto-font')

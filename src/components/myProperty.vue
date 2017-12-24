@@ -112,14 +112,19 @@
 		methods: {
 			refresh: function(done) {
 				let self = this;
-				self.$http.post(self.$api.url.myProperty, {}).then(response => {
-					if(response.data.code == 1) {
-						self.top = response.data.data;
-					}
-				}).catch(err => {});
-				if(done) {
-					done();
-				}
+				self.$showloading();
+				setTimeout(()=>{
+          self.$http.post(self.$api.url.myProperty, {}).then(response => {
+          if(response.data.code == 1) {
+            self.top = response.data.data;
+          }
+        }).catch(err => {});
+        if(done) {
+          done();
+        }
+        self.$hideloading();
+        },1000)
+
 
 			}
 		},
@@ -142,5 +147,5 @@
 		font-size: 1.8rem;
 		border-bottom: 1px solid rgb(227, 227, 227);
 	}
-	
+
 </style>

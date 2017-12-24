@@ -1,7 +1,7 @@
 <template>
 	<div id="maxpro-wrapper">
 		<div id="maxpro-content">
-			<transition mode="out-in" duration='100' name="custom-classes-transition" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+			<transition mode="out-in" duration='200' name="custom-classes-transition" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
 
 				<keep-alive>
 					<router-view></router-view>

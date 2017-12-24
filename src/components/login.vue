@@ -85,7 +85,6 @@
 				curSecond: 0,
 				loginType: '1',
 				validateArray: ['phoneNum', 'password'],
-				loginMessage: '正在登陆...',
         login_type:"",
         login_account:''
 			}
@@ -208,63 +207,63 @@
 
         }
 
-
-
 				let self = this;
 				this.$validate(this.validateArray)
 					.then(function(success) {
 						if(success) {
-							Loading.show({
-								spinner: QSpinnerFacebook,
-								message: self.loginMessage,
-								dalay: 3000
-							});
-
-							self.$http.post(self.$api.url.login, {
-								account: self.login_account,
-								password: self.password,
-                type:self.login_type,
-                code:self.code
-							}).then(response => {
-
-								if(response.data.code == 1) {
-
-									self.$http.post(self.$api.url.gettoken, {
-										appID: self.$api.appConfig.appID,
-										appsecret: self.$api.appConfig.appsecret,
-										userid: response.data.data.id,
-										password: response.data.data.password
-									}).then(response => {
-										if(response.data.code == 1) {
-                                             self.loginMessage = '登陆成功';
-                                             setCookie('token',response.data.data,'h1.5');
-                                             self.$router.push('/maxpro');
-
-										} else {
-											Toast.create.negative({
-												html: response.data.message
-											});
-										}
-									}).catch(err => {
-										Toast.create.negative({
-											html: err.message
-										});
-									});
+              self.$showloading({message:'正在登陆…'})
+						  setTimeout(()=>{
 
 
-								} else {
-									Toast.create.negative({
-										html: response.data.message
-									});
-								}
+                self.$http.post(self.$api.url.login, {
+                  account: self.login_account,
+                  password: self.password,
+                  type:self.login_type,
+                  code:self.code
+                }).then(response => {
 
-								Loading.hide();
-							}).catch(err => {
-								Loading.hide()
-								Toast.create.negative({
-									html: err.message
-								});
-							});
+                  if(response.data.code == 1) {
+
+                    self.$http.post(self.$api.url.gettoken, {
+                      appID: self.$api.appConfig.appID,
+                      appsecret: self.$api.appConfig.appsecret,
+                      userid: response.data.data.id,
+                      password: response.data.data.password
+                    }).then(response => {
+                      if(response.data.code == 1) {
+                         self.$hideloading();
+                        setCookie('token',response.data.data,'h1.5');
+                        self.$router.push('/maxpro');
+
+                      } else {
+                         self.$hideloading();
+                        Toast.create.negative({
+                          html: response.data.message
+                        });
+                      }
+                    }).catch(err => {
+                      self.$hideloading();
+                      Toast.create.negative({
+                        html: err.message
+                      });
+                    });
+
+
+                  } else {
+                     self.$hideloading();
+                    Toast.create.negative({
+                      html: response.data.message
+                    });
+                  }
+
+                }).catch(err => {
+                   self.$hideloading();
+                  Toast.create.negative({
+                    html: err.message
+                  });
+                });
+              },1000)
+
 
 						}
 					});

@@ -66,6 +66,22 @@ export default new VueRouter({
           path:'member',
           component:load('member')
         },
+        {
+          path:'member/bankList',
+          component:load('bankList')
+        },
+        {
+          path:'/maxpro/member/addBankCard',
+          component:load('addBankCard')
+        },
+        {
+          path:'/maxpro/member/promoCode',
+          component:load('promoCode')
+        },
+        {
+          path:'/maxpro/member/settings',
+          component:load('settings')
+        },
 				{
 					path: 'test',
 					component: load('test')

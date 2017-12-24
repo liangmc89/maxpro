@@ -175,27 +175,32 @@
 				this.$validate()
 					.then(function(success) {
 						if(success) {
-							self.$http.post(self.$api.url.depositDoin, {
-								inlogin: self.inlogin,
-								inmoney: self.inmoney,
-								inmoneytype: self.pay.inmoneytype,
-								inmoneyrmb: self.inmoneyrmb,
-								pay_id: self.pay.id,
-								bankid: self.pay.bankno
-							}).then(response => {
-								if(response.code == 1) {
-									console.log(response);
-								} else {
-									Toast.create({
-										html: response.data.message,
+						  self.$showloading({message:'正在提交…'});
+						  setTimeout(()=>{
+                self.$http.post(self.$api.url.depositDoin, {
+                  inlogin: self.inlogin,
+                  inmoney: self.inmoney,
+                  inmoneytype: self.pay.inmoneytype,
+                  inmoneyrmb: self.inmoneyrmb,
+                  pay_id: self.pay.id,
+                  bankid: self.pay.bankno
+                }).then(response => {
+                  if(response.code == 1) {
+                    console.log(response);
+                  } else {
+                    Toast.create({
+                      html: response.data.message,
 
-									});
-								}
-							}).catch(err => {
-								Toast.create.negative({
-									html: err.message
-								});
-							});
+                    });
+                  }
+                }).catch(err => {
+                  Toast.create.negative({
+                    html: err.message
+                  });
+                });
+                self.$hideloading();
+              },1000);
+
 						}
 					});
 			},
@@ -204,8 +209,8 @@
 				this.exchangerate = '';
 				this.banklist = [];
 				let self = this;
+				self.$showloading();
 				this.timeout = setTimeout(() => {
-				  debugger
 					self.$http.post(self.$api.url.depositIn, {}).then(response => {
 						if(response.data.code == 1) {
 							self.exchangerate = response.data.data.exchangerate;
@@ -238,8 +243,8 @@
 					if(done) {
 						done();
 					}
-
-				}, 2000)
+          self.$hideloading();
+				}, 1000)
 			}
 
 		},
