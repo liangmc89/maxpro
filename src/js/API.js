@@ -12,6 +12,8 @@ class API {
     myAllCard:'/openapi/member/myAllCard',                    //获取用户所有银行卡
     addBankCard:'/openapi/member/addBankCard',                //用户新增银行卡
     promoCode:'/openapi/member/promoCode',                    //获取用户推广码
+    personalData:'/openapi/member/personalData',              //获取个人资料
+    editPersonalData:'/openapi/member/editPersonalData',      //修改个人资料
 
     //-----------------登录、注册-------------------------
 		login: '/openapi/index/checkLogin',						            //登陆
