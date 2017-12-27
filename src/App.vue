@@ -1,7 +1,7 @@
 <template>
   <!-- Don't drop "q-app" class -->
   <div id="q-app">
-    <router-view />    
+    <router-view />
   </div>
 </template>
 
@@ -11,14 +11,15 @@
  */
 
 export default {
-	
+
 }
 </script>
 
 <style>
 	#q-app{
 		height: 100%;
-		
-		
+    background: rgb(247,247,247);
+
+
 	}
 </style>

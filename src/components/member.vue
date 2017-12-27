@@ -30,7 +30,7 @@
             </q-item-side>
           </q-item>
 
-          <q-item v-ripple class="settings-item">
+          <q-item v-ripple class="settings-item" to="/maxpro/member/mtList">
             <q-item-side>
               <q-item-tile icon="account circle" color="blue">
               </q-item-tile>
@@ -42,7 +42,7 @@
           <div style="margin: 1rem 0" class="bg-white">
             <div class="account-detail">
               <div class="detail-item" v-ripple>
-                <h5>余额</h5>
+                <h5>MT</h5>
                 <p class="amount">{{top.balance|currencyFilter}}</p>
               </div>
               <hr/>
@@ -58,18 +58,18 @@
               </div>
               <hr/>
               <div class="detail-item" v-ripple>
-                <h5>净值</h5>
+                <h5>交易</h5>
                 <p class="amount">{{top.equity|currencyFilter}}</p>
               </div>
             </div>
             <div class="account-detail">
               <div class="detail-item" v-ripple>
-                <h5>余额</h5>
+                <h5>返佣</h5>
                 <p class="amount">{{top.balance|currencyFilter}}</p>
               </div>
               <hr/>
               <div class="detail-item" v-ripple>
-                <h5>净值</h5>
+                <h5>跟单</h5>
                 <p class="amount">{{top.equity|currencyFilter}}</p>
               </div>
             </div>

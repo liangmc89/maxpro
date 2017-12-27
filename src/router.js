@@ -45,7 +45,10 @@ export default new VueRouter({
 			component: load('articleDetail'),
 			name: 'articleDetail'
 		},
-
+    {
+      path:'/maxpro/member/mtList',
+      component:load('mtList')
+    },
 		{
 			path: '/maxpro/myProperty/doWithDraw/actionResult',
 			component: load('actionResult'),

@@ -138,7 +138,7 @@
           </div>
           <div class="settings-body">
             <pull-to>
-              <div class="padding-content">
+              <div class="padding-content bg-white">
                 <div class="pwd-title">旧密码</div>
                 <div class="user-field">
                   <q-field :error="validation.hasError('pwd.password')"
@@ -146,6 +146,8 @@
                     <q-input float-label="原密码" v-model="pwd.password" clearable type="password"></q-input>
                   </q-field>
                 </div>
+              </div>
+              <div class="padding-content bg-white" style="margin-top: 1rem">
                 <div class="pwd-title">旧密码</div>
                 <div class="user-field">
                   <q-field :error="validation.hasError('pwd.new_password')"
@@ -157,10 +159,11 @@
                     <q-input float-label="确认密码" v-model="pwd.re_password" clearable type="password"></q-input>
                   </q-field>
                 </div>
+              </div>
                 <div class="padding-content">
                   <q-btn class="my-button full-width" big @click="passwordAgain">保存</q-btn>
                 </div>
-              </div>
+
             </pull-to>
           </div>
         </div>
@@ -172,7 +175,7 @@
           </div>
           <div class="settings-body">
             <pull-to>
-              <div class="padding-content">
+              <div class="padding-content bg-white">
                 <div class="pwd-title">MT账号</div>
                 <div class="user-field">
                   <q-field :error="validation.hasError('mt')" :error-label="validation.firstError('mt')">
@@ -188,10 +191,11 @@
                     <q-radio v-model="mt.ENABLE" val="1" label="只读"/>
                   </q-field>
                 </div>
+              </div>
                 <div class="padding-content">
                   <q-btn class="my-button full-width" big @click="resetAccoutPwd">保存</q-btn>
                 </div>
-              </div>
+
             </pull-to>
           </div>
         </div>
@@ -322,8 +326,8 @@
 
         let self = this;
         Dialog.create({
-          title: 'Confirm',
-          message: 'Modern HTML5 Single Page Application front-end framework on steroids.',
+          title: '退出系统',
+          message: '确定退出系统？',
           buttons: [
             {
               label: '取消',
@@ -341,11 +345,13 @@
                     if (response && response.data.code == 1) {
                       setCookie('token', '', '-1d');
                       self.$hideloading();
-                      self.$route.push('/');
+                      self.$router.push('/');
                     } else {
+                      self.$hideloading();
                       Toast.create.negative({html: response.data.message});
                     }
                   }).catch(err => {
+                    self.$hideloading();
                     Toast.create.negative({html: err.message});
                   });
                 }, 1000);
@@ -501,8 +507,10 @@
           self.$http.post(self.$api.url.personalData, {}).then(response => {
               if (response && response.data.code == 1) {
                 self.personData = response.data.data;
-              } else {
-                Toast.create.negative({html: response.data.message})
+              } else if(!response) {
+                Toast.create.negative({html:'未登录，请登录！'})
+              }else{
+                Toast.create.negative({html: response.message})
               }
               self.$hideloading();
             }

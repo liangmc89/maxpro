@@ -4,48 +4,21 @@
 			<div class="h-bg my-bg">
 				<h5 class="page-title">入金申请</h5>
 			</div>
-			<div class="padding-content">
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">入金账号：</span></div>
-					<div class="col-7">
+			<div style="padding: 1.5rem">
+
 						<q-field :error="validation.hasError('inlogin')" :error-label="validation.firstError('inlogin')">
-							<q-select v-model="inlogin" :options="mtlist" />
+							<q-select float-label="入金账号" v-model="inlogin" :options="mtlist" />
 						</q-field>
-					</div>
-				</div>
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">入金金额（美元）：</span></div>
-					<div class="col-7">
 						<q-field :error="validation.hasError('inmoney')" :error-label="validation.firstError('inmoney')">
-							<q-input v-model.lazy.trim="inmoney" clearable type="number" prefix="$" @change='changeInmoney' />
+							<q-input float-label="入金金额（美元）" v-model.lazy.trim="inmoney" clearable type="number" prefix="$" @change='changeInmoney' />
 						</q-field>
-					</div>
-				</div>
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">当前汇率：</span></div>
-					<div class="col-7">
-						<q-input :value="exchangerate" type="text" disable readonly/>
-					</div>
-				</div>
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">需支付（人民币）：</span></div>
-					<div class="col-7">
-						<q-input v-model="inmoneyrmb" prefix="¥" type="number" disable readonly />
-					</div>
-				</div>
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">手续费（$）：</span></div>
-					<div class="col-7">
-						<q-input v-model="infee" prefix="$" type="number" disable readonly /></div>
-				</div>
-				<div class="row no-wrap">
-					<div class="col-5 f-label"><span class="lb">支付方式：</span></div>
-					<div class="col-7">
+						<q-input float-label="当前汇率：" :value="exchangerate" type="text" disable readonly/>
+						<q-input float-label="需支付（人民币）" v-model="inmoneyrmb" prefix="¥" type="number" disable readonly />
+						<q-input float-label="手续费（$）" v-model="infee" prefix="$" type="number" disable readonly />
 						<q-field :error="validation.hasError('pay')" :error-label="validation.firstError('pay')">
-							<q-input v-model="pay.bname" type="text" @click='isOpen=true' />
+							<q-input float-label="支付方式" v-model="pay.bname" type="text" @click='isOpen=true' />
 						</q-field>
-					</div>
-				</div>
+
 
 				<div class="row no-warp" style="padding: 2rem 0;">
 					<q-btn rounded :big="true" class="full-width my-button" @click='doAddDepositIn'>申 请</q-btn>
@@ -62,8 +35,9 @@
 					</div>
 
 				</q-modal>
+      </div>
 			</div>
-		</div>
+
 	</pull-to>
 </template>
 

@@ -75,11 +75,11 @@
 		data() {
 			return {
 				phoneNum: '',
-				mtId: '887735',
+				mtId: '887710',
 				email: '',
         code:'',
-				account: '887735',
-				password: 'Ss123456',
+				account: '887710',
+				password: 'abcd1234',
 				isLogining: false,
 				isEnableSend: false,
 				curSecond: 0,

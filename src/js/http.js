@@ -60,7 +60,7 @@ axios.interceptors.response.use(function(response) {
 				redirect: sessionStorage.redirectUrl
 			}
 		});
-		return false;
+		return false ;
 	}
 	return response;
 }, function(error) {

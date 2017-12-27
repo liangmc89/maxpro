@@ -4,98 +4,47 @@
       <div class="h-bg">
         <h5 class="page-title">出金申请</h5>
       </div>
-      <div class="padding-content">
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">出金金额（美元）：</span></div>
-          <div class="col-7">
+      <div  style="padding: 1.5rem">
+
             <q-field :error="validation.hasError('number')" :error-label="validation.firstError('number')">
-              <q-input v-model.lazy.trim="number" clearable type="number" prefix="$" @change='changenumber' />
+              <q-input float-label="出金金额（美元）" v-model.lazy.trim="number" clearable type="number" prefix="$" @change='changenumber' />
             </q-field>
-          </div>
-        </div>
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">手续费（$）：</span></div>
-          <div class="col-7">
-            <q-input v-model="outfee" prefix="$" type="number" disable readonly />
-          </div>
-        </div>
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">出金方式：</span></div>
-          <div class="col-7">
-            <q-field :error="validation.hasError('radioInline')" :error-label="validation.firstError('radioInline')">
-              <q-radio v-model="radioInline" v-for='(item,index) in radioInlineList' :key="index"  :val="item.value" :label="item.label" />
+
+            <q-input float-label="手续费（$）" v-model="outfee" prefix="$" type="number" disable readonly />
+
+            <q-field label="出金方式" :error="validation.hasError('radioInline')" :error-label="validation.firstError('radioInline')">
+              <q-radio  v-model="radioInline" v-for='(item,index) in radioInlineList' :key="index"  :val="item.value" :label="item.label" />
             </q-field>
-          </div>
-        </div>
+
          <div v-show="radioInline==1">
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">开户行：</span></div>
-          <div class="col-7">
             <q-field >
-              <q-input v-model="bankname1"  type="text"  disable readonly/>
+              <q-input float-label="开户行" v-model="bankname1"  type="text"  disable readonly/>
             </q-field>
-          </div>
-        </div>
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">收款人姓名：</span></div>
-          <div class="col-7">
             <q-field >
-              <q-input v-model="forwordname1"  type="text"  disable readonly />
+              <q-input float-label="收款人姓名" v-model="forwordname1"  type="text"  disable readonly />
             </q-field>
-          </div>
-        </div>
-        <div class="row no-wrap">
-          <div class="col-5 f-label"><span class="lb">银行账号：</span></div>
-          <div class="col-7">
             <q-field :error="validation.hasError('bankaccount1')" :error-label="validation.firstError('bankaccount1')">
-              <q-input v-model="bankaccount1"  type="number"  disable readonly/>
+              <q-input float-label="银行账号" v-model="bankaccount1"  type="number"  disable readonly/>
             </q-field>
-          </div>
-        </div>
          </div>
         <div v-show="radioInline==2">
-          <div class="row no-wrap">
-            <div class="col-5 f-label"><span class="lb">开户行：</span></div>
-            <div class="col-7">
               <q-field >
-                <q-input v-model="bankname2"  type="text"  disable readonly/>
+                <q-input float-label="开户行" v-model="bankname2"  type="text"  disable readonly/>
               </q-field>
-            </div>
-          </div>
-          <div class="row no-wrap">
-            <div class="col-5 f-label"><span class="lb">收款人姓名：</span></div>
-            <div class="col-7">
               <q-field >
-                <q-input v-model="forwordname2"  type="text"  disable readonly />
+                <q-input float-label="收款人姓名" v-model="forwordname2"  type="text"  disable readonly />
               </q-field>
-            </div>
-          </div>
-          <div class="row no-wrap">
-            <div class="col-5 f-label"><span class="lb">银行账号：</span></div>
-            <div class="col-7">
               <q-field >
-                <q-input v-model="bankaccount2"  type="number"  disable readonly/>
+                <q-input float-label="银行账号" v-model="bankaccount2"  type="number"  disable readonly/>
               </q-field>
-            </div>
-          </div>
         </div>
         <div v-show="radioInline==3">
-          <div class="row no-wrap">
-            <div class="col-5 f-label"><span class="lb">转入MT账户：</span></div>
-            <div class="col-7">
               <q-field >
-                <q-input v-model="mtlogin"  type="text"  disable readonly/>
+                <q-input float-label="转入MT账户" v-model="mtlogin"  type="text"  disable readonly/>
               </q-field>
-            </div>
-          </div>
-          <div class="row no-wrap">
-            <div class="col-5 f-label"><span class="lb">确认转入MT账户	：</span></div>
-            <div class="col-7">
               <q-field >
-                <q-input v-model="mtlogin2"  type="text"  disable readonly />
+                <q-input float-label="确认转入MT账户" v-model="mtlogin2"  type="text"  disable readonly />
               </q-field>
-            </div>
-          </div>
         </div>
         <div class="row no-warp" style="padding: 2rem 0;">
           <q-btn rounded :big="true" class="full-width my-button" @click='doAddDepositOut'>申 请</q-btn>
@@ -158,15 +107,6 @@
       number:function (value) {
         return Validator.value(value).required().greaterThan(0);
       }
-
-
-      // pay: function(value) {
-      //   return Validator.custom(function() {
-      //     if(value.inmoneytype == null || value.inmoneytype == 'undefined' || Validator.isEmpty(value.inmoneytype)) {
-      //       return '未选择支付方式！'
-      //     }
-      //   });
-      // }
 
     },
     computed: {
