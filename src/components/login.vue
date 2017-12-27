@@ -9,7 +9,7 @@
 					<q-input type="number" placeholder="手机号码" v-model="phoneNum" :clearable="true" key='phoneInput' :error="validation.hasError('phoneNum')" />
 				</q-field>
 				<q-field class="pass my-field" :error-label="validation.firstError('code')">
-					<q-input type="text" placeholder="请输入短信验证码" v-model="code" :clearable="true" key='phonepwdInput' :error="validation.hasError('code')" />
+					<q-input type="text" placeholder="短信验证码" v-model="code" :clearable="true" key='phonepwdInput' :error="validation.hasError('code')" />
 					<q-btn class='sendHelp' color="primary" :flat='true' :disable="isEnableSend" @click="getValidateNum">{{validateHelpText}}</q-btn>
 				</q-field>
 
@@ -307,7 +307,6 @@
 		}
 
 		.login-toggle {
-			margin-top: 6rem;
 			text-align: center;
 			.or {}
 			.toggle-btn {

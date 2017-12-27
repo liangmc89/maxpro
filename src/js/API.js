@@ -4,6 +4,7 @@ class API {
 	  //-----------------公共接口---------------------
     baseURI:'http://ib.fxclouds.com',                         //baseUrl
     upload:'/openapi/index/upload',                           //上传图片
+    logout:'/openapi/index/logout',                           //退出系统
 
 	  //-----------------个人中心---------------------
     getServerId:'/openapi/index/getServerId',                 //获取平台ID列表
@@ -14,6 +15,9 @@ class API {
     promoCode:'/openapi/member/promoCode',                    //获取用户推广码
     personalData:'/openapi/member/personalData',              //获取个人资料
     editPersonalData:'/openapi/member/editPersonalData',      //修改个人资料
+    passwordAgain:'/openapi/member/passwordAgain',            //修改登录密码
+    resetAccoutPwd:'/openapi/member/resetAccoutPwd',          //修改MT密码
+    mtDetail:'/openapi/member/mtDetail',                      //获取全部mt账号详情
 
     //-----------------登录、注册-------------------------
 		login: '/openapi/index/checkLogin',						            //登陆

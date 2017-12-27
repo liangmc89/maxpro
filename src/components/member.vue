@@ -97,7 +97,7 @@
           </q-item>
 
 
-          <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode">
+          <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode" exact>
             <q-item-side icon="layers" color="primary"/>
             <q-item-main>
               <q-item-tile label>推广</q-item-tile>
@@ -111,8 +111,6 @@
             <q-item-side icon="settings" color="blue"/>
 
             <q-item-main label="设置">
-              <!--<q-item-tile label>设置</q-item-tile>-->
-              <!--<q-item-tile sublabel>&nbsp;</q-item-tile>-->
             </q-item-main>
             <q-item-side right icon="keyboard arrow right">
 
