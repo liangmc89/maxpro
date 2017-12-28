@@ -38,7 +38,8 @@ export default new VueRouter({
 		},
 		{
 			path: '/login',
-			component: load('login')
+			component: load('login'),
+      name:'login'
 		},
 		{
 			path: '/maxpro/articleDetail',

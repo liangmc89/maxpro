@@ -1,5 +1,5 @@
 <template>
-	<div id="login">
+	<div id="login" class="bg-white">
 		<div class="logo">
 			<img src="../statics/images/logo.png" />
 		</div>
@@ -87,6 +87,7 @@
 				validateArray: ['phoneNum', 'password'],
         login_type:"",
         login_account:''
+
 			}
 		},
 		validators: {
@@ -184,7 +185,6 @@
 				if(type == '1') {
 					this.validateArray = ['phoneNum', 'code'];
 				} else if(type == '3') {
-
 					this.validateArray = ['email', 'password'];
 				} else if(type == '2') {
 					this.validateArray = ['mtId', 'password'];
@@ -213,8 +213,6 @@
 						if(success) {
               self.$showloading({message:'正在登陆…'})
 						  setTimeout(()=>{
-
-
                 self.$http.post(self.$api.url.login, {
                   account: self.login_account,
                   password: self.password,
@@ -270,8 +268,20 @@
 			}
 
 		},
-		mounted() {
+		created() {
+       if(this.$route.params.loginParams&&JSON.stringify(this.$route.params.loginParams)!='{}'){
+         let loginParams=this.$route.params.loginParams;
+         this.phone=loginParams.phone;
+         this.email=loginParams.email;
+         if(loginParams.loginType==0){
+           this.loginType='1';
+           this.validateArray = ['phoneNum', 'code'];
+         }else{
+           this.loginType='3';
+           this.validateArray = ['email', 'password'];
+         }
 
+       }
 		}
 
 	}
@@ -302,7 +312,7 @@
 		.sendHelp {
 			position: absolute;
 			top: -.5rem;
-			right: 4.5rem;
+			right: 1.5rem;
 			font-size: 1.6rem;
 		}
 

@@ -1,5 +1,5 @@
 <template>
-	<div id="register">
+	<div id="register" class="bg-white">
 		<div class="logo">
 			<img src="../statics/images/logo.png" />
 		</div>
@@ -59,7 +59,7 @@
 					</q-field>
 				</q-tab-pane>
 			</q-tabs>
-			<q-btn rounded :big="true" class="full-width my-button" :disable="isLogining" @click='regist'>注 册</q-btn>
+			<q-btn rounded style="margin-top: 1rem" class="full-width my-button" :disable="isLogining" @click='regist'>注 册</q-btn>
 
 		</div>
 
@@ -116,7 +116,15 @@
 				return Validator.value(value).required();
 			},
 			password: function(value) {
-				return Validator.value(value).required();
+				return Validator.custom(function () {
+          if(!Validator.isEmpty(value)){
+            if(!(/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,16}$/.test(value))){
+              return '密码必须是6-16位大小写字母和数字组合！'
+            }
+          }else{
+            return '密码不能为空！'
+          }
+        })
 			},
 			'repassword, password': function(repassword, password) {
 				if(this.submitted || this.validation.isTouched('repassword')) {
@@ -167,7 +175,7 @@
 			QSelect,
 			QList,
 			QItem
-			
+
 		},
 
 		methods: {
@@ -180,7 +188,6 @@
 				this.$validate('phone')
 					.then(function(success) {
 						if(success) {
-
 							self.$http.post(self.$api.url.sendactivemsg, {
 								phone: self.phone,
 								mtserver: self.$api.appConfig.mtserver,
@@ -218,71 +225,52 @@
 			regist: function() {
 				this.submitted = true;
 				let self = this;
-				console.log(this.validateArray[this.registerType])
-				this.$validate(this.validateArray[this.registerType])
+				this.$validate(this.validateArray[self.registerType])
 					.then(function(success) {
 						if(success) {
 
 							let params = {};
+
 							if(self.registerType == 0) {
-								debugger
-								params = {
+                  params.mtserver= self.$api.appConfig.mtserver;
+                  params.type= self.registerType + 1;
+                  params.phone= self.phone;
+                  params.phone_code= self.phone_code;
+                  params.register_invent_codes= self.register_invent_codes;
 
-									mtserver: self.$api.appConfig.mtserver,
-									type: self.registerType + 1,
-									phone: self.phone,
-									phone_code: self.phone_code,
-									register_invent_codes: self.register_invent_codes
-								}
 							} else {
-								params = {
-									mtserver: self.$api.config.mtserver,
-									type: self.registerType + 1,
-									email: self.email,
-									password: self.password,
-									repassword: self.repassword,
-									register_invent_codes: self.register_invent_codes
-								}
+                params.mtserver=self.$api.appConfig.mtserver;
+                params.type=self.registerType + 1;
+                params.email=self.email;
+                params.password=self.password;
+                params.repassword=self.repassword;
+                params.register_invent_codes=self.register_invent_codes
+
 							}
-
+              debugger
 							self.$http.post(self.$api.url.register, params).then(response => {
-
 								if(response.data.code == 1) {
+                  Dialog.create({
+                    title: '注册',
+                    message: response.data.message,
+                    buttons: [
+                      {
+                        label: '稍后登录',
+                        color:'primary',
+                        handler() {
 
-									self.$http.post(self.$api.url.gettoken, {
-										appID: self.$api.appConfig.appID,
-										appsecret: self.$api.appConfig.appsecret,
-										userid: response.data.data.id,
-										password: self.password
-									}).then(response => {
-										if(response.data.code == 1) {
-
-											Dialog.create({
-												title: '注册',
-												message: '恭喜你注册成功！',
-												buttons: [
-													{
-														label: '立即登陆',
-														color:'primary',
-														handler() {
-															self.$router.push('/login');
-														}
-													}
-												]
-											})
-
-											
-
-										} else {
-											Toast.create.negative({
-												html: response.data.message
-											});
-										}
-									}).catch(err => {
-										Toast.create.negative({
-											html: err.message
-										});
-									});
+                        }
+                      },
+                      {
+                        label: '立即登录',
+                        color:'primary',
+                        outline:true,
+                        handler() {
+                          self.$router.push({name:'login',params:{loginParams:{loginType:self.registerType,email:self.email,phone:self.phone}}});
+                        }
+                      }
+                    ]
+                  })
 
 								} else {
 									Toast.create.negative({
