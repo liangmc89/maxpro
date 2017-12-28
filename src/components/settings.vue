@@ -38,7 +38,7 @@
           </q-item>
         </q-list>
         <div class="padding-content">
-          <q-btn class="my-button full-width" big @click="logout">退出系统</q-btn>
+          <q-btn class="my-button full-width"  @click="logout">退出系统</q-btn>
         </div>
       </pull-to>
       <q-modal ref="personDataModal" maximized @open="refresh">
@@ -125,7 +125,7 @@
                 </q-list>
               </div>
               <div class="padding-content">
-                <q-btn class="my-button full-width" big @click="savePersonData">保存</q-btn>
+                <q-btn class="my-button full-width"  @click="savePersonData">保存</q-btn>
               </div>
             </pull-to>
           </div>
@@ -161,7 +161,7 @@
                 </div>
               </div>
                 <div class="padding-content">
-                  <q-btn class="my-button full-width" big @click="passwordAgain">保存</q-btn>
+                  <q-btn class="my-button full-width"  @click="passwordAgain">保存</q-btn>
                 </div>
 
             </pull-to>
@@ -193,7 +193,7 @@
                 </div>
               </div>
                 <div class="padding-content">
-                  <q-btn class="my-button full-width" big @click="resetAccoutPwd">保存</q-btn>
+                  <q-btn class="my-button full-width"  @click="resetAccoutPwd">保存</q-btn>
                 </div>
 
             </pull-to>
@@ -314,10 +314,10 @@
     },
     computed: {
       provinceAndCity: function () {
-        return "<div class='row no-wrap'><div class='col-6 text-left'>省市</div><div class='col-6 text-right'>" + this.personData.province + "-" + this.personData.city + "</div></div>";
+        return "<div class='row no-wrap'><div class='col-3 text-left'>省市</div><div class='col-9 text-right'>" + this.personData.province + " " + this.personData.city + "</div></div>";
       },
       nation: function () {
-        return "<div class='row no-wrap'><div class='col-6 text-left'>国籍</div><div class='col-6 text-right'>" + this.personData.nationality + "</div></div>";
+        return "<div class='row no-wrap'><div class='col-3 text-left'>国籍</div><div class='col-9 text-right'>" + this.personData.nationality + "</div></div>";
       }
 
     },

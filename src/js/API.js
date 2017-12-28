@@ -18,6 +18,8 @@ class API {
     passwordAgain:'/openapi/member/passwordAgain',            //修改登录密码
     resetAccoutPwd:'/openapi/member/resetAccoutPwd',          //修改MT密码
     mtDetail:'/openapi/member/mtDetail',                      //获取全部mt账号详情
+    memberIndex:'/openapi/member/index',                      //用户个人中心
+    saveapply:'/openapi/index/saveapply',                     //申请开户
 
     //-----------------登录、注册-------------------------
 		login: '/openapi/index/checkLogin',						            //登陆

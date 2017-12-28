@@ -11,23 +11,9 @@
           <q-item v-ripple class="settings-item">
             <q-item-side icon="cloud circle" color="primary">
             </q-item-side>
-            <q-item-main label="服务器" sublabel="">
+            <q-item-main label="服务器" :sublabel="memberIndex.server_name">
             </q-item-main>
-            <q-item-side right icon="keyboard arrow down" color="primary">
-              <q-popover ref="popover">
-                <q-list link highlight >
 
-                  <q-item tag="label" @click="changeServer()" v-for="(item,index) in serverList" :key="index">
-                    <q-item-side>
-                      <q-radio v-model="currentServer" :val="item"/>
-                    </q-item-side>
-                    <q-item-main>
-                      <q-item-tile label>{{item.mt4_name}}</q-item-tile>
-                    </q-item-main>
-                  </q-item>
-                </q-list>
-              </q-popover>
-            </q-item-side>
           </q-item>
 
           <q-item v-ripple class="settings-item" to="/maxpro/member/mtList">
@@ -35,7 +21,7 @@
               <q-item-tile icon="account circle" color="blue">
               </q-item-tile>
             </q-item-side>
-            <q-item-main label="John Doe" sublabel="123124333@qq.com"/>
+            <q-item-main :label="memberIndex.phone" :sublabel="memberIndex.email"/>
             <q-item-side right icon="keyboard arrow right"/>
           </q-item>
 
@@ -43,34 +29,34 @@
             <div class="account-detail">
               <div class="detail-item" v-ripple>
                 <h5>MT</h5>
-                <p class="amount">{{top.balance|currencyFilter}}</p>
+                <p class="amount">{{memberIndex.mtcount}}个</p>
               </div>
               <hr/>
               <div class="detail-item" v-ripple>
                 <h5>净值</h5>
-                <p class="amount">{{top.equity|currencyFilter}}</p>
+                <p class="amount">{{myProperty.equity|currencyFilter}}</p>
               </div>
             </div>
             <div class="account-detail">
               <div class="detail-item" v-ripple>
                 <h5>余额</h5>
-                <p class="amount">{{top.balance|currencyFilter}}</p>
+                <p class="amount">{{myProperty.balance|currencyFilter}}</p>
               </div>
               <hr/>
               <div class="detail-item" v-ripple>
-                <h5>交易</h5>
-                <p class="amount">{{top.equity|currencyFilter}}</p>
+                <h5>赠金</h5>
+                <p class="amount">{{myProperty.credit|currencyFilter}}</p>
               </div>
             </div>
             <div class="account-detail">
               <div class="detail-item" v-ripple>
                 <h5>返佣</h5>
-                <p class="amount">{{top.balance|currencyFilter}}</p>
+                <p class="amount">{{myProperty.AMOUNT|currencyFilter}}</p>
               </div>
               <hr/>
               <div class="detail-item" v-ripple>
                 <h5>跟单</h5>
-                <p class="amount">{{top.equity|currencyFilter}}</p>
+                <p class="amount">{{myProperty.follow|currencyFilter}}</p>
               </div>
             </div>
           </div>
@@ -91,7 +77,7 @@
             </q-item-side>
             <q-item-main>
               <q-item-tile label>银行卡</q-item-tile>
-              <q-item-tile sublabel>{{myAllCard.length}}张</q-item-tile>
+              <q-item-tile sublabel>{{memberIndex.cardcount}}张</q-item-tile>
             </q-item-main>
             <q-item-side right icon="keyboard arrow right"/>
           </q-item>
@@ -145,12 +131,8 @@
   export default {
     data() {
       return {
-        currentServer:{},
-        top: {},
-        serverList:[],
-        MtList:[],
-        myAllCard:[],
-        loginid:''
+        myProperty: {},
+        memberIndex:{}
       }
     },
     directives: {
@@ -171,18 +153,13 @@
     },
     methods: {
 
-      getServerList:function () {
-       return this.$http.post(this.$api.url.getServerId,{});// 服务器列表
+      getMemberIndex:function () {
+       return this.$http.post(this.$api.url.memberIndex,{});// 用户个人中心
       },
-      getMtList:function () {
-       return this.$http.post(this.$api.url.getMtList,{type:''});//	如果获取的是个人的MT账号则需要传此参数为1，该参数为空时获取为本人+下级的全部MT账号
+      getMyProperty:function () {
+       return this.$http.post(this.$api.url.myProperty,{});//	我的资产
       },
-      getMyAllCard:function(){
-       return this.$http.post(this.$api.url.myAllCard,{});        //获取用户所有银行卡
-      },
-      getMtProfit:function () {
-       return  this.$http.post(this.$api.url.mtProfit,{})         //获取用户推广码
-      },
+
       positive:function(message){
         Toast.create.positive({
           html:message
@@ -193,45 +170,25 @@
           html:message
         });
       },
-
-
-      changeServer:function () {
-         console.log(this.currentServer);
-         this.$refs.popover.close();
-      },
-
-
-
       refresh: function (done) {
         this.$showloading();
         let self=this;
         setTimeout(()=>{
 
 
-          self.$http.all([self.getServerList(), self.getMtList(),self.getMtProfit(),self.getMyAllCard()])
-            .then(self.$http.spread(function (ServerList, MtList,MtProfit,MyAllCard) {
+          self.$http.all([self.getMemberIndex(), self.getMyProperty()])
+            .then(self.$http.spread(function (MemberIndex, MyProperty) {
 
-              if(ServerList&&ServerList.data.code==1){
-                self.serverList=ServerList.data.data;
+              if(MemberIndex&&MemberIndex.data.code==1){
+                self.memberIndex=MemberIndex.data.data;
               }else{
-                self.negative(ServerList.data.message);
+                self.negative(MemberIndex.data.message);
               }
 
-              if(MtList&&MtList.data.code==1){
-                self.mtlist=MtList.data.data;
+              if(MyProperty&&MyProperty.data.code==1){
+                self.myProperty=MyProperty.data.data;
               }else{
-                self.negative(MtList.data.message);
-              }
-
-              if(MtProfit&&MtProfit.data.code==1){
-                self.mtProfit=MtProfit.data.data;
-              }else{
-                self.negative(MtProfit.data.message);
-              }
-              if(MyAllCard&&MyAllCard.data.code==1){
-                self.myAllCard=MyAllCard.data.data;
-              }else{
-                self.negative(MyAllCard.data.message);
+                self.negative(MyProperty.data.message);
               }
 
               self.$hideloading();
@@ -247,7 +204,7 @@
 
       }
     },
-    created: function () {
+    mounted: function () {
       this.refresh();
 
     },
