@@ -38,7 +38,7 @@
           </q-item>
         </q-list>
         <div class="padding-content">
-          <q-btn class="my-button full-width"  @click="logout">退出系统</q-btn>
+          <q-btn class="my-button full-width" @click="logout">退出系统</q-btn>
         </div>
       </pull-to>
       <q-modal ref="personDataModal" maximized @open="refresh">
@@ -125,7 +125,7 @@
                 </q-list>
               </div>
               <div class="padding-content">
-                <q-btn class="my-button full-width"  @click="savePersonData">保存</q-btn>
+                <q-btn class="my-button full-width" @click="savePersonData">保存</q-btn>
               </div>
             </pull-to>
           </div>
@@ -148,7 +148,7 @@
                 </div>
               </div>
               <div class="padding-content bg-white" style="margin-top: 1rem">
-                <div class="pwd-title">旧密码</div>
+                <div class="pwd-title">新密码</div>
                 <div class="user-field">
                   <q-field :error="validation.hasError('pwd.new_password')"
                            :error-label="validation.firstError('pwd.new_password')">
@@ -160,9 +160,9 @@
                   </q-field>
                 </div>
               </div>
-                <div class="padding-content">
-                  <q-btn class="my-button full-width"  @click="passwordAgain">保存</q-btn>
-                </div>
+              <div class="padding-content">
+                <q-btn class="my-button full-width" @click="passwordAgain">保存</q-btn>
+              </div>
 
             </pull-to>
           </div>
@@ -192,9 +192,9 @@
                   </q-field>
                 </div>
               </div>
-                <div class="padding-content">
-                  <q-btn class="my-button full-width"  @click="resetAccoutPwd">保存</q-btn>
-                </div>
+              <div class="padding-content">
+                <q-btn class="my-button full-width" @click="resetAccoutPwd">保存</q-btn>
+              </div>
 
             </pull-to>
           </div>
@@ -292,7 +292,15 @@
         return Validator.value(value).required();
       },
       'pwd.new_password': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if (!Validator.isEmpty(value)) {
+            if (!(/^(?=.*[0-9].*)(?=.*[A-Z].*)(?=.*[a-z].*).{6,16}$/.test(value))) {
+              return '密码必须是6-16位大小写字母和数字组合！'
+            }
+          } else {
+            return '密码不能为空！'
+          }
+        })
       },
       'pwd.re_password, pwd.new_password': function (repassword, password) {
         if (this.submitted || this.validation.isTouched('pwd.re_password')) {
@@ -507,9 +515,9 @@
           self.$http.post(self.$api.url.personalData, {}).then(response => {
               if (response && response.data.code == 1) {
                 self.personData = response.data.data;
-              } else if(!response) {
-                Toast.create.negative({html:'未登录，请登录！'})
-              }else{
+              } else if (!response) {
+                Toast.create.negative({html: '未登录，请登录！'})
+              } else {
                 Toast.create.negative({html: response.message})
               }
               self.$hideloading();

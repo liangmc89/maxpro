@@ -247,7 +247,6 @@
                 params.register_invent_codes=self.register_invent_codes
 
 							}
-              debugger
 							self.$http.post(self.$api.url.register, params).then(response => {
 								if(response.data.code == 1) {
                   Dialog.create({

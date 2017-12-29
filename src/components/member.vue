@@ -61,12 +61,12 @@
             </div>
           </div>
 
-          <q-item v-ripple class="settings-item">
+          <q-item v-ripple class="settings-item" to="/maxpro/member/customer" exact>
             <q-item-side icon="people" color="orange-5">
             </q-item-side>
             <q-item-main>
               <q-item-tile label>我的客户</q-item-tile>
-              <q-item-tile sublabel>2个</q-item-tile>
+              <q-item-tile sublabel></q-item-tile>
             </q-item-main>
             <q-item-side right icon="keyboard arrow right"/>
           </q-item>

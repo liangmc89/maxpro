@@ -50,6 +50,10 @@ export default new VueRouter({
       path:'/maxpro/member/mtList',
       component:load('mtList')
     },
+    {
+      path:'/maxpro/member/customer',
+      component:load('customer')
+    },
 		{
 			path: '/maxpro/myProperty/doWithDraw/actionResult',
 			component: load('actionResult'),

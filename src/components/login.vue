@@ -229,9 +229,10 @@
                       password: response.data.data.password
                     }).then(response => {
                       if(response.data.code == 1) {
-                         self.$hideloading();
+
                         setCookie('token',response.data.data,'h1.5');
                         self.$router.push('/maxpro');
+                        self.$hideloading();
 
                       } else {
                          self.$hideloading();
