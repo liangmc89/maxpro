@@ -1,52 +1,53 @@
 <template>
-  <div class="settings">
-    <div class="h-bg my-bg">
-      <h5 class="page-title">设置</h5>
-    </div>
-    <div class="settings-body">
+  <div class="content-wrapper">
+    <div class="content-title">设置</div>
+    <div class="content-flex">
       <pull-to :top-load-method="refresh">
-        <q-list no-border inset-separator highlight>
-          <q-item v-ripple class="settings-item" @click="$refs.personDataModal.open()">
-            <q-item-side icon="people" color="orange-5">
-            </q-item-side>
-            <q-item-main>
-              <q-item-tile label>个人资料</q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-          <q-item v-ripple class="settings-item" @click="$refs.PwdModal.open()">
-            <q-item-side icon="credit card" color="teal-5">
-            </q-item-side>
-            <q-item-main>
-              <q-item-tile label>修改登录密码</q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-          <q-item v-ripple class="settings-item" @click="$refs.MtModal.open()">
-            <q-item-side icon="layers" color="primary"/>
-            <q-item-main>
-              <q-item-tile label>修改MT密码</q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-          <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode">
-            <q-item-side icon="layers" color="primary"/>
-            <q-item-main>
-              <q-item-tile label>关于</q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-        </q-list>
         <div class="padding-content">
-          <q-btn class="my-button full-width" @click="logout">退出系统</q-btn>
+          <q-list no-border   class="bg-white ">
+            <q-item v-ripple class="settings-item" @click="$refs.personDataModal.open()">
+              <q-item-side icon="person" color="orange-5">
+              </q-item-side>
+              <q-item-main>
+                <q-item-tile label>个人资料</q-item-tile>
+              </q-item-main>
+              <q-item-side right icon="keyboard arrow right"/>
+            </q-item>
+            <q-item-separator inset/>
+            <q-item v-ripple class="settings-item" @click="$refs.PwdModal.open()">
+              <q-item-side icon="lock" color="teal-5">
+              </q-item-side>
+              <q-item-main>
+                <q-item-tile label>修改登录密码</q-item-tile>
+              </q-item-main>
+              <q-item-side right icon="keyboard arrow right"/>
+            </q-item>
+            <q-item-separator inset/>
+            <q-item v-ripple class="settings-item" @click="$refs.MtModal.open()">
+              <q-item-side icon="vpn key" color="primary"/>
+              <q-item-main>
+                <q-item-tile label>修改MT密码</q-item-tile>
+              </q-item-main>
+              <q-item-side right icon="keyboard arrow right"/>
+            </q-item>
+            <q-item-separator inset/>
+            <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode">
+              <q-item-side icon="info" color="teal-5"/>
+              <q-item-main>
+                <q-item-tile label>关于</q-item-tile>
+              </q-item-main>
+              <q-item-side right icon="keyboard arrow right"/>
+            </q-item>
+          </q-list>
+          <div class="padding-content" style="margin-top: 6rem">
+            <q-btn big class="my-button full-width" @click="logout">退出系统</q-btn>
+          </div>
         </div>
       </pull-to>
       <q-modal ref="personDataModal" maximized @open="refresh">
-        <div class="settings" style="background: rgb(247, 247, 250)">
-          <div class="h-bg my-bg">
-            <h5 class="page-title">设置</h5>
-          </div>
-          <div class="settings-body">
+        <div class="content-wrapper">
+          <div class="content-title">个人资料</div>
+          <div class="content-flex">
             <pull-to>
               <div class="row no-wrap user-avatar padding-content">
                 <div class="col-6 relative-position text-left"><span class="avatar-title">头像</span></div>
@@ -125,18 +126,16 @@
                 </q-list>
               </div>
               <div class="padding-content">
-                <q-btn class="my-button full-width" @click="savePersonData">保存</q-btn>
+                <q-btn  big class="my-button full-width" @click="savePersonData">保存</q-btn>
               </div>
             </pull-to>
           </div>
         </div>
       </q-modal>
       <q-modal ref="PwdModal" maximized>
-        <div class="settings" style="background: rgb(247, 247, 250)">
-          <div class="h-bg my-bg">
-            <h5 class="page-title">修改密码</h5>
-          </div>
-          <div class="settings-body">
+        <div class="content-wrapper">
+          <div class="content-title">修改密码</div>
+          <div class="content-flex">
             <pull-to>
               <div class="padding-content bg-white">
                 <div class="pwd-title">旧密码</div>
@@ -169,36 +168,34 @@
         </div>
       </q-modal>
       <q-modal ref="MtModal" maximized @open="getMtList">
-        <div class="settings" style="background: rgb(247, 247, 250)">
-          <div class="h-bg my-bg">
-            <h5 class="page-title">修改MT密码</h5>
-          </div>
-          <div class="settings-body">
-            <pull-to>
-              <div class="padding-content bg-white">
-                <div class="pwd-title">MT账号</div>
-                <div class="user-field">
-                  <q-field :error="validation.hasError('mt')" :error-label="validation.firstError('mt')">
-                    <q-select
-                      v-model="mt"
-                      float-label="MT账号"
-                      radio
-                      :options="mtlist"
-                    />
-                  </q-field>
-                  <q-field>
-                    <q-radio v-model="mt.ENABLE" val="0" label="交易"/>
-                    <q-radio v-model="mt.ENABLE" val="1" label="只读"/>
-                  </q-field>
-                </div>
-              </div>
-              <div class="padding-content">
-                <q-btn class="my-button full-width" @click="resetAccoutPwd">保存</q-btn>
-              </div>
+         <div class="content-wrapper">
+           <div class="content-title">修改MT密码</div>
+           <div class="content-flex">
+             <pull-to>
+               <div class="padding-content bg-white">
+                 <div class="pwd-title">MT账号</div>
+                 <div class="user-field">
+                   <q-field :error="validation.hasError('mt')" :error-label="validation.firstError('mt')">
+                     <q-select
+                       v-model="mt"
+                       float-label="MT账号"
+                       radio
+                       :options="mtlist"
+                     />
+                   </q-field>
+                   <q-field>
+                     <q-radio v-model="mt.ENABLE" val="0" label="交易"/>
+                     <q-radio v-model="mt.ENABLE" val="1" label="只读"/>
+                   </q-field>
+                 </div>
+               </div>
+               <div class="padding-content">
+                 <q-btn class="my-button full-width" @click="resetAccoutPwd">保存</q-btn>
+               </div>
 
-            </pull-to>
-          </div>
-        </div>
+             </pull-to>
+           </div>
+         </div>
       </q-modal>
     </div>
   </div>
@@ -538,19 +535,6 @@
   }
 </script>
 <style>
-  .settings {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .settings-body {
-    flex: 1;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
-
   .user-avatar {
     margin-bottom: .5rem;
     background: white;
@@ -575,7 +559,7 @@
   }
 
   .settings-item {
-    background: white;
+
   }
 
   .province {

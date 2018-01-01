@@ -1,114 +1,108 @@
 <template>
-  <pull-to :top-load-method="refresh">
-    <div id="member">
-      <div class="h-bg my-bg">
-        <h5 class="page-title">我的</h5>
-      </div>
-      <div class="settings">
+  <div class="content-wrapper">
+    <div class="content-title">我的</div>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh">
+        <div id="member">
+          <div class="padding-content">
+            <q-list no-border class="bg-white">
+              <q-item v-ripple class="settings-item">
+                <q-item-side icon="cloud circle" color="primary">
+                </q-item-side>
+                <q-item-main :label="serverLabel" >
+                </q-item-main>
+              </q-item>
+              <q-item-separator inset/>
+              <q-item v-ripple class="settings-item" to="/maxpro/member/mtList">
+                <q-item-side>
+                  <q-item-tile icon="account circle" color="blue">
+                  </q-item-tile>
+                </q-item-side>
+                <q-item-main :label="accountLabel" />
+                <q-item-side right icon="keyboard arrow right"/>
+              </q-item>
+              <q-item-separator inset/>
+            </q-list>
 
-        <q-list no-border >
+              <div style="margin: 1rem 0" class="bg-white">
+                <div class="account-detail">
+                  <div class="detail-item" v-ripple>
+                    <h5>MT</h5>
+                    <p class="amount">{{memberIndex.mtcount}}个</p>
+                  </div>
+                  <hr/>
+                  <div class="detail-item" v-ripple>
+                    <h5>净值</h5>
+                    <p class="amount">{{myProperty.equity|currencyFilter}}</p>
+                  </div>
+                </div>
+                <div class="account-detail">
+                  <div class="detail-item" v-ripple>
+                    <h5>余额</h5>
+                    <p class="amount">{{myProperty.balance|currencyFilter}}</p>
+                  </div>
+                  <hr/>
+                  <div class="detail-item" v-ripple>
+                    <h5>赠金</h5>
+                    <p class="amount">{{myProperty.credit|currencyFilter}}</p>
+                  </div>
+                </div>
+                <div class="account-detail">
+                  <div class="detail-item" v-ripple>
+                    <h5>返佣</h5>
+                    <p class="amount">{{myProperty.AMOUNT|currencyFilter}}</p>
+                  </div>
+                  <hr/>
+                  <div class="detail-item" v-ripple>
+                    <h5>跟单</h5>
+                    <p class="amount">{{myProperty.follow|currencyFilter}}</p>
+                  </div>
+                </div>
+              </div>
+             <q-list no-border class="bg-white">
+              <q-item v-ripple class="settings-item" to="/maxpro/member/customer" exact>
+                <q-item-side icon="people" color="orange-5">
+                </q-item-side>
+                <q-item-main>
+                  <q-item-tile label>我的客户</q-item-tile>
+                  <q-item-tile sublabel></q-item-tile>
+                </q-item-main>
+                <q-item-side right icon="keyboard arrow right"/>
+              </q-item>
 
-          <q-item v-ripple class="settings-item">
-            <q-item-side icon="cloud circle" color="primary">
-            </q-item-side>
-            <q-item-main label="服务器" :sublabel="memberIndex.server_name">
-            </q-item-main>
+              <q-item-separator inset/>
+              <q-item v-ripple class="settings-item" to="/maxpro/member/bankList" exact>
+                <q-item-side icon="credit card" color="teal-5">
+                </q-item-side>
+                <q-item-main :label="bankLabel">
 
-          </q-item>
-
-          <q-item v-ripple class="settings-item" to="/maxpro/member/mtList">
-            <q-item-side>
-              <q-item-tile icon="account circle" color="blue">
-              </q-item-tile>
-            </q-item-side>
-            <q-item-main :label="memberIndex.phone" :sublabel="memberIndex.email"/>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-
-          <div style="margin: 1rem 0" class="bg-white">
-            <div class="account-detail">
-              <div class="detail-item" v-ripple>
-                <h5>MT</h5>
-                <p class="amount">{{memberIndex.mtcount}}个</p>
-              </div>
-              <hr/>
-              <div class="detail-item" v-ripple>
-                <h5>净值</h5>
-                <p class="amount">{{myProperty.equity|currencyFilter}}</p>
-              </div>
-            </div>
-            <div class="account-detail">
-              <div class="detail-item" v-ripple>
-                <h5>余额</h5>
-                <p class="amount">{{myProperty.balance|currencyFilter}}</p>
-              </div>
-              <hr/>
-              <div class="detail-item" v-ripple>
-                <h5>赠金</h5>
-                <p class="amount">{{myProperty.credit|currencyFilter}}</p>
-              </div>
-            </div>
-            <div class="account-detail">
-              <div class="detail-item" v-ripple>
-                <h5>返佣</h5>
-                <p class="amount">{{myProperty.AMOUNT|currencyFilter}}</p>
-              </div>
-              <hr/>
-              <div class="detail-item" v-ripple>
-                <h5>跟单</h5>
-                <p class="amount">{{myProperty.follow|currencyFilter}}</p>
-              </div>
-            </div>
+                </q-item-main>
+                <q-item-side right icon="keyboard arrow right"/>
+              </q-item>
+              <q-item-separator inset/>
+              <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode" exact>
+                <q-item-side icon="layers" color="primary"/>
+                <q-item-main>
+                  <q-item-tile label>推广</q-item-tile>
+                  <q-item-tile sublabel></q-item-tile>
+                </q-item-main>
+                <q-item-side right icon="keyboard arrow right"/>
+              </q-item>
+              <q-item-separator inset/>
+              <q-item v-ripple class="settings-item" to="/maxpro/member/settings">
+                <q-item-side icon="settings" color="blue"/>
+                <q-item-main label="设置">
+                </q-item-main>
+                <q-item-side right icon="keyboard arrow right">
+                </q-item-side>
+              </q-item>
+            </q-list>
           </div>
-
-          <q-item v-ripple class="settings-item" to="/maxpro/member/customer" exact>
-            <q-item-side icon="people" color="orange-5">
-            </q-item-side>
-            <q-item-main>
-              <q-item-tile label>我的客户</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-
-
-          <q-item v-ripple class="settings-item" to="/maxpro/member/bankList" exact>
-            <q-item-side icon="credit card" color="teal-5">
-            </q-item-side>
-            <q-item-main>
-              <q-item-tile label>银行卡</q-item-tile>
-              <q-item-tile sublabel>{{memberIndex.cardcount}}张</q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-
-
-          <q-item v-ripple class="settings-item" to="/maxpro/member/promoCode" exact>
-            <q-item-side icon="layers" color="primary"/>
-            <q-item-main>
-              <q-item-tile label>推广</q-item-tile>
-              <q-item-tile sublabel></q-item-tile>
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right"/>
-          </q-item>
-
-
-          <q-item v-ripple class="settings-item" to="/maxpro/member/settings">
-            <q-item-side icon="settings" color="blue"/>
-
-            <q-item-main label="设置">
-            </q-item-main>
-            <q-item-side right icon="keyboard arrow right">
-
-            </q-item-side>
-          </q-item>
-
-
-        </q-list>
-      </div>
+        </div>
+      </pull-to>
     </div>
+  </div>
 
-  </pull-to>
 </template>
 <script>
   import PullTo from 'vue-pull-to'
@@ -132,7 +126,12 @@
     data() {
       return {
         myProperty: {},
-        memberIndex:{}
+        memberIndex:{
+          server_name:'',
+          phone:'',
+          email:'',
+          cardcount:0
+        }
       }
     },
     directives: {
@@ -150,6 +149,17 @@
       QPopover,
       Toast,
       QRadio
+    },
+    computed:{
+      serverLabel:function () {
+        return '<div class="row"><div class="col-4">服务器</div><div class="col-6 text-right">'+this.memberIndex.server_name+'</div><div class="col-2"></div></div>'
+      },
+      accountLabel:function () {
+        return '<div class="row"><div class="col-4">'+this.memberIndex.phone+'</div><div class="col-8 text-right">'+this.memberIndex.email+'</div></div>'
+      },
+      bankLabel:function () {
+        return '<div class="row"><div class="col-4">银行卡</div><div class="col-7 text-right">'+this.memberIndex.cardcount+'张</div><div class="col-1"></div></div>'
+      }
     },
     methods: {
 
@@ -174,8 +184,6 @@
         this.$showloading();
         let self=this;
         setTimeout(()=>{
-
-
           self.$http.all([self.getMemberIndex(), self.getMyProperty()])
             .then(self.$http.spread(function (MemberIndex, MyProperty) {
 
@@ -216,11 +224,6 @@
   }
 </script>
 <style scoped>
- .settings{
-   padding: .5rem 1.2rem;
- }
-  .settings-item{
-    font-size: 1.4rem !important;
-    background: white;
-  }
+
+
 </style>

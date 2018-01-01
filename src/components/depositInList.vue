@@ -39,8 +39,8 @@
 					</div>
 					<div class="row no-wrap">
 						<div class="col-3 order-num">订单时间:</div>
-						<div class="col-5 order-content">{{item.create_time|dateFormat}}</div>
-						<div class="col-4 order-status text-primary"></div>
+						<div class="col-9 order-content">{{item.create_time|dateFormat}}</div>
+
 					</div>
 
 				</li>

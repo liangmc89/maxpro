@@ -1,28 +1,35 @@
 <template>
-	<pull-to :top-load-method="refresh">
-		<div id="commissionList">
-			<div class="h-bg">
-				<h5 class="page-title">跟单记录</h5>
-			</div>
-			<div class="section" style=" margin-bottom: 0;">
-				<div class="account-detail">
-					<div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
-						<h5>汇总</h5>
-						<p class="amount">{{total.count}}<span style="font-size: .6em; margin-left: .3em;">单</span></p>
-					</div>
-					<hr style="margin-top: 2.7rem;" />
-					<div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
-						<h5>总计盈亏</h5>
-						<p class="amount">{{total.AMOUNT|currencys}}</p>
-					</div>
-				</div>
-			</div>
-			<q-data-table :data="table" :config="config" :columns="columns" @refresh="refresh" @selection="selection" @rowclick="rowClick">
+  <div class="content-wrapper">
+    <div class="content-title">跟单记录</div>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh">
+        <div id="commissionList">
+          <div class="section" style=" margin-bottom: 0;">
+            <div class="account-detail">
+              <div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
+                <h5>汇总</h5>
+                <p class="amount">{{total.count}}<span style="font-size: .6em; margin-left: .3em;">单</span></p>
+              </div>
+              <hr style="margin-top: 2.7rem;" />
+              <div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
+                <h5>总计盈亏</h5>
+                <p class="amount">{{total.AMOUNT|currencys}}</p>
+              </div>
+            </div>
+          </div>
+          <q-data-table :data="table" :config="config" :columns="columns" @refresh="refresh" @selection="selection" @rowclick="rowClick">
 
-			</q-data-table>
+          </q-data-table>
 
-		</div>
-	</pull-to>
+        </div>
+      </pull-to>
+    </div>
+  </div>
+
+
+
+
+
 </template>
 
 <script>

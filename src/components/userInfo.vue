@@ -1,7 +1,7 @@
 <template>
 	<div class="account-info" id="userinfo">
 		<img class="account-icon" src="../statics/images/account_icon.png" />
-		<p class="account-title">账号<span class="account linear-font">{{top.loginid}}</span>
+		<p class="account-title ">账号<span class="account linear-font">{{top.loginid}}</span>
 			<q-btn ref="target" icon="fa-angle-down" round outline color="primary" id="account-btn">
 
 				<q-popover ref="popover">

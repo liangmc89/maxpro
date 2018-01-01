@@ -1,36 +1,36 @@
 <template>
-
-			<pull-to :top-load-method="refresh" :bottom-load-method='loadmore'  id='pullto' >
-			<div class="h-bg">
-				<h5 class="page-title">首页</h5>
-			</div>
-
-
-			<div style="margin: 1rem;background: white;">
-			<q-tabs  inverted>
-				<!-- Tabs - notice slot="title" -->
-				<q-tab default slot="title" name="tab-1" label='新闻' @click="changeType(0)"/>
-				<q-tab slot="title" name="tab-2" label='财经' @click='changeType(1)'/>
+      <div class="content-wrapper">
+        <div class="content-title">新闻</div>
+        <div class="content-flex">
+          <pull-to :top-load-method="refresh" :bottom-load-method='loadmore'  id='pullto' >
+            <div style="margin: 1rem;background: white;">
+              <q-tabs  inverted>
+                <!-- Tabs - notice slot="title" -->
+                <q-tab default slot="title" name="tab-1" label='新闻' @click="changeType(0)"/>
+                <q-tab slot="title" name="tab-2" label='财经' @click='changeType(1)'/>
 
 
-				<!-- Targets -->
-				<q-tab-pane  name="tab-1" class='no-border' >
-					<router-link :key="index" :to="{name:'articleDetail',params:{articleDetail:item}}" v-for="(item,index) in art[0].list">
-						<Article-Item :article="item"  ></Article-Item>
-					</router-link>
+                <!-- Targets -->
+                <q-tab-pane  name="tab-1" class='no-border' >
+                  <router-link :key="index" :to="{name:'articleDetail',params:{articleDetail:item}}" v-for="(item,index) in art[0].list">
+                    <Article-Item :article="item"  ></Article-Item>
+                  </router-link>
 
 
-					<div class="no-data" v-show="art[0].list==null||art[0].list.length==0"></div>
-				</q-tab-pane>
-				<q-tab-pane name="tab-2" class='no-border'>
-					<router-link :key="index" :to="{name:'articleDetail',params:{articleDetail:item}}" v-for="(item,index) in art[1].list">
-						<Article-Item :article="item"  ></Article-Item>
-					</router-link>
-					<div class="no-data" v-show="art[1].list==null||art[1].list.length==0"></div>
-				</q-tab-pane>
+                  <div class="no-data" v-show="art[0].list==null||art[0].list.length==0"></div>
+                </q-tab-pane>
+                <q-tab-pane name="tab-2" class='no-border'>
+                  <router-link :key="index" :to="{name:'articleDetail',params:{articleDetail:item}}" v-for="(item,index) in art[1].list">
+                    <Article-Item :article="item"  ></Article-Item>
+                  </router-link>
+                  <div class="no-data" v-show="art[1].list==null||art[1].list.length==0"></div>
+                </q-tab-pane>
 
-			</q-tabs></div>
-			</pull-to>
+              </q-tabs></div>
+          </pull-to>
+        </div>
+      </div>
+
 
 
 </template>

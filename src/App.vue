@@ -1,7 +1,9 @@
 <template>
   <!-- Don't drop "q-app" class -->
   <div id="q-app">
+    <keep-alive>
     <router-view />
+    </keep-alive>
   </div>
 </template>
 
@@ -10,8 +12,11 @@
  * Root component
  */
 
-export default {
 
+export default {
+ created:function () {
+
+ }
 }
 </script>
 

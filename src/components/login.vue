@@ -34,14 +34,14 @@
 				</q-field>
 			</div>
 			<q-btn rounded :big="true" class="full-width my-button" :disable="isLogining" @click='login'>登录</q-btn>
-			<div class="login-help">
+			<div class="login-help light-paragraph">
 				<q-btn :small="true" :flat="true">忘记密码</q-btn>|
 				<q-btn :small="true" :flat="true" @click="$router.push('/register')" >注册账号</q-btn>
 			</div>
 
 		</div>
 		<div class="login-toggle">
-			<p class="or">or</p>
+			<p class="light-paragraph">or</p>
 			<div class="toggle-btn">
 				<q-btn round class='phone-btn' @click="toggleLoginType('1')"></q-btn>
 			</div>
@@ -302,10 +302,12 @@
 			}
 		}
 		.my-field {
-			height: 6rem;
+			height: 5rem;
 		}
 		.login-help {
 			text-align: center;
+      padding: 1rem;
+      color:gray;
 		}
 		.pass {
 			position: relative;
@@ -319,7 +321,6 @@
 
 		.login-toggle {
 			text-align: center;
-			.or {}
 			.toggle-btn {
 				width: 32%;
 				display: inline-block;

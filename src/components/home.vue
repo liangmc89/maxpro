@@ -1,48 +1,51 @@
 <template>
-	<pull-to :top-load-method="refresh">
-		<div id="home">
-			<div class="head-bg">
-				<h4 class="page-title">首页</h4>
-			</div>
-			<div class="head">
-				<div class="sys-notice padding-1rem">
-					<q-carousel class="text-white" autoplay infinite>
-						<div slot="slide" v-for='(item,index) in notice' :key='index' style="width: 100%;">
-							<div class="notice-item">
-								<div class="notice-left-icon">
-									<q-icon name='fa-volume-down' size='2rem' class='notice-item-icon'></q-icon>
-								</div>
-								<div class="notice-title" @click="goArticleDetail(item)">
-									<h5 style="margin-top: 0;">{{item.title}}</h5>
-									<p class="notice-subtitle">{{item.create_time|dateFormat}}</p>
-								</div>
-								<div class="notice-right-icon">
-									<q-icon name='fa-angle-right' size='2rem' class='notice-item-icon' @click="goArticleList"></q-icon>
-								</div>
-							</div>
-						</div>
+<div class="content-wrapper">
+  <div class="content-title" style="box-shadow: none">首页</div>
+  <div class="content-flex">
+    <pull-to :top-load-method="refresh">
+      <div id="home" >
+        <div class="notice-bg"></div>
+        <div class="head">
+          <div class="sys-notice padding-1rem">
+            <q-carousel class="text-white" autoplay infinite>
+              <div slot="slide" v-for='(item,index) in notice' :key='index' style="width: 100%;">
+                <div class="notice-item">
+                  <div class="notice-left-icon">
+                    <q-icon name='fa-volume-down' size='2rem' class='notice-item-icon'></q-icon>
+                  </div>
+                  <div class="notice-title" @click="goArticleDetail(item)">
+                    <h5 style="margin-top: 0;">{{item.title}}</h5>
+                    <p class="notice-subtitle">{{item.create_time|dateFormat}}</p>
+                  </div>
+                  <div class="notice-right-icon">
+                    <q-icon name='fa-angle-right' size='2rem' class='notice-item-icon' @click="goArticleList"></q-icon>
+                  </div>
+                </div>
+              </div>
+            </q-carousel>
+          </div>
+        </div>
+        <div class="padding-content">
+          <user-info></user-info>
+          <div class="section">
+            <!--<q-btn v-for="(item,index) in charts" outline="item.value==chartType" :flat="item.value!=chartType" rounded :outline="item.value==chartType" @click="ChangeChart(item.value)" :key="index" :color="item.value==chartType?'primary':''">{{item.name}}</q-btn>-->
 
-					</q-carousel>
-				</div>
-			</div>
+            <q-tabs v-model="chartType" inverted @select="ChangeChart">
+              <q-tab slot="title" :key="index" v-for="(item,index) in charts" :name="item.value" :label="item.name" />
+            </q-tabs>
 
-			<user-info></user-info>
-			<div class="section">
-				<!--<q-btn v-for="(item,index) in charts" outline="item.value==chartType" :flat="item.value!=chartType" rounded :outline="item.value==chartType" @click="ChangeChart(item.value)" :key="index" :color="item.value==chartType?'primary':''">{{item.name}}</q-btn>-->
+            <div class="echarts">
+              <IEcharts :option="bar" :loading="loading" @ready="onReady" @click="onClick"></IEcharts>
+            </div>
 
-				<q-tabs v-model="chartType" inverted @select="ChangeChart">
-					<q-tab slot="title" :key="index" v-for="(item,index) in charts" :name="item.value" :label="item.name" />
-				</q-tabs>
+          </div>
+        </div>
 
-				<div class="echarts">
-					<IEcharts :option="bar" :loading="loading" @ready="onReady" @click="onClick"></IEcharts>
 
-				</div>
-
-			</div>
-
-		</div>
-	</pull-to>
+      </div>
+    </pull-to>
+  </div>
+</div>
 </template>
 
 <script>
@@ -90,7 +93,6 @@
 			}
 		},
 		components: {
-
 			QCarousel,
 			QIcon,
 			Toast,
@@ -188,7 +190,10 @@
 <style lang="less">
 	#home {
 		position: relative;
-		padding: .5rem 1.2rem;
+   .notice-bg{
+     width: 100%;height: 200px;background: linear-gradient(to right, #f55970, #f4883b);position: absolute;
+
+   }
 		.q-carousel-track>div {
 			min-height: 0;
 			padding: 0;
