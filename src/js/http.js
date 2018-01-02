@@ -30,14 +30,6 @@ axios.interceptors.request.use(
 				token: token
 			}
 		}
-		// Loading.show({
-		// 	spinner: QSpinnerGears,
-		// 	message: '加载中...',
-		// 	messageColor: 'white',
-		// 	spinnerSize: 50, // in pixels
-		// 	spinnerColor: 'white',
-		// 	customClass: 'gray'
-		// })
 		return config;
 	},
 	err => {

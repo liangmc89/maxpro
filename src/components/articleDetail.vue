@@ -75,7 +75,13 @@
 			dateFormat: function(data_str) {
 				return date.formatDate(new Date(parseInt(data_str) * 1000), 'YYYY/MM/DD HH:mm:ss')
 			}
-		}
+		},
+    watch: {
+      '$route' (to, from) {
+        this.articleDetail= this.$route.params.articleDetail;
+        // 对路由变化作出响应...
+      }
+    }
 
 	}
 </script>

@@ -45,95 +45,45 @@
         </div>
       </pull-to>
       <q-modal ref="saveApplyModal" maximized>
-        <div class="settings" style="background: rgb(247, 247, 250)">
-          <div class="h-bg my-bg">
-            <h5 class="page-title">开户申请</h5>
+        <div class="content-wrapper" style="background: rgb(247, 247, 247)">
+          <div class="content-title">
+            开户申请
           </div>
-          <div class="settings-body">
+          <div class="content-flex">
             <pull-to>
               <div class="padding-content bg-white">
-                <q-list no-border>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      服务器
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.mt4_server_id')"
-                               :error-label="validation.firstError('apply.mt4_server_id')">
-                        <q-select align="right"
-                                  v-model="apply.mt4_server_id"
-                                  :options="serverList"
-                        />
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      杠杆
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.leverage')"
-                               :error-label="validation.firstError('apply.leverage')">
-                        <q-input v-model="apply.leverage" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      开户名
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.name')"
-                               :error-label="validation.firstError('apply.name')">
-                        <q-input v-model="apply.name" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      邮箱
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.email')"
-                               :error-label="validation.firstError('apply.email')">
-                        <q-input v-model="apply.email" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      手机号
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.phone')"
-                               :error-label="validation.firstError('apply.phone')">
-                        <q-input v-model="apply.phone" type="number" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <!--<q-item class="settings-item">-->
-                  <!--<q-item-side>-->
-                  <!--证件号码-->
-                  <!--</q-item-side>-->
-                  <!--<q-item-main>-->
-                  <!--<q-field :error="validation.hasError('personData.identity')"-->
-                  <!--:error-label="validation.firstError('personData.identity')">-->
-                  <!--<q-input v-model="personData.identity" type="text" align="right"></q-input>-->
-                  <!--</q-field>-->
-                  <!--</q-item-main>-->
-                  <!--</q-item>-->
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      地址
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.address')"
-                               :error-label="validation.firstError('apply.address')">
-                        <q-input v-model="apply.address" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                </q-list>
+
+                <q-field style="margin-top: 0" :error="validation.hasError('apply.mt4_server_id')"
+                         :error-label="validation.firstError('apply.mt4_server_id')">
+                  <q-select float-label="服务器" align="right"
+                            v-model="apply.mt4_server_id"
+                            :options="serverList"
+                  />
+                </q-field>
+                <q-field :error="validation.hasError('apply.leverage')"
+                         :error-label="validation.firstError('apply.leverage')">
+                  <q-input float-label="杠杆" v-model="apply.leverage" type="text" clearable align="right"></q-input>
+                </q-field>
+                </div>
+              <div class="padding-content bg-white" style="margin-top: 1rem;">
+                <q-field style="margin-top: 0" :error="validation.hasError('apply.name')"
+                         :error-label="validation.firstError('apply.name')">
+                  <q-input float-label="开户名" v-model="apply.name" type="text" clearable align="right"></q-input>
+                </q-field>
+
+                <q-field :error="validation.hasError('apply.email')"
+                         :error-label="validation.firstError('apply.email')">
+                  <q-input float-label="邮箱" v-model="apply.email" type="text" clearable align="right"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('apply.phone')"
+                         :error-label="validation.firstError('apply.phone')">
+                  <q-input float-label="手机号" v-model="apply.phone" type="number" clearable align="right"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('apply.address')"
+                         :error-label="validation.firstError('apply.address')">
+                  <q-input float-label="地址"  v-model="apply.address" type="text" clearable align="right"></q-input>
+                </q-field>
+
               </div>
               <div class="padding-content">
                 <q-btn class="my-button full-width" @click="saveApply">提交申请</q-btn>
@@ -143,54 +93,34 @@
         </div>
       </q-modal>
       <q-modal ref="bindingMTModal" maximized>
-        <div class="settings" style="background: rgb(247, 247, 250)">
-          <div class="h-bg my-bg">
-            <h5 class="page-title">账号绑定</h5>
+        <div class="content-wrapper" style="background: rgb(247, 247, 247)">
+          <div class="content-title">
+            账号绑定
           </div>
-          <div class="settings-body">
+          <div class="content-flex">
             <pull-to>
               <div class="padding-content bg-white">
-                <q-list no-border>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      服务器
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.mt4_server_id')"
-                               :error-label="validation.firstError('apply.mt4_server_id')">
-                        <q-select align="right"
-                                  v-model="apply.mt4_server_id"
-                                  :options="serverList"
-                        />
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      账号
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.loginid')"
-                               :error-label="validation.firstError('apply.loginid')">
-                        <q-input v-model="apply.loginid" type="text" clearable align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      密码
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('apply.mtpassword')"
-                               :error-label="validation.firstError('apply.mtpassword')">
-                        <q-input v-model="apply.mtpassword" type="password" clearable align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                </q-list>
+                <q-field style="margin-top: 0"  :error="validation.hasError('apply.mt4_server_id')"
+                          :error-label="validation.firstError('apply.mt4_server_id')">
+                  <q-select float-label="服务器"   align="right"
+                            v-model="apply.mt4_server_id"
+                            :options="serverList"
+                  />
+                </q-field>
               </div>
-              <div class="padding-content">
-                <q-btn class="my-button full-width" @click="bindingMT">绑定</q-btn>
+              <div class="padding-content bg-white" style="margin-top: 1rem">
+                <q-field style="margin-top: 0" :error="validation.hasError('apply.loginid')"
+                         :error-label="validation.firstError('apply.loginid')">
+                  <q-input float-label="账号"   v-model="apply.loginid" type="text" clearable align="right"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('apply.mtpassword')"
+                         :error-label="validation.firstError('apply.mtpassword')">
+                  <q-input float-label="密码" v-model="apply.mtpassword" type="password" clearable align="right"></q-input>
+                </q-field>
+
+              </div>
+              <div class="padding-content text-center">
+                <q-btn class="my-button full-width"  @click="bindingMT">绑定</q-btn>
               </div>
             </pull-to>
           </div>
@@ -217,7 +147,7 @@
     QItemSeparator,
     QItemSide,
     QItemMain,
-    QItemTile
+    QItemTile,QChip,QSlider
   } from 'quasar'
   import Vue from 'vue'
 
@@ -250,6 +180,8 @@
           address: '',
           loginid: '',
           mtpassword: ''
+
+
         }
       }
     },
@@ -261,7 +193,7 @@
       QItemSeparator,
       QItemSide,
       QItemMain,
-      QItemTile
+      QItemTile,QChip,QSlider
     },
     filters: {
       currencyFilter: function (value) {

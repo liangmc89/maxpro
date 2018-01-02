@@ -78,7 +78,6 @@
 				mtId: '887710',
 				email: '',
         code:'',
-				account: '887710',
 				password: 'abcd1234',
 				isLogining: false,
 				isEnableSend: false,
@@ -203,10 +202,10 @@
 
         } else if(this.loginType == '2') {
           this.login_type=this.loginType;
-          this.login_account=this.account;
+          this.login_account=this.mtId;
 
         }
-
+           console.log(this.login_account)
 				let self = this;
 				this.$validate(this.validateArray)
 					.then(function(success) {

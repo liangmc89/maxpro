@@ -9,12 +9,7 @@
 				<q-tab slot="title" name="emailRegist" label='邮箱注册' @click='setTab(1)' />
 				<q-tab-pane name="phoneRegist">
 					<q-field :error-label="validation.firstError('p_mtserver')">
-						<q-select float-label="平台" v-model="p_mtserver" :error="validation.hasError('p_mtserver')" :options="[
-            {label: 'Bucharest', value: 'bucharest'},
-            {label: 'London', value: 'london'},
-            {label: 'Paris', value: 'paris'}
-          ]" />
-
+						<q-select float-label="平台" v-model="p_mtserver" :error="validation.hasError('p_mtserver')" :options="serverList" />
 					</q-field>
 					<q-field :error-label="validation.firstError('phone')">
 						<q-input type="number" float-label='手机号码' v-model="phone" :clearable="true" :error="validation.hasError('phone')" />
@@ -27,29 +22,19 @@
 						<q-input type="text" float-label='推荐码' v-model="register_invent_codes" :clearable="true" :error="validation.hasError('register_invent_codes')" />
 					</q-field>
 				</q-tab-pane>
-
 				<q-tab-pane name="emailRegist">
-
 					<q-field :error-label="validation.firstError('e_mtserver')">
-						<q-select float-label="平台" v-model="e_mtserver" :error="validation.hasError('e_mtserver')" :options="[
-            {label: 'Bucharest', value: 'bucharest'},
-            {label: 'London', value: 'london'},
-            {label: 'Paris', value: 'paris'}
-          ]" />
-
+						<q-select float-label="平台" v-model="e_mtserver" :error="validation.hasError('e_mtserver')" :options="serverList" />
 					</q-field>
 					<q-field :error-label="validation.firstError('email')">
 						<q-input type="text" float-label='Email' v-model="email" :clearable="true" :error="validation.hasError('email')" />
-					</q-field>
-
+          </q-field>
 					<q-field :error-label="validation.firstError('password')">
 						<q-input type="password" float-label='密码' v-model="password" :clearable="true" :error="validation.hasError('password')" />
 					</q-field>
-
 					<q-field :error-label="validation.firstError('repassword')">
 						<q-input type="password" float-label='确认密码' v-model="repassword" :clearable="true" :error="validation.hasError('repassword')" />
 					</q-field>
-
 					<!--<q-field class='relative-position' :error-label="validation.firstError('e_code')">
 						<q-input type="text" float-label='激活码' v-model="e_code" :clearable="true" :error="validation.hasError('e_code')" />
 						<q-btn class='sendHelp' color="primary" :flat='true' :disable="isEnableSend" @click="getValidateNum">{{validateHelpText}}</q-btn>
@@ -104,7 +89,8 @@
 				validateArray: [
 					['p_mtserver', 'phone', 'phone_code'],
 					['e_mtserver', 'email', 'password', 'repassword']
-				]
+				],
+        serverList:[]
 
 			}
 		},
@@ -183,6 +169,22 @@
 			setTab: function(val) {
 				this.registerType = val;
 			},
+      getMtServer:function () {
+        let self=this;
+        self.serverList=[];
+        self.$http.post(self.$api.url.getServerId,{}).then(response=>{
+          if(response&&response.data.code==1){
+            response.data.data.forEach((item)=>{
+              let obj={label:item.mt4_name,value:item.id}
+              self.serverList.push(obj);
+            });
+          }else{
+            Toast.create.info({html:response.data.message})
+          }
+        }).catch(err=>{
+          Toast.create.negative({html:err.message})
+        });
+      },
 			getValidateNum: function() {
 				let self = this;
 				this.$validate('phone')
@@ -232,14 +234,14 @@
 							let params = {};
 
 							if(self.registerType == 0) {
-                  params.mtserver= self.$api.appConfig.mtserver;
+                  params.mtserver= self.p_mtserver;
                   params.type= self.registerType + 1;
                   params.phone= self.phone;
                   params.phone_code= self.phone_code;
                   params.register_invent_codes= self.register_invent_codes;
 
 							} else {
-                params.mtserver=self.$api.appConfig.mtserver;
+                params.mtserver=self.e_mtserver;
                 params.type=self.registerType + 1;
                 params.email=self.email;
                 params.password=self.password;
@@ -291,8 +293,8 @@
 			}
 
 		},
-		mounted() {
-
+		created() {
+      this.getMtServer();
 		}
 
 	}
@@ -302,7 +304,7 @@
 	#register {
 		padding: 3rem;
 		width: 100%;
-		height: 100%;
+		/*height: 100%;*/
 		.logo {
 			padding: 3rem;
 			text-align: center;
