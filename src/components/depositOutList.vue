@@ -1,8 +1,15 @@
 <template>
 	<div id="deposiInList">
-		<div class="h-bg my-bg">
-			<h5 class="page-title">财务-出金</h5>
-		</div>
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          财务-出金记录
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
 		<div class="section total-info">
 			<div class="account-detail">
 				<q-input v-model="ticket" placeholder='订单号搜索' clearable :before="[{icon: 'fa-search text-primary', handler () {refresh()}}]" :after="[{icon: 'fa-filter text-primary', handler () {}}]" />
@@ -18,7 +25,7 @@
 			</div>
 		</div>
 		<pull-to :top-load-method="refresh" :bottom-load-method='loadmore'>
-			<div class="no-data" v-show="listOut.lenght==0"></div>
+			<div class="no-data" v-show="listOut.length==0"></div>
 			<ul id='in-List'>
 				<li v-for="(item,index) in listOut" :key="index" v-ripple>
 					<div class="row no-wrap">
@@ -47,7 +54,7 @@
 						<div class="col-5 order-content">{{item.outtime|dateFormat}}</div>
 						<div class="col-4 order-status text-primary"></div>
 					</div>-->
-					
+
 				</li>
 			</ul>
 		</pull-to>
@@ -74,7 +81,7 @@
 		clone,
 		Toast,
 		Ripple,
-		date
+		date,QToolbar,QToolbarTitle
 	} from 'quasar'
 
 	import { currencys } from '../js/filter'
@@ -99,7 +106,7 @@
 			QCollapsible,
 			Toast,
 			PullTo,
-			date
+			date,QToolbar,QToolbarTitle
 		},
 		filters: {
 			currencys: function(value, c) {
@@ -113,7 +120,7 @@
 				switch(value) {
 					case '0':
 						status = '审核中'
-						break;					
+						break;
 				}
 				return status;
 			},
@@ -122,7 +129,7 @@
 				switch(value){
 					case '1':
 					_type='银联';
-					break;					
+					break;
 					case '2':
 					_type='电汇';
 					break;
@@ -134,7 +141,7 @@
 			}
 
 		},
-		methods: {			
+		methods: {
 			loadmore(done) {
 				this.fetchData(done);
 				this.page++;
@@ -154,11 +161,11 @@
 						num: 10,
 						ticket: self.ticket
 					}).then(response => {
-						if(response.data.code == 1) {
+						if(response.data.code==1) {
 							self.vtotal = response.data.data.data.vtotal;
 							self.listOut = self.listOut.concat(response.data.data.list);
-						} else {
-							Toast.create({
+						} else if(response.data.code != 40007) {
+							Toast.create.info({
 								html: response.data.message
 							});
 						}
@@ -192,6 +199,6 @@
 </script>
 
 <style>
-	
-	
+
+
 </style>

@@ -59,6 +59,17 @@ export default new VueRouter({
 			component: load('actionResult'),
 			name: 'actionResult'
 		},
+    {
+      path:'/maxpro/myProperty/addDepositIn',
+      component: load('addDepositIn'),
+      name:'addDepositIn'
+    }
+    ,
+    {
+      name:'doDepositOut',
+      path:'/maxpro/myProperty/doDepositOut',
+      component:load('doDepositOut')
+    },
 		{
 			path: '/maxpro',
 			component: load('maxpro'),
@@ -115,9 +126,6 @@ export default new VueRouter({
 					path:'myProperty/depositInList',
 			        component: load('depositInList')
 				},{
-					path:'myProperty/addDepositIn',
-			        component: load('addDepositIn')
-				},{
 					path:'followList',
 			        component: load('followList')
 				},
@@ -125,11 +133,6 @@ export default new VueRouter({
 					path:'myProperty/depositOutList',
 			        component: load('depositOutList')
 				},
-        {
-          name:'doDepositOut',
-          path:'myProperty/doDepositOut',
-          component:load('doDepositOut')
-        },
 				{
 					path:'myProperty/addDepositOut',
 			        component: load('addDepositOut')

@@ -1,8 +1,15 @@
 <template>
 	<div id="deposiInList">
-		<div class="h-bg my-bg">
-			<h5 class="page-title">财务-入金</h5>
-		</div>
+		<div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          财务-入金记录
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
 		<div class="section total-info">
 			<div class="account-detail">
 				<q-input v-model="ticket" placeholder='订单号搜索' clearable :before="[{icon: 'fa-search text-primary', handler () {refresh()}}]" :after="[{icon: 'fa-filter text-primary', handler () {}}]" />
@@ -69,7 +76,7 @@
 		clone,
 		Toast,
 		Ripple,
-		date
+		date,QToolbar,QToolbarTitle
 	} from 'quasar'
 
 	import { currencys } from '../js/filter'
@@ -94,7 +101,7 @@
 			QCollapsible,
 			Toast,
 			PullTo,
-			date
+			date,QToolbar,QToolbarTitle
 		},
 		filters: {
 			currencys: function(value, c) {

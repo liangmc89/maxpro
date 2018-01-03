@@ -1,56 +1,69 @@
 <template>
-	<pull-to :top-load-method="refresh" class="bg-white">
-		<div id="addDeposit">
-			<div class="h-bg my-bg">
-				<h5 class="page-title">入金申请</h5>
-			</div>
-			<div style="padding: 1.5rem">
+  <div class="content-wrapper">
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          财务-入金申请
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh" class="bg-white">
 
-						<q-field :error="validation.hasError('inlogin')" :error-label="validation.firstError('inlogin')">
-							<q-select float-label="入金账号" v-model="inlogin" :options="mtlist" />
-						</q-field>
-						<q-field :error="validation.hasError('inmoney')" :error-label="validation.firstError('inmoney')">
-							<q-input float-label="入金金额（美元）" v-model.lazy.trim="inmoney" clearable type="number" prefix="$" @change='changeInmoney' />
-						</q-field>
-						<q-input float-label="当前汇率：" :value="exchangerate" type="text" disable readonly/>
-						<q-input float-label="需支付（人民币）" v-model="inmoneyrmb" prefix="¥" type="number" disable readonly />
-						<q-input float-label="手续费（$）" v-model="infee" prefix="$" type="number" disable readonly />
-						<q-field :error="validation.hasError('pay')" :error-label="validation.firstError('pay')">
-							<q-input float-label="支付方式" v-model="pay.bname" type="text" @click='isOpen=true' />
-						</q-field>
+        <div id="addDeposit" class="padding-content">
+            <q-field :error="validation.hasError('inlogin')" :error-label="validation.firstError('inlogin')">
+              <q-select float-label="入金账号" v-model="inlogin" :options="mtlist" />
+            </q-field>
+            <q-field :error="validation.hasError('inmoney')" :error-label="validation.firstError('inmoney')">
+              <q-input float-label="入金金额（美元）" v-model.lazy.trim="inmoney" clearable type="number" prefix="$" @change='changeInmoney' />
+            </q-field>
+            <q-input float-label="当前汇率：" :value="exchangerate" type="text" disable readonly/>
+            <q-input float-label="需支付（人民币）" v-model="inmoneyrmb" prefix="¥" type="number" disable readonly />
+          <q-field :error="validation.hasError('isInfee')" :error-label="validation.firstError('isInfee')">
+            <q-input float-label="手续费（$）" v-model="infee" prefix="$" type="number" disable readonly />
+          </q-field>
+            <q-field :error="validation.hasError('pay')" :error-label="validation.firstError('pay')">
+              <q-input float-label="支付方式" v-model="pay.bname" type="text" @click='isOpen=true' />
+            </q-field>
 
 
-				<div class="row no-warp" style="padding: 2rem 0;">
-					<q-btn rounded :big="true" class="full-width my-button" @click='doAddDepositIn'>申 请</q-btn>
-				</div>
+            <div class="row no-warp" style="padding: 2rem 0;">
+              <q-btn rounded :big="true" class="full-width my-button" @click='doAddDepositIn'>申 请</q-btn>
+            </div>
 
-				<q-modal v-model='isOpen' maximized>
-					<div class="h-bg my-bg" style="box-sizing: border-box;">
-						<h5 class="page-title">选择支付方式</h5>
-					</div>
-					<div style="flex: 1; box-sizing: border-box;overflow: hidden; ">
-						<q-scroll-area style='height: 100%;padding: 1.5rem 1rem'>
-							<q-radio v-model="pay" @focus='isOpen=false' class='radio' v-for="(item,index) in banklist" :val="item" color="secondary" :label="item.bname" :key="index" />
-						</q-scroll-area>
-					</div>
+            <q-modal v-model='isOpen' maximized>
+              <div class="h-bg my-bg" style="box-sizing: border-box;">
+                <h5 class="page-title">选择支付方式</h5>
+              </div>
+              <div style="flex: 1; box-sizing: border-box;overflow: hidden; ">
+                <q-scroll-area style='height: 100%;padding: 1.5rem 1rem'>
+                  <q-radio v-model="pay" @focus='isOpen=false' class='radio' v-for="(item,index) in banklist" :val="item" color="secondary" :label="item.bname" :key="index" />
+                </q-scroll-area>
+              </div>
 
-				</q-modal>
-      </div>
-			</div>
+            </q-modal>
+          </div>
 
-	</pull-to>
+
+      </pull-to>
+    </div>
+  </div>
+
+
+
+
+
+
 </template>
 
 <script>
 	import Vue from 'vue'
 	var SimpleVueValidation = require('simple-vue-validator');
-	var Validator = SimpleVueValidation.Validator.create({
-		templates: {
-			required: '字段不能为空！',
-			greaterThan: '必须大于{0}!'
+	var Validator = SimpleVueValidation.Validator;
 
-		}
-	});
 	Vue.use(SimpleVueValidation);
 
 	import { required, email } from 'vuelidate/lib/validators'
@@ -65,7 +78,8 @@
 		Ripple,
 		QRadio,
 		QModal,
-		QScrollArea
+		QScrollArea,
+    QToolbar,QToolbarTitle
 	} from 'quasar'
 
 	import { currencys } from '../js/filter'
@@ -85,7 +99,8 @@
 			PullTo,
 			QRadio,
 			QModal,
-			QScrollArea
+			QScrollArea,
+      QToolbar,QToolbarTitle
 		},
 		filters: {
 			currencys: function(value) {
@@ -101,17 +116,39 @@
 		validators: {
 
 			inlogin: function(value) {
-				return Validator.value(value).required();
+				return Validator.custom(function () {
+          if(Validator.isEmpty(value)) {
+            return '请选择出金账号！'
+          }
+        });
 			},
-
+      isInfee:function (value) {
+        return Validator.custom(function () {
+        if(!value){
+          return '未能刷新入金手续费，请重新输入入金金额后再试！'
+        }})
+      },
 			inmoney: function(value) {
-				return Validator.value(value).required().greaterThan(0);
+        let self=this;
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)) {
+            return '请输入入金金额！'
+          }
+          if(value<=0){
+            return '入金金额必须大于0 ！'
+          }
+          if(value<=self.infee){
+            return '入金金额必须大于入金的手续费 ！'
+          }
+        });
+
+
 			}, //入金金额
 
 			pay: function(value) {
 				return Validator.custom(function() {
 					if(value.inmoneytype == null || value.inmoneytype == 'undefined' || Validator.isEmpty(value.inmoneytype)) {
-						return '未选择支付方式！'
+						return '请选择支付方式！'
 					}
 				});
 			}
@@ -124,25 +161,30 @@
 		},
 		methods: {
 			changeInmoney(newVal) {
-				return;
 				let self = this;
-				console.log(newVal)
-				self.$http.post(self.$api.url.getinfee, {
-					'number': newVal
-				}).then(response => {
-					if(response && response.code == 1) {
-						self.infee = response.data.data;
-					} else {
-						Toast.create({
-							html: response.data.message
-						});
-					}
+        if(newVal!=''&&newVal!=0&&newVal!=null){
+          self.$http.post(self.$api.url.getinfee, {
+            'number': newVal
+          }).then(response => {
+            if(response && response.data.code == 1) {
+              self.infee = response.data.data;
+              self.isInfee=true;
+              self.$validate();
+            } else {
+              self.isInfee=false;
+              Toast.create.negative({
+                html: response.data.message
+              });
+            }
 
-				}).catch(err => {
-					Toast.create.negative({
-						html: err.message
-					});
-				});
+          }).catch(err => {
+            self.isInfee=false;
+            Toast.create.negative({
+              html: err.message
+            });
+          });
+        }
+
 			},
 			doAddDepositIn() {
 				let self = this;
@@ -159,13 +201,29 @@
                   pay_id: self.pay.id,
                   bankid: self.pay.bankno
                 }).then(response => {
-                  if(response.code == 1) {
-                    console.log(response);
+                  if(response&&response.data.code == 1) {
+                    self.$router.push({name:'actionResult',params:{ActionResult:{
+                          message:response.data.message,
+                          types:'success',
+                          buttons:[{
+                            label:'完成',
+                            handle:function () {
+                              self.$router.back();
+                            }
+                          }]
+                        }}})
+                   // Toast.create.positive({html:response.data.message})
                   } else {
-                    Toast.create({
-                      html: response.data.message,
-
-                    });
+                    self.$router.push({name:'actionResult',params:{ActionResult:{
+                          message:response.data.message,
+                          types:'fail',
+                          buttons:[{
+                            label:'返回',
+                            handle:function () {
+                              self.$router.back();
+                            }
+                          }]
+                        }}})
                   }
                 }).catch(err => {
                   Toast.create.negative({
@@ -182,6 +240,7 @@
 				this.mtlist = [];
 				this.exchangerate = '';
 				this.banklist = [];
+				this.isInfee=false;
 				let self = this;
 				self.$showloading();
 				this.timeout = setTimeout(() => {
@@ -233,7 +292,8 @@
 				inmoney: 0, //入金金额
 				inmoneytype: '', //支付方式，
 				pay: {},
-				infee: 100 //手续费
+				infee:0, //手续费
+        isInfee:false //是否成功刷新手续费
 
 			}
 		},

@@ -1,13 +1,13 @@
 <template>
   <div class="content-wrapper">
   <div class="content-title">
-    <q-toolbar class="text-left" style="background: transparent;height: 4.8rem">
+    <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
       <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
       </q-btn>
       <q-toolbar-title>
         新闻详情
       </q-toolbar-title>
-
+      <div style="width: 4rem"></div>
     </q-toolbar>
 
   </div>
