@@ -1,6 +1,15 @@
 <template>
   <div class="content-wrapper">
-    <div class="content-title">设置</div>
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          设置
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
     <div class="content-flex">
       <pull-to :top-load-method="refresh">
         <div class="padding-content">
@@ -18,7 +27,7 @@
               <q-item-side icon="lock" color="teal-5">
               </q-item-side>
               <q-item-main>
-                <q-item-tile label>修改登录密码</q-item-tile>
+                <q-item-tile label>修改CRM登录密码</q-item-tile>
               </q-item-main>
               <q-item-side right icon="keyboard arrow right"/>
             </q-item>
@@ -26,7 +35,7 @@
             <q-item v-ripple class="settings-item" @click="$refs.MtModal.open()">
               <q-item-side icon="vpn key" color="primary"/>
               <q-item-main>
-                <q-item-tile label>修改MT密码</q-item-tile>
+                <q-item-tile label>重置MT密码</q-item-tile>
               </q-item-main>
               <q-item-side right icon="keyboard arrow right"/>
             </q-item>
@@ -39,83 +48,67 @@
               <q-item-side right icon="keyboard arrow right"/>
             </q-item>
           </q-list>
-          <div class="padding-content" style="margin-top: 6rem">
+          <div class="padding-content" style="margin-top: 5rem">
             <q-btn big class="my-button full-width" @click="logout">退出系统</q-btn>
           </div>
         </div>
       </pull-to>
-      <q-modal ref="personDataModal" maximized @open="refresh">
-        <div class="content-wrapper">
-          <div class="content-title">个人资料</div>
+      <q-modal ref="personDataModal" maximized >
+        <div class="content-wrapper ">
+          <div class="content-title">
+            <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+              <q-btn flat icon="keyboard_arrow_left" @click="$refs.personDataModal.close()" >
+              </q-btn>
+              <q-toolbar-title>
+                个人资料
+              </q-toolbar-title>
+              <div style="width: 4rem"></div>
+            </q-toolbar></div>
           <div class="content-flex">
-            <pull-to>
+            <pull-to >
+              <div style="background: rgb(247,247,250);padding: 1rem">
               <div class="row no-wrap user-avatar padding-content">
                 <div class="col-6 relative-position text-left"><span class="avatar-title">头像</span></div>
                 <div class="col-6 text-right"><img
                   :src="personData.avatar==''?'../statics/images/default_avatar.png':this.$api.url.baseURI+personData.avatar.substr(1)"
                   class="avatar-img" alt="点击修改头像"/></div>
               </div>
-              <div class="user-field">
-                <q-list no-border>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      昵称
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field>
-                        <q-input v-model="personData.nickname" type="text" align="right" :max-length="20"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      邮箱
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('personData.email')"
-                               :error-label="validation.firstError('personData.email')">
-                        <q-input v-model="personData.email" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      手机号
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('personData.phone')"
-                               :error-label="validation.firstError('personData.phone')">
-                        <q-input v-model="personData.phone" type="number" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      证件号码
-                    </q-item-side>
-                    <q-item-main>
-                      <q-field :error="validation.hasError('personData.identity')"
-                               :error-label="validation.firstError('personData.identity')">
-                        <q-input v-model="personData.identity" type="text" align="right"></q-input>
-                      </q-field>
-                    </q-item-main>
-                  </q-item>
-                  <q-item class="settings-item">
-                    <q-item-side>
-                      性别
-                    </q-item-side>
-                    <q-item-main>
-                      <div class="text-right">
-                        <q-radio v-model="personData.sex" val="2" label="男"/>
-                        <q-radio v-model="personData.sex" val="1" label="女"/>
-                        <q-radio v-model="personData.sex" val="0" label="保密"/>
-                      </div>
-                    </q-item-main>
-                  </q-item>
-                  <q-collapsible ref="clpProvince" :label="provinceAndCity" class="bg-white">
-                    <v-distpicker wrapper="province-wrapper" hide-area address-container="province" type="mobile"
-                                  @selected="selectedProvince"></v-distpicker>
-                  </q-collapsible>
+              <div class=" padding-content bg-white">
+                <q-field style="margin-top: 0">
+                  <q-input float-label="昵称" clearable v-model="personData.nickname" type="text" align="right" :max-length="20"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('personData.email')"
+                         :error-label="validation.firstError('personData.email')">
+                  <q-input float-label="邮箱" clearable v-model="personData.email" type="text" align="right"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('personData.phone')"
+                         :error-label="validation.firstError('personData.phone')">
+                  <q-input float-label="手机号" clearable v-model="personData.phone" type="number" align="right"></q-input>
+                </q-field>
+                <q-field :error="validation.hasError('personData.identity')"
+                         :error-label="validation.firstError('personData.identity')">
+                  <q-input float-label="证件号码" clearable v-model="personData.identity" type="text" align="right"></q-input>
+                </q-field>
+
+                <div class="row">
+                  <div class="col-4">性别</div>
+                  <div class="col-8">
+                    <q-option-group inline align="right"
+                                    color="primary"
+                                    v-model="personData.sex"
+                                    :options="[
+            {label: '男', value: '2'},
+            {label: '女', value: '1'},
+            {label: '保密', value: '0'}
+          ]"
+                    />
+                  </div>
+
+                </div>
+
+              </div>
+
+                <q-list no-border style="margin-top: .3rem">
                   <q-collapsible :label="nation" class="bg-white">
                     <div>
                       <q-field>
@@ -123,10 +116,16 @@
                       </q-field>
                     </div>
                   </q-collapsible>
+                  <q-collapsible ref="clpProvince" :label="provinceAndCity" class="bg-white">
+                    <v-distpicker wrapper="province-wrapper" hide-area address-container="province" type="mobile"
+                                  @selected="selectedProvince"></v-distpicker>
+                  </q-collapsible>
+
                 </q-list>
-              </div>
-              <div class="padding-content">
+
+              <div class="padding-content" style="padding-bottom: 5rem">
                 <q-btn  big class="my-button full-width" @click="savePersonData">保存</q-btn>
+              </div>
               </div>
             </pull-to>
           </div>
@@ -134,7 +133,16 @@
       </q-modal>
       <q-modal ref="PwdModal" maximized>
         <div class="content-wrapper">
-          <div class="content-title">修改密码</div>
+          <div class="content-title">
+            <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+              <q-btn flat icon="keyboard_arrow_left" @click="$refs.PwdModal.close()" >
+              </q-btn>
+              <q-toolbar-title>
+                修改CRM登录密码
+              </q-toolbar-title>
+              <div style="width: 4rem"></div>
+            </q-toolbar>
+            </div>
           <div class="content-flex">
             <pull-to>
               <div class="padding-content bg-white">
@@ -159,17 +167,24 @@
                   </q-field>
                 </div>
               </div>
-              <div class="padding-content">
-                <q-btn class="my-button full-width" @click="passwordAgain">保存</q-btn>
+              <div class="padding-content"  >
+                <q-btn big  class="my-button full-width" @click="passwordAgain">保存</q-btn>
               </div>
 
             </pull-to>
           </div>
         </div>
       </q-modal>
-      <q-modal ref="MtModal" maximized @open="getMtList">
+      <q-modal ref="MtModal" maximized >
          <div class="content-wrapper">
-           <div class="content-title">修改MT密码</div>
+           <div class="content-title"><q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+             <q-btn flat icon="keyboard_arrow_left" @click="$refs.MtModal.close()" >
+             </q-btn>
+             <q-toolbar-title>
+               重置MT密码
+             </q-toolbar-title>
+             <div style="width: 4rem"></div>
+           </q-toolbar></div>
            <div class="content-flex">
              <pull-to>
                <div class="padding-content bg-white">
@@ -190,7 +205,7 @@
                  </div>
                </div>
                <div class="padding-content">
-                 <q-btn class="my-button full-width" @click="resetAccoutPwd">保存</q-btn>
+                 <q-btn big class="my-button full-width" @click="resetAccoutPwd">保存</q-btn>
                </div>
 
              </pull-to>
@@ -218,12 +233,12 @@
   import VDistpicker from 'v-distpicker'
   import {
     QIcon, Ripple, QList, QModal, QBtn, QField, QInput, QRadio, QCollapsible, Toast, QSelect,
-    QListHeader, Dialog,
+    QListHeader, Dialog,QOptionGroup,
     QItem,
     QItemSeparator,
     QItemSide,
     QItemMain,
-    QItemTile
+    QItemTile,QToolbar,QToolbarTitle
   } from 'quasar'
 
   export default {
@@ -236,20 +251,16 @@
           province: '',
           city: '',
           nationality: ''
-
         },
         pwd: {
           password: '',
           new_password: '',
           re_password: ''
         },
-
         mtlist: [],
         mt: {},
-
         validatePersonData: ['personData.phone', 'personData.email', 'personData.identity'],
         validatePwd: ['pwd.password', 'pwd.new_password', 'pwd.re_password']
-
       }
     },
     directives: {Ripple},
@@ -259,8 +270,8 @@
       QItem,
       QItemSeparator,
       QItemSide,
-      QItemMain,
-      QItemTile, QModal, QBtn, VDistpicker
+      QItemMain,QOptionGroup,
+      QItemTile, QModal, QBtn, VDistpicker,QToolbar,QToolbarTitle
     }, validators: {
 
       'personData.email': function (value) {
@@ -286,7 +297,11 @@
         })
       },
       'pwd.password': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '原密码不能为空！'
+          }
+        })
       },
       'pwd.new_password': function (value) {
         return Validator.custom(function () {
@@ -295,18 +310,31 @@
               return '密码必须是6-16位大小写字母和数字组合！'
             }
           } else {
-            return '密码不能为空！'
+            return '新密码不能为空！'
           }
         })
       },
       'pwd.re_password, pwd.new_password': function (repassword, password) {
+
+
+
         if (this.submitted || this.validation.isTouched('pwd.re_password')) {
-          return Validator.value(repassword).required().match(password);
+
+          return Validator.custom(function () {
+            if (!Validator.isEmpty(repassword)) {
+                if(repassword!=password){
+                  return '密码不一致！'
+                }
+            } else {
+              return '确认密码不能为空！'
+            }
+          })
         }
       },
       mt: function (value) {
+        let self=this;
         return Validator.custom(function () {
-          if (JSON.stringify(value) == '{}') {
+          if (self.submitted&&JSON.stringify(value) == '{}') {
             return '未选择账号！';
           }
         })
@@ -315,7 +343,7 @@
 
     },
     created: function () {
-
+        this.refresh();
     },
     computed: {
       provinceAndCity: function () {
@@ -367,7 +395,7 @@
       },
       resetAccoutPwd: function () {
         let self = this;
-
+        self.submitted = true;
         this.$validate('mt')
           .then(function (success) {
             if (success) {
@@ -395,6 +423,7 @@
 
             }
           });
+        self.submitted=false;
 
       },
       passwordAgain: function () {
@@ -475,51 +504,36 @@
             }
           });
       },
-      getMtList: function (done) {
-        this.$showloading();
-        let self = this;
-        self.mtlist = [];
-        self.mt = {};
-        setTimeout(() => {
-
-          self.$http.post(self.$api.url.mtDetail, {}).then(response => {
-              if (response && response.data.code == 1) {
-                response.data.data.forEach((item) => {
-                  self.mtlist.push({label: item.loginid, value: item});
-                })
-
-              } else {
-                Toast.create.negative({html: response.data.message})
-              }
-              self.$hideloading();
-            }
-          ).catch(err => {
-            self.$hideloading();
-            Toast.create.negative({
-              html: err.message
-            });
-          });
-          if (done) {
-            done()
-          }
-        }, 1000);
+      getMtList: function () {
+        return  this.$http.post(this.$api.url.mtDetail, {});
       },
+      getPersonlData:function () {
+        return this.$http.post(this.$api.url.personalData, {});
+      },
+
       refresh: function (done) {
         this.$showloading();
         let self = this;
         setTimeout(() => {
-
-          self.$http.post(self.$api.url.personalData, {}).then(response => {
-              if (response && response.data.code == 1) {
-                self.personData = response.data.data;
-              } else if (!response) {
-                Toast.create.negative({html: '未登录，请登录！'})
-              } else {
-                Toast.create.negative({html: response.message})
-              }
-              self.$hideloading();
+          self.$http.all([self.getMtList(),self.getPersonlData()]).then(self.$http.spread(function (_mtlist,_personalData) {
+            self.$hideloading();
+            if(_mtlist&&_mtlist.data.code == 1){
+              self.mtlist = [];
+              _mtlist.data.data.forEach((item) => {
+                self.mtlist.push({label: item.loginid, value: item});
+              })
+            }else{
+              Toast.create.negative({html: response.data.message})
             }
-          ).catch(err => {
+            if (_personalData && _personalData.data.code == 1) {
+              self.mt = {};
+              self.personData = _personalData.data.data;
+            } else if (!_personalData) {
+              Toast.create.negative({html: '未登录，请登录！'})
+            } else {
+              Toast.create.negative({html: _personalData.message})
+            }
+          })).catch(err=>{
             self.$hideloading();
             Toast.create.negative({
               html: err.message
@@ -536,7 +550,7 @@
 </script>
 <style>
   .user-avatar {
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
     background: white;
   }
 
@@ -581,6 +595,7 @@
   .pwd-title {
     border-left: .3rem solid #f4873c;
     padding-left: .5rem;
+    font-size: 1.4rem;
   }
 
 </style>

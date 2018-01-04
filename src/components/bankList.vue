@@ -2,7 +2,7 @@
     <div class="content-wrapper">
       <div class="content-title">
         <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
-          <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+          <q-btn flat icon="keyboard_arrow_left" @click="$router.push({name:'member'})" >
           </q-btn>
           <q-toolbar-title>
             银行卡
@@ -71,12 +71,22 @@
 
         }
       },
+      watch: {
+        // 如果路由有变化，会再次执行该方法
+        '$route': function (from,to) {
+
+           if(from.name=='bankList'){
+            this.refresh();
+           }
+        }
+      },
       methods:{
          refresh:function (done) {
             let self=this;
             setTimeout(()=>{
               self.$showloading();
               self.$http.post(self.$api.url.myAllCard,{}).then(response=>{
+                self.$hideloading();
                   if(response&&response.data.code==1){
                       self.bankList=response.data.data;
                   }else{
@@ -85,6 +95,7 @@
                     })
                   }
               }).catch(err=>{
+                self.$hideloading();
                   Toast.create.negative({
                      html:err.message
                   })
@@ -93,7 +104,7 @@
               if(done){
                 done();
               }
-              self.$hideloading();
+
             },1000)
          },
         loadmore:function (done) {

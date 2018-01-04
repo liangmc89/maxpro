@@ -80,6 +80,11 @@ export default new VueRouter({
       component:load('addBankCard'),
       name:'addBankCard'
     },
+    {
+      path:'/maxpro/member/settings',
+      component:load('settings'),
+      name:'settings'
+    },
 		{
 			path: '/maxpro',
 			component: load('maxpro'),
@@ -93,19 +98,17 @@ export default new VueRouter({
 				},
         {
           path:'member',
-          component:load('member')
+          component:load('member'),
+          name:'member'
         },
         {
           path:'member/bankList',
-          component:load('bankList')
+          component:load('bankList'),
+          name:'bankList'
         },
         {
           path:'/maxpro/member/promoCode',
           component:load('promoCode')
-        },
-        {
-          path:'/maxpro/member/settings',
-          component:load('settings')
         },
 				{
 					path: 'test',
@@ -127,7 +130,8 @@ export default new VueRouter({
 			        component: load('followList')
 				},{
 					path:'myProperty/depositInList',
-			        component: load('depositInList')
+			        component: load('depositInList'),
+             name:'depositInList'
 				},{
 					path:'followList',
 			        component: load('followList')

@@ -58,6 +58,7 @@ axios.interceptors.response.use(function(response) {
 }, function(error) {
 	//对返回的错误进行一些处理
 	// Loading.hide();
+
 	return Promise.reject(error);
 
 });

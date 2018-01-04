@@ -209,6 +209,7 @@
                   bankid: self.pay.bankno
                 }).then(response => {
                   if(response&&response.data.code == 1) {
+
                     self.$router.push({name:'actionResult',params:{ActionResult:{
                           message:response.data.message,
                           types:'success',

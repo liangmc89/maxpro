@@ -81,7 +81,6 @@
     validators: {
       bankCard: function (value) {
          return Validator.custom(function () {
-           debugger
            if(Validator.isEmpty(value)){
              return '请上传银行卡照片！'
            }
@@ -146,12 +145,10 @@
          let data=JSON.parse(xhr.response);
         if(data.status==1){
            Toast.create.positive({html:data.info,timeout:3000})
-           console.log('id:'+data.data[0]['id'])
-          debugger
           this.bankCard=data.data[0]['id'];
-           console.log('bankCard:'+this.bankCard);
+
         }else{
-          Toast.create.negative({html:data.data.message})
+          Toast.create.negative({html:data.message})
           this.bankCard='';
         }
 
@@ -172,7 +169,11 @@
             if (response && response.data.code == 1) {
               self.$hideloading();
               Toast.create.positive({
-                html:response.data.message
+                html:response.data.message,
+                timeout:4000,
+                onDismiss:()=>{
+                  self.$router.push({name:'bankList'});
+                }
               });
 
             } else {

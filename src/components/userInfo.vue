@@ -38,15 +38,19 @@
 				</div>
 			</div>
 			<div slot="slide" class="account-detail">
-				<div class="detail-item" v-ripple>
+        <router-link to="/maxpro/myProperty/depositInList">
+				<div class="detail-item" v-ripple >
 					<h5>入金</h5>
 					<p class="amount">{{top.innumber|currencyFilter}}</p>
 				</div>
+        </router-link>
 				<hr />
-				<div class="detail-item" v-ripple>
+        <router-link to="/maxpro/myProperty/depositOutList">
+				<div class="detail-item" v-ripple >
 					<h5>出金</h5>
 					<p class="amount">{{top.outnumber|currencyFilter}}</p>
 				</div>
+        </router-link>
 			</div>
 			<div slot="slide" class="account-detail">
 				<div class="detail-item" v-ripple>
