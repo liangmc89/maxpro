@@ -35,8 +35,15 @@
             </div>
 
             <q-modal v-model='isOpen' maximized>
-              <div class="h-bg my-bg" style="box-sizing: border-box;">
-                <h5 class="page-title">选择支付方式</h5>
+              <div class="content-title">
+                <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+                  <q-btn flat icon="keyboard_arrow_left" @click="isOpen=false" >
+                  </q-btn>
+                  <q-toolbar-title>
+                    选择支付方式
+                  </q-toolbar-title>
+                  <div style="width: 4rem"></div>
+                </q-toolbar>
               </div>
               <div style="flex: 1; box-sizing: border-box;overflow: hidden; ">
                 <q-scroll-area style='height: 100%;padding: 1.5rem 1rem'>

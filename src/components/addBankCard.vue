@@ -1,60 +1,68 @@
 <template>
-  <div class="add-bank-card">
-    <div class="h-bg my-bg">
-      <h5 class="page-title">银行卡</h5>
+  <div class="content-wrapper">
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          添加银行卡
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
     </div>
-    <div class="bank">
-    <pull-to>
-    <div class="bank-info ">
-      <div class="info-legend">银行信息</div>
-      <div class="info-field">
-      <q-field :error="validation.hasError('bankName')" :error-label="validation.firstError('bankName')">
-        <q-input v-model.trim="bankName" clearable type="text" float-label="开户行"/>
-      </q-field>
+    <div class="content-flex">
+      <pull-to>
+        <div class="bank-info ">
+          <div class="info-legend">银行信息</div>
+          <div class="info-field">
+            <q-field :error="validation.hasError('bankName')" :error-label="validation.firstError('bankName')">
+              <q-input v-model.trim="bankName" clearable type="text" float-label="开户行"/>
+            </q-field>
 
-      <q-field :error="validation.hasError('bankBranch')" :error-label="validation.firstError('bankBranch')">
-        <q-input v-model.trim="bankBranch" clearable type="text" float-label="支行"/>
-      </q-field>
+            <q-field :error="validation.hasError('bankBranch')" :error-label="validation.firstError('bankBranch')">
+              <q-input v-model.trim="bankBranch" clearable type="text" float-label="支行"/>
+            </q-field>
 
-      <q-field :error="validation.hasError('accountName')" :error-label="validation.firstError('accountName')">
-        <q-input v-model.trim="accountName" clearable type="text" float-label="姓名"/>
-      </q-field>
+            <q-field :error="validation.hasError('accountName')" :error-label="validation.firstError('accountName')">
+              <q-input v-model.trim="accountName" clearable type="text" float-label="姓名"/>
+            </q-field>
 
-      <q-field :error="validation.hasError('accountNum')" :error-label="validation.firstError('accountNum')">
-        <q-input v-model.trim="accountNum" clearable type="number" float-label="账户"/>
-      </q-field>
-      </div>
-    </div>
-    <div class="bank-avatar">
-      <div class="info-legend">附件资料</div>
-      <div class="add-avatar" v-ripple>
-            <div class="avatar-wrapper">
-              <img v-if="bankCardUrl!=''" :src="bankCardUrl"/>
-            </div>
-      </div>
-      <input hidden class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="update"/>
-
-    </div>
-    <div class="bank-btn">
-    <q-btn big class="my-button full-width" @click="addBankCard">保存</q-btn>
-    </div>
-    </pull-to>
+            <q-field :error="validation.hasError('accountNum')" :error-label="validation.firstError('accountNum')">
+              <q-input v-model.trim="accountNum" clearable type="text" float-label="账号"/>
+            </q-field>
+          </div>
+        </div>
+        <div class="bank-avatar">
+          <div class="info-legend">附件资料</div>
+          <div class="add-avatar" v-ripple>
+            <q-field :error="validation.hasError('bankCard')" :error-label="validation.firstError('bankCard')">
+            <q-uploader  extensions=".gif,.jpg,.jpeg,.png" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
+            </q-field>
+          </div>
+        </div>
+        <div class="bank-btn">
+          <q-btn big class="my-button full-width" @click="addBankCard">保存</q-btn>
+        </div>
+      </pull-to>
     </div>
   </div>
+
+
+
+
+
 </template>
 
 <script>
   import Vue from 'vue'
   import PullTo from 'vue-pull-to'
-  import {Toast, QField, QInput, QBtn,QUploader,Dialog,Ripple} from 'quasar'
+  import {Toast, QField, QInput, QBtn,QUploader,Dialog,Ripple,QToolbar,QToolbarTitle} from 'quasar'
   import {required} from 'vuelidate/lib/validators'
+  import {getCookie} from '../js/cookie.js'
 
   var SimpleVueValidation = require('simple-vue-validator');
-  var Validator = SimpleVueValidation.Validator.create({
-    templates: {
-      required: '字段不能为空！'
-    }
-  });
+  var Validator = SimpleVueValidation.Validator;
+
   Vue.use(SimpleVueValidation);
 
 
@@ -62,31 +70,51 @@
     name: "add-bank-card",
     data() {
       return {
-        bankCard: '123',
+        bankCard: '',
         bankName: '',
         bankBranch: '',
         accountName: '',
         accountNum: '',
-        bankCardUrl:''
-
-
+        uploadUrl:''
       }
     },
     validators: {
-      // bankCard: function (value) {
-      //   return Validator.value(value).required();
-      // },
+      bankCard: function (value) {
+         return Validator.custom(function () {
+           debugger
+           if(Validator.isEmpty(value)){
+             return '请上传银行卡照片！'
+           }
+         });
+       },
       bankName: function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '开户行不能为空！'
+          }
+        });
+
       },
       bankBranch:function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '支行名称不能为空！'
+          }
+        });
       },
       accountName:function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '姓名不能为空！'
+          }
+        });
       },
       accountNum:function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '账号不能为空！'
+          }
+        });
       }
 
     },
@@ -94,23 +122,39 @@
       Ripple
     },
     components: {
-      QField, QInput, QBtn,QUploader,Dialog,PullTo
+      QField, QInput, QBtn,QUploader,Dialog,PullTo,QToolbar,QToolbarTitle
     },
     methods: {
+      getUploloadUrl:function () {
+        let self=this;
+         let token=getCookie('token');
+         if(token==null||token==''){
+           Toast.create.negative({
+             html:'登录已失效，请重新登录后再试！',
+             timeout:4000,
+             onDismiss:function () {
+               self.$router.push({name:'login'});
+             }
+           })
+         }else {
+           this.uploadUrl= this.$api.url.baseURI+this.$api.url.upload+'?token='+token;
+         }
 
-      update:function (e) {
-        let file = e.target.files[0];
-        let param = new FormData(); //创建form对象
-        param.append('file',file,file.name);//通过append向form对象添加数据
-        //param.append('chunk','0');//添加form表单中其他数据
-        console.log(param.get('file')); //FormData私有类对象，访问不到，可以通过get判断值是否传进去
-        let config = {
-          headers:{'Content-Type':'multipart/form-data'}
-        };  //添加请求头
-        this.$http.post(this.$api.url.upload,param,config)
-          .then(response=>{
-            console.log(response.data);
-          })
+      },
+      uploaded:function(file, xhr){
+
+         let data=JSON.parse(xhr.response);
+        if(data.status==1){
+           Toast.create.positive({html:data.info,timeout:3000})
+           console.log('id:'+data.data[0]['id'])
+          debugger
+          this.bankCard=data.data[0]['id'];
+           console.log('bankCard:'+this.bankCard);
+        }else{
+          Toast.create.negative({html:data.data.message})
+          this.bankCard='';
+        }
+
       },
 
       saveBankCard:function () {
@@ -119,7 +163,7 @@
         self.$showloading({message:'正在保存…'});
         setTimeout(() => {
           self.$http.post(self.$api.url.addBankCard, {
-            bankCard: '123',
+            bankCard: self.bankCard,
             bankName: self.bankName,
             bankBranch: self.bankBranch,
             accountName: self.accountName,
@@ -185,16 +229,7 @@
 
 <style>
 
-  .add-bank-card{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .bank{
-    flex: 1;
-    overflow: hidden;
 
-  }
 
   .bank-info {
     background: white;
@@ -219,17 +254,12 @@
   }
   .add-avatar{
     margin: 2rem auto;
-    padding: 1.5rem 3rem;
+    padding-bottom: .5rem;
     position: relative;
-    text-align: center;
+    text-align: left;
     background: rgba(227,227,233,.6);
 
   }
-  .avatar-wrapper{
-    background: url("../statics/images/add-bank.png") no-repeat center center/40% 60%;
-    width: 70%;
-    height: 10rem;
-    margin: 0 auto;
-  }
+
 
 </style>

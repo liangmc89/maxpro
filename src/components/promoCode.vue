@@ -1,20 +1,27 @@
 <template>
-   <div id="promo">
-     <div class="h-bg my-bg">
-       <h5 class="page-title">推广码</h5>
-     </div>
-     <div id="promo-body">
-       <pull-to :top-load-method="refresh">
-          <div class="promo-item bg-white" v-for="(item,index) in code" :key="index" >
-             <div class="promo-title">推广</div>
-            <div class="promo-field">
+  <div class="content-wrapper">
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          推广码
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh">
+        <div class="promo-item bg-white shadow-3" v-for="(item,index) in code" :key="index" >
+          <div class="promo-title">推广</div>
+          <div class="promo-field">
             <q-field >
               <q-input :value="item.link"  type="textarea" readonly stack-label="URL"/>
             </q-field>
             <q-btn flat color="primary" icon="content copy" v-clipboard:copy="item.link"
                    v-clipboard:success="onCopy(item)"
                    v-clipboard:error="onError">
-               点击复制链接
+              点击复制链接
               <q-tooltip v-model="item.show">
                 复制成功！
               </q-tooltip>
@@ -23,15 +30,16 @@
               <q-input :value="invent_code" clearable type="text" readonly stack-label="推广码"/>
             </q-field>
             <div class="qcode">
-                <div class="qcode-wrapper">
-                   <img :src="baseURI+item.avatar.substr(1)" class="qcode-img"/>
-                </div>
-            </div>
+              <div class="qcode-wrapper">
+                <img :src="baseURI+item.avatar.substr(1)" class="qcode-img"/>
+              </div>
             </div>
           </div>
-       </pull-to>
-     </div>
-   </div>
+        </div>
+      </pull-to>
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -40,7 +48,7 @@
 
   Vue.use(VueClipboard)
   import PullTo from 'vue-pull-to'
-  import {Toast,QField,QInput,QBtn,Ripple,QTooltip} from 'quasar'
+  import {Toast,QField,QInput,QBtn,Ripple,QTooltip,QToolbar,QToolbarTitle} from 'quasar'
     export default {
         name: "promo-code",
       data(){
@@ -57,7 +65,7 @@
 
       },
       components:{
-          PullTo,Toast,QField,QInput,QBtn,VueClipboard,QTooltip
+          PullTo,Toast,QField,QInput,QBtn,VueClipboard,QTooltip,QToolbar,QToolbarTitle
       },
       methods:{
 
@@ -109,17 +117,7 @@
 </script>
 
 <style >
-   #promo{
-     height: 100%;
-     width: 100%;
-     display: flex;
-     flex-direction: column;
-   }
-  #promo-body{
-    flex: 1;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
+
    .promo-item{
      margin-bottom: 1rem;
      padding: 1rem 2rem;
@@ -131,6 +129,7 @@
   .promo-title{
     padding-left: 1rem;
     border-left:.3rem solid #f4873c;
+    font-size: 1.4rem;
   }
    .qcode{
 

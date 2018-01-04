@@ -21,8 +21,8 @@
             <q-field :error="validation.hasError('isOutfee')" :error-label="validation.firstError('isOutfee')">
             <q-input float-label="手续费（$）" v-model="outfee" prefix="$" type="number" disable readonly />
             </q-field>
-
-            <q-field label="出金方式" :error="validation.hasError('radioInline')" :error-label="validation.firstError('radioInline')">
+            <!--:error="validation.hasError('radioInline')" :error-label="validation.firstError('radioInline')"-->
+            <q-field label="出金方式" >
               <q-radio  v-model="radioInline" v-for='(item,index) in radioInlineList' :key="index"  :val="item.value" :label="item.label"  />
             </q-field>
 
@@ -50,10 +50,10 @@
             </div>
             <div v-show="radioInline==3">
               <q-field :error="validation.hasError('mtlogin')" :error-label="validation.firstError('mtlogin')">
-                <q-input float-label="转入MT账户" v-model="mtlogin"  type="text"   />
+                <q-input float-label="转入MT账户" v-model="mtlogin" clearable  type="text"   />
               </q-field>
               <q-field :error="validation.hasError('mtlogin2')" :error-label="validation.firstError('mtlogin2')">
-                <q-input float-label="确认转入MT账户" v-model="mtlogin2"  type="text"    />
+                <q-input float-label="确认转入MT账户" v-model="mtlogin2" clearable type="text"    />
               </q-field>
             </div>
             <div class="row no-warp" style="padding: 2rem 0;">
@@ -73,13 +73,7 @@
 <script>
   import Vue from 'vue'
   var SimpleVueValidation = require('simple-vue-validator');
-  var Validator = SimpleVueValidation.Validator.create({
-    templates: {
-
-      match: 'MT账户不一致！'
-
-    }
-  });
+  var Validator = SimpleVueValidation.Validator;
   Vue.use(SimpleVueValidation);
 
   import { required, email } from 'vuelidate/lib/validators'
@@ -120,7 +114,7 @@
       }
     },
     validators: {
-      number:function (value) {
+      'number':function (value) {
         let self=this;
         return Validator.custom(function () {
           if(Validator.isEmpty(value)) {
@@ -149,12 +143,14 @@
         })
       },
       'mtlogin2,mtlogin': function(mtlogin2,mtlogin) {
+        let self=this;
+        return Validator.custom(function () {
         if(mtlogin2==''){
           return '请输入确认MT账户！'
         }
-        if(this.validation.isTouched('mtlogin2')) {
-          return Validator.value(mtlogin2).match(mtlogin);
-        }
+        if(self.validation.isTouched('mtlogin2')&&mtlogin2!=mtlogin) {
+          return 'MT账户不一致！';
+        }})
       },
 
     },
@@ -175,12 +171,7 @@
         self.$http.post(self.$api.url.getoutfee, {
           number: newVal
         }).then(response => {
-          if(self.radioInline==3){
-            self.valArray=['number','isOutfee','mtlogin','mtlogin2']
-          }else {
-            self.valArray=['number','isOutfee']
-          }
-          self.$validate(self.valArray);
+
           if(response && response.data.code == 1) {
             self.outfee = response.data.data;
             self.isOutfee=true;
@@ -204,7 +195,6 @@
         }else {
           this.valArray=['number','isOutfee']
         }
-       debugger
         self.$validate(self.valArray)
           .then(function(success) {
             if(success) {

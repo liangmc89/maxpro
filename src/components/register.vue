@@ -44,7 +44,7 @@
 					</q-field>
 				</q-tab-pane>
 			</q-tabs>
-			<q-btn rounded style="margin-top: 1rem" class="full-width my-button" :disable="isLogining" @click='regist'>注 册</q-btn>
+			<q-btn rounded big style="margin-top: 1rem" class="full-width my-button" :disable="isLogining" @click='regist'>注 册</q-btn>
 
 		</div>
 

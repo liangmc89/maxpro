@@ -1,34 +1,47 @@
 <template>
-    <div id="bank">
-      <div class="h-bg my-bg">
-        <h5 class="page-title">银行卡</h5>
+    <div class="content-wrapper">
+      <div class="content-title">
+        <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+          <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+          </q-btn>
+          <q-toolbar-title>
+            银行卡
+          </q-toolbar-title>
+          <div style="width: 4rem"></div>
+        </q-toolbar>
       </div>
-      <div class="bank-body">
-        <pull-to :bottom-load-method="refresh" :top-load-method="loadmore" class="bg-white ">
-          <div class="padding-content" style="padding-bottom: 8rem">
-          <div v-ripple class="bank-item shadow-5" v-for="(item,index) in bankList" style='background-image: url("../../statics/images/bank.png")'>
-            <div class="row no-wrap">
-               <div class="col-6 accountName">{{item.accountName}}</div>
-              <div class="col-6 addtime">{{item.addtime|dateFormat}}</div>
-            </div>
-            <div class="row no-wrap bankname">
-              {{item.bankName}}
-            </div>
-            <div class="row no-wrap bankbranch">
-              {{item.bankBranch}}
-            </div>
-            <div class="row no-wrap ">
-             <div class="col-12 accountNum">{{item.accountNum}}</div>
-            </div>
+      <div class="content-flex">
+        <div id="bank">
+          <div class="bank-body">
+            <pull-to :bottom-load-method="refresh" :top-load-method="loadmore" class="bg-white ">
+              <div class="padding-content" style="padding-bottom: 8rem">
+                <div v-ripple class="bank-item shadow-5" v-for="(item,index) in bankList" style='background-image: url("../../statics/images/bank.png")'>
+                  <div class="row no-wrap">
+                    <div class="col-6 accountName">{{item.accountName}}</div>
+                    <div class="col-6 addtime">{{item.addtime|dateFormat}}</div>
+                  </div>
+                  <div class="row no-wrap bankname">
+                    {{item.bankName}}
+                  </div>
+                  <div class="row no-wrap bankbranch">
+                    {{item.bankBranch}}
+                  </div>
+                  <div class="row no-wrap ">
+                    <div class="col-12 accountNum">{{item.accountNum}}</div>
+                  </div>
 
+                </div>
+              </div>
+            </pull-to>
+            <q-btn round  color="white" @click="$router.push('/maxpro/member/addBankCard')"  class="fixed" style="right: 1.5rem; bottom: 8rem">
+              <q-icon name="add" color="primary" size="3rem" />
+            </q-btn>
           </div>
-          </div>
-        </pull-to>
-        <q-btn round  color="white" @click="$router.push('/maxpro/member/addBankCard')"  class="fixed" style="right: 1.5rem; bottom: 8rem">
-          <q-icon name="add" color="primary" size="3rem" />
-        </q-btn>
+        </div>
       </div>
+
     </div>
+
 
 
 </template>
@@ -36,7 +49,7 @@
 <script>
   import PullTo from 'vue-pull-to'
 
-  import {Toast,Ripple,date,QBtn,QIcon} from 'quasar'
+  import {Toast,Ripple,date,QBtn,QIcon,QToolbar,QToolbarTitle} from 'quasar'
     export default {
         name: "bank-list",
         data(){
@@ -48,7 +61,7 @@
           Ripple
       },
       components:{
-        PullTo,QBtn,QIcon
+        PullTo,QBtn,QIcon,QToolbar,QToolbarTitle
       },
       filters: {
         dateFormat: function(data_str) {
@@ -119,13 +132,13 @@
     min-height: 10rem;
   }
   .accountName{
-    font-size:2.2rem
+    font-size:2.0rem
   }
   .bankname,.bankbranch{
     font-size: 1.6rem;
   }
   .accountNum{
-    font-size: 2.6rem;
+    font-size: 1.8rem;
     text-align: right;
     font-family: Arial;
   }

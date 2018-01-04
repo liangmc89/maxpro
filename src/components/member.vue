@@ -9,7 +9,7 @@
               <q-item v-ripple class="settings-item">
                 <q-item-side icon="cloud circle" color="primary">
                 </q-item-side>
-                <q-item-main :label="serverLabel" >
+                <q-item-main :label="serverLabel" sublabel="" >
                 </q-item-main>
               </q-item>
               <q-item-separator inset/>
@@ -18,7 +18,7 @@
                   <q-item-tile icon="account circle" color="blue">
                   </q-item-tile>
                 </q-item-side>
-                <q-item-main :label="accountLabel" />
+                <q-item-main :label="memberIndex.phone" :sublabel="memberIndex.email" />
                 <q-item-side right icon="keyboard arrow right"/>
               </q-item>
               <q-item-separator inset/>
