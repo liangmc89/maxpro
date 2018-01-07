@@ -1,83 +1,76 @@
 <template>
 	<div class="account-info" id="userinfo">
 		<img class="account-icon" src="../statics/images/account_icon.png" />
-		<p class="account-title ">账号<span class="account linear-font">{{top.loginid}}</span>
-			<q-btn ref="target" icon="fa-angle-down" round outline color="primary" id="account-btn">
+		<p class="account-title ">账号<span class="account linear-font">{{mt}}</span>
+			<q-btn ref="target" icon="fa-angle-down" round outline color="primary" id="account-btn" v-if="mtList.length>1">
 
-				<q-popover ref="popover">
-					<!--<q-list separator link>-->
-						<!--<q-item>-->
-							<!--hahahah-->
-						<!--</q-item>-->
-					<!--</q-list>-->
+				<q-popover ref="popover" >
+					<q-list separator link >
+						<q-item :class="{disabled:item==mt}" :key="index" v-for="(item,index) in mtList" @click="changeMt(item)">
+							{{item}}
+						</q-item>
+					</q-list>
 				</q-popover>
 			</q-btn>
 		</p>
 		<q-carousel autoplay infinite dots>
 			<div slot="slide" class="account-detail">
 				<div class="detail-item" v-ripple>
-					<h5>余额</h5>
+					<h5>当前余额</h5>
 					<p class="amount">{{top.balance|currencyFilter}}</p>
 				</div>
 				<hr />
 				<div class="detail-item" v-ripple>
-					<h5>净值</h5>
+					<h5>当前净值</h5>
 					<p class="amount">{{top.equity|currencyFilter}}</p>
 				</div>
 			</div>
 
 			<div slot="slide" class="account-detail">
-				<div class="detail-item" v-ripple>
-					<h5>盈亏</h5>
-					<p class="amount">{{top.mtprofit|currencyFilter}}</p>
-				</div>
+        <router-link to='/maxpro/myProperty/followList' exact>
+          <div class="detail-item" v-ripple>
+            <h5>跟单收益</h5>
+            <p class="amount">{{top.follow|currencyFilter}}</p>
+          </div>
+        </router-link>
 				<hr />
-				<div class="detail-item" v-ripple>
-					<h5>持仓</h5>
-					<p class="amount">{{top.totalunprofit|currencyFilter}}</p>
-				</div>
+        <div class="detail-item" v-ripple>
+          <h5>当前赠金</h5>
+          <p class="amount">{{top.credit|currencyFilter}}</p>
+        </div>
 			</div>
 			<div slot="slide" class="account-detail">
         <router-link to="/maxpro/myProperty/depositInList">
 				<div class="detail-item" v-ripple >
-					<h5>入金</h5>
-					<p class="amount">{{top.innumber|currencyFilter}}</p>
+					<h5>入金金额</h5>
+					<p class="amount">{{top.depoist|currencyFilter}}</p>
 				</div>
         </router-link>
 				<hr />
         <router-link to="/maxpro/myProperty/depositOutList">
 				<div class="detail-item" v-ripple >
-					<h5>出金</h5>
-					<p class="amount">{{top.outnumber|currencyFilter}}</p>
+					<h5>出金金额</h5>
+					<p class="amount">{{top.withdraw|currencyFilter}}</p>
 				</div>
         </router-link>
 			</div>
 			<div slot="slide" class="account-detail">
 				<div class="detail-item" v-ripple>
-					<h5>净入金</h5>
-					<p class="amount">{{top.netmoney|currencyFilter}}</p>
+					<h5>平仓总盈亏</h5>
+					<p class="amount">{{top.mtprofit|currencyFilter}}</p>
 				</div>
 				<hr />
-				<div class="detail-item" v-ripple>
-					<h5>赠金</h5>
-					<p class="amount">{{top.credit|currencyFilter}}</p>
-				</div>
+        <div class="detail-item" v-ripple>
+          <h5>持仓总盈亏</h5>
+          <p class="amount">{{top.mtunprofit|currencyFilter}}</p>
+        </div>
+
 			</div>
-			<div slot="slide" class="account-detail">
-				<router-link to='/maxpro/myProperty/followList' exact>
-					<div class="detail-item" v-ripple>
-						<h5>跟单</h5>
-						<p class="amount">{{top.follow|currencyFilter}}</p>
-					</div>
-				</router-link>
-				<hr />
-				<router-link to='/maxpro/myProperty/commissionList' exact>
-					<div class="detail-item" v-ripple>
-						<h5>返佣</h5>
-						<p class="amount">{{top.amount|currencyFilter}}</p>
-					</div>
-				</router-link>
-			</div>
+			<!--<div slot="slide" class="account-detail">-->
+				<!---->
+				<!--<hr />-->
+
+			<!--</div>-->
 
 		</q-carousel>
 	</div>
@@ -93,6 +86,8 @@
 		},
 		data() {
 			return {
+			  mt:'',
+        mtList:[],
 				top: {}
 
 			}
@@ -107,6 +102,48 @@
 			QItem
 		},
 		methods: {
+
+      changeMt:function (mt) {
+        this.$refs.popover.close();
+        if(mt!=this.mt){
+           this.mt=mt;
+          this.$showloading({message:'正在切换MT账号…'})
+          setTimeout(()=>{
+            this.$http.post(this.$api.url.mtProfit,{loginid:this.mt}).then(response=>{
+              this.$hideloading();
+              if(response&&response.data.code==1){
+                this.top=response.data.data;
+              }else{
+                Toast.create.info({html:response.data.message})
+              }
+            }).catch(err=>{
+              this.$hideloading();
+              Toast.create.negative({html:err.message});
+            })
+          },1000)
+
+        }
+      },
+		  getMtList:function () {
+		    let self=this;
+         this.$http.post(this.$api.url.getMtList,{}).then(response=>{
+           if(response&&response.data.code==1){
+             let arr=[];
+             for(let i in response.data.data){
+              arr.push(response.data.data[i]);
+             }
+             self.mtList=arr;
+             if(self.mtList.length>0){
+               self.mt=self.mtList[0];
+             }
+
+           }else{
+             Toast.create.info({html:response.data.message})
+           }
+         }).catch(err=>{
+           Toast.create.negative({html:err.message})
+         });
+      },
 			refresh() {
 				let self = this;
 				self.$http.post(self.$api.url.myProperty, {}).then(response => {
@@ -124,6 +161,7 @@
 		},
 		created: function() {
 			this.refresh();
+			this.getMtList();
 		}
 		//		props: ['userInfo']
 	}

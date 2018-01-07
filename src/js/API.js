@@ -21,13 +21,18 @@ class API {
     memberIndex:'/openapi/member/index',                      //用户个人中心
     saveapply:'/openapi/index/saveapply',                     //申请开户
     bindingMT:'/openapi/member/bindingMT',                    //绑定MT账号
+    getLeverageList:'/openapi/index/getLeverageList',         //获取全部杠杆
+    getAccountInfo:'/openapi/index/getAccountInfo',           //保存开户信息
 
     //-----------------登录、注册-------------------------
 		login: '/openapi/index/checkLogin',						            //登陆
 		register:'/openapi/index/register',						            //注册
 		sendactivemsg: '/openapi/index/sendactivemsg', 			      //短信发送验证码
     sendloginmsg: '/openapi/index/sendloginmsg',              //登录验证码
-		gettoken: '/openapi/api/get_token',            			      //token
+		gettoken: '/openapi/api/get_token',            			      //token,
+    resetpwdmail:'OpenApi/Index/resetpwdmail',                //邮箱修改密码
+    resetpwd:'/OpenApi/index/resetpwd',                       //手机短信重置密码
+    sendbymail:'OpenApi/index/sendbymail',                    //发送邮箱验证码
 
     //-----------------首页-------------------------------
 		index:'/openapi/index/index',				   			              //首页

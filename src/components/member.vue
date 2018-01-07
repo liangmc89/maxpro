@@ -13,7 +13,7 @@
                 </q-item-main>
               </q-item>
               <q-item-separator inset/>
-              <q-item v-ripple class="settings-item" to="/maxpro/member/mtList">
+              <q-item v-ripple class="settings-item" to="/maxpro/member/settings?menu=personData">
                 <q-item-side>
                   <q-item-tile icon="account circle" color="blue">
                   </q-item-tile>
@@ -26,37 +26,45 @@
 
               <div style="margin: 1rem 0" class="bg-white">
                 <div class="account-detail">
+                  <router-link :to="{name:'mtList'}">
                   <div class="detail-item" v-ripple>
                     <h5>MT</h5>
                     <p class="amount">{{memberIndex.mtcount}}个</p>
                   </div>
+                  </router-link>
                   <hr/>
-                  <div class="detail-item" v-ripple>
-                    <h5>净值</h5>
-                    <p class="amount">{{myProperty.equity|currencyFilter}}</p>
-                  </div>
+                  <router-link :to="{name:'followList'}">
+                    <div class="detail-item" v-ripple>
+                      <h5>跟单收益</h5>
+                      <p class="amount">{{myProperty.follow|currencyFilter}}</p>
+                    </div>
+                  </router-link>
+
                 </div>
                 <div class="account-detail">
                   <div class="detail-item" v-ripple>
-                    <h5>余额</h5>
+                    <h5>当前余额</h5>
                     <p class="amount">{{myProperty.balance|currencyFilter}}</p>
                   </div>
                   <hr/>
                   <div class="detail-item" v-ripple>
-                    <h5>赠金</h5>
+                    <h5>当前赠金</h5>
                     <p class="amount">{{myProperty.credit|currencyFilter}}</p>
                   </div>
                 </div>
                 <div class="account-detail">
+                  <router-link :to="{name:'commissionList'}">
                   <div class="detail-item" v-ripple>
                     <h5>返佣</h5>
                     <p class="amount">{{myProperty.AMOUNT|currencyFilter}}</p>
                   </div>
+                  </router-link>
                   <hr/>
                   <div class="detail-item" v-ripple>
-                    <h5>跟单</h5>
-                    <p class="amount">{{myProperty.follow|currencyFilter}}</p>
+                    <h5>当前净值</h5>
+                    <p class="amount">{{myProperty.equity|currencyFilter}}</p>
                   </div>
+
                 </div>
               </div>
              <q-list no-border class="bg-white">
@@ -186,7 +194,6 @@
         setTimeout(()=>{
           self.$http.all([self.getMemberIndex(), self.getMyProperty()])
             .then(self.$http.spread(function (MemberIndex, MyProperty) {
-
               if(MemberIndex&&MemberIndex.data.code==1){
                 self.memberIndex=MemberIndex.data.data;
               }else{

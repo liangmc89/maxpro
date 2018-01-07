@@ -1,6 +1,15 @@
 <template>
   <div class="content-wrapper">
-    <div class="content-title">跟单记录</div>
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          跟单记录
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+    </div>
     <div class="content-flex">
       <pull-to :top-load-method="refresh">
         <div id="commissionList">
@@ -46,7 +55,7 @@
 		QCollapsible,
 		clone,
 		Toast,
-		Ripple
+		Ripple,QToolbar,QToolbarTitle
 	} from 'quasar'
 
 	import { currencys } from '../js/filter'
@@ -67,7 +76,7 @@
 			QTooltip,
 			QCollapsible,
 			Toast,
-			PullTo
+			PullTo,QToolbar,QToolbarTitle
 		},
 		filters: {
 			currencys: function(value) {

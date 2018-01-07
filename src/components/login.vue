@@ -35,7 +35,7 @@
 			</div>
 			<q-btn rounded :big="true" class="full-width my-button" :disable="isLogining" @click='login'>登录</q-btn>
 			<div class="login-help light-paragraph">
-				<q-btn :small="true" :flat="true">忘记密码</q-btn>|
+				<q-btn :small="true" :flat="true" @click="$router.push('/resetPwd')">忘记密码</q-btn>|
 				<q-btn :small="true" :flat="true" @click="$router.push('/register')" >注册账号</q-btn>
 			</div>
 
@@ -60,13 +60,7 @@
 	import Vue from 'vue'
 	import {setCookie} from '../js/cookie.js'
 	var SimpleVueValidation = require('simple-vue-validator');
-	var Validator = SimpleVueValidation.Validator.create({
-		templates: {
-			required: '字段不能为空！',
-			email: 'Email格式不正确！'
-
-		}
-	});
+	var Validator = SimpleVueValidation.Validator;
 	Vue.use(SimpleVueValidation);
 
 	import { Toast,QBtn, QIcon, QField, QInput, Loading, QSpinnerFacebook } from 'quasar'
@@ -85,7 +79,8 @@
 				loginType: '1',
 				validateArray: ['phoneNum', 'password'],
         login_type:"",
-        login_account:''
+        login_account:'',
+        isNewUser:false
 
 			}
 		},
@@ -205,7 +200,7 @@
           this.login_account=this.mtId;
 
         }
-           console.log(this.login_account)
+
 				let self = this;
 				this.$validate(this.validateArray)
 					.then(function(success) {
@@ -228,9 +223,13 @@
                       password: response.data.data.password
                     }).then(response => {
                       if(response.data.code == 1) {
-
                         setCookie('token',response.data.data,'h1.5');
-                        self.$router.push('/maxpro');
+                        // setCookie('loginid',response.data.data.)
+                        if(self.isNewUser){
+                          self.$router.push('/maxpro/member/settings?menu=personData');
+                        }else{
+                          self.$router.push('/maxpro');
+                        }
                         self.$hideloading();
 
                       } else {
@@ -271,6 +270,7 @@
 		created() {
        if(this.$route.params.loginParams&&JSON.stringify(this.$route.params.loginParams)!='{}'){
          let loginParams=this.$route.params.loginParams;
+         this.isNewUser=loginParams.isNewUser;
          this.phone=loginParams.phone;
          this.email=loginParams.email;
          if(loginParams.loginType==0){
@@ -293,7 +293,7 @@
 		width: 100%;
 		height: 100%;
 		.logo {
-			padding: 3rem;
+			padding:  2.5rem;
 			text-align: center;
 			img {
 				width: 7rem;

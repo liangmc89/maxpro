@@ -1,6 +1,15 @@
 <template>
       <div class="content-wrapper">
-        <div class="content-title">新闻</div>
+        <div class="content-title">
+          <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+            <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+            </q-btn>
+            <q-toolbar-title>
+              新闻
+            </q-toolbar-title>
+            <div style="width: 4rem"></div>
+          </q-toolbar>
+        </div>
         <div class="content-flex">
           <pull-to :top-load-method="refresh" :bottom-load-method='loadmore'  id='pullto' >
             <div style="margin: 1rem;background: white;">
@@ -41,7 +50,8 @@
 		date,
 		QTab,
 		QTabs,
-		QTabPane
+		QTabPane,
+    QToolbar,QToolbarTitle,QBtn
 
 	} from 'quasar'
 	import ArticleItem from '../components/articleItem'
@@ -71,7 +81,8 @@
 			QTab,
 			QTabs,
 			QTabPane,
-			ArticleItem
+			ArticleItem,
+      QToolbar,QToolbarTitle,QBtn
 
 
 		},

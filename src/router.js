@@ -32,7 +32,12 @@ export default new VueRouter({
 		},{
 			path: '/register',
 			component: load('register')
-		}, {
+		},
+    {
+      path: '/resetPwd',
+      component: load('resetPwd'),
+      name:'resetPwd'
+    },{
 			path: '/home',
 			component: load('home')
 		},
@@ -48,7 +53,8 @@ export default new VueRouter({
 		},
     {
       path:'/maxpro/member/mtList',
-      component:load('mtList')
+      component:load('mtList'),
+      name:'mtList'
     },
     {
       path:'/maxpro/member/customer',
@@ -124,10 +130,12 @@ export default new VueRouter({
 
 				},{
 					path:'myProperty/commissionList',
-			        component: load('commissionList')
+          component: load('commissionList'),
+          name:'commissionList'
 				},{
 					path:'myProperty/followList',
-			        component: load('followList')
+          component: load('followList'),
+          name:'followList'
 				},{
 					path:'myProperty/depositInList',
 			        component: load('depositInList'),

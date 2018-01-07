@@ -46,8 +46,8 @@
 					</div>
 					<div class="row no-wrap">
 						<div class="col-3 order-num">申请时间:</div>
-						<div class="col-5 order-content">{{item.create_time|dateFormat}}</div>
-						<div class="col-4 order-status text-primary"></div>
+						<div class="col-7 order-content">{{item.create_time|dateFormat}}</div>
+						<div class="col-2 order-status text-primary"></div>
 					</div>
 					<!--<div class="row no-wrap">
 						<div class="col-3 order-num">成功时间:</div>

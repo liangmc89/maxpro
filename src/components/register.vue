@@ -96,10 +96,18 @@
 		},
 		validators: {
 			p_mtserver: function(value) {
-				return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '平台不能为空！'
+          }
+        })
 			},
 			e_mtserver: function(value) {
-				return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '平台不能为空！'
+          }
+        })
 			},
 			password: function(value) {
 				return Validator.custom(function () {
@@ -117,9 +125,17 @@
 					return Validator.value(repassword).required().match(password);
 				}
 			},
-			email: function(value) {
-				return Validator.value(value).required().email();
-			},
+      email: function(value) {
+        return Validator.custom(function () {
+          if (!Validator.isEmpty(value)) {
+            if (!(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(value))) {
+              return '邮箱格式错误！'
+            }
+          }else{
+            return '邮箱不能为空！';
+          }
+        })
+      },
 			phone: function(value) {
 				return Validator.custom(function() {
 					if(!Validator.isEmpty(value)) {
@@ -132,7 +148,11 @@
 				})
 			},
 			phone_code: function(value) {
-				return Validator.value(value).required();
+        return Validator.custom(function () {
+          if(Validator.isEmpty(value)){
+            return '验证码不能为空！'
+          }
+        })
 			},
 
 		},
@@ -267,7 +287,7 @@
                         color:'primary',
                         outline:true,
                         handler() {
-                          self.$router.push({name:'login',params:{loginParams:{loginType:self.registerType,email:self.email,phone:self.phone}}});
+                          self.$router.push({name:'login',params:{loginParams:{loginType:self.registerType,email:self.email,phone:self.phone,isNewUser:true}}});
                         }
                       }
                     ]
@@ -302,8 +322,8 @@
 
 <style lang="less">
 	#register {
-		padding: 3rem;
-		width: 100%;
+		padding: 2.5rem;
+
 		/*height: 100%;*/
 		.logo {
 			padding: 3rem;

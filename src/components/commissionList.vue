@@ -1,31 +1,39 @@
 <template>
-	<pull-to :top-load-method="refresh">
-		<div id="commissionList">
-			<div class="h-bg">
-				<h5 class="page-title">返佣记录</h5>
-			</div>
-			<div class="section" style=" margin-bottom: 0;">
-				<div class="account-detail">
-					<div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
-						<h5>返佣次数</h5>
-						<p class="amount">{{total.count}}</p>
-					</div>
-					<hr style="margin-top: 2.7rem;"/>
-					<router-link to='/maxpro/myProperty/doWithDraw'>
-					<div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
-						<h5>返佣总额</h5>
-						<p class="amount">{{total.AMOUNT|currencys}}</p>
-					</div></router-link>
-				</div>
-			</div>
-			<q-data-table :data="table" :config="config" :columns="columns" @refresh="refresh" @selection="selection" @rowclick="rowClick">
-				
+  <div class="content-wrapper">
+    <div class="content-title">
+    <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+      <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+      </q-btn>
+      <q-toolbar-title>
+        返佣记录
+      </q-toolbar-title>
+      <div style="width: 4rem"></div>
+    </q-toolbar>
+    </div>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh">
+        <div id="commissionList">
+          <div class="section" style=" margin-bottom: 0;">
+            <div class="account-detail">
+              <div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
+                <h5>返佣次数</h5>
+                <p class="amount">{{total.count}}</p>
+              </div>
+              <hr style="margin-top: 2.7rem;"/>
+              <router-link to='/maxpro/myProperty/doWithDraw'>
+                <div class="detail-item" style="padding-top: 1.2rem;" v-ripple>
+                  <h5>返佣总额</h5>
+                  <p class="amount">{{total.AMOUNT|currencys}}</p>
+                </div></router-link>
+            </div>
+          </div>
+          <q-data-table :data="table" :config="config" :columns="columns" @refresh="refresh" @selection="selection" @rowclick="rowClick">
+          </q-data-table>
+        </div>
+      </pull-to>
+    </div>
+  </div>
 
-				
-			</q-data-table>
-
-		</div>
-	</pull-to>
 </template>
 
 <script>
@@ -42,7 +50,7 @@
 		QCollapsible,
 		clone,
 		Toast,
-		Ripple
+		Ripple,QToolbar,QToolbarTitle
 	} from 'quasar'
 
 	import { currencys } from '../js/filter'
@@ -63,7 +71,7 @@
 			QTooltip,
 			QCollapsible,
 			Toast,
-			PullTo
+			PullTo,QToolbar,QToolbarTitle
 		},
 		filters: {
 			currencys: function(value) {
@@ -71,7 +79,7 @@
 			}
 		},
 		methods: {
-			
+
 			refresh(done) {
 				let self = this;
 

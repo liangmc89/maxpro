@@ -191,7 +191,7 @@
 	#home {
 		position: relative;
    .notice-bg{
-     width: 100%;height: 200px;background: linear-gradient(to right, #f55970, #f4883b);position: absolute;
+     width: 100%;height: 16rem;background: linear-gradient(to right, #f55970, #f4883b);position: absolute;
 
    }
 		.q-carousel-track>div {

@@ -46,19 +46,24 @@ axios.interceptors.response.use(function(response) {
 	// Loading.hide()
 	if(response.data.code == 40000 || response.data.code == 40001) {
 
-		router.push({
-			path: '/login',
-			query: {
-				redirect: sessionStorage.redirectUrl
-			}
-		});
-		return false ;
-	}
-	return response;
+    Toast.create.info({html:'未登录，请重新登录！',timeout:4000,onDismiss:function () {
+        router.push({
+          path: '/login',
+          query: {
+            redirect: sessionStorage.redirectUrl
+          }
+        });
+
+      }});
+    return false;
+	}else{
+	  return response;
+  }
+
 }, function(error) {
 	//对返回的错误进行一些处理
 	// Loading.hide();
-
-	return Promise.reject(error);
+  Toast.create.negative({html:error.message,timeout:4000})
+	//return Promise.reject(error);
 
 });

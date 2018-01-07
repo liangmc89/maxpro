@@ -1,14 +1,23 @@
 <template>
+
   <div id="mtList">
-    <div class="h-bg my-bg">
-      <h5 class="page-title">设置</h5>
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          设置
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
+
     </div>
-    <div class="padding-content bg-white">
+    <div class="padding-content bg-white shadow-1">
       <q-input :before="[{icon:'search'}]" v-model="mtKey" placeholder="搜索账号" clearable type="text"></q-input>
     </div>
     <div class="mt-body">
       <pull-to :top-load-method="refresh">
-        <div class="mt-item bg-white" v-for="(item,index) in mtList" :key="index">
+        <div class="mt-item bg-white shadow-1" v-for="(item,index) in mtList" :key="index">
           <div class="mt-title-wrap ">
             <div class="row no-wrap mt-title ">
               <div class="col-4 mt-label list-style text-right">真实姓名：</div>
@@ -47,7 +56,14 @@
       <q-modal ref="saveApplyModal" maximized>
         <div class="content-wrapper" style="background: rgb(247, 247, 247)">
           <div class="content-title">
-            开户申请
+            <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+              <q-btn flat icon="keyboard_arrow_left" @click="$refs.saveApplyModal.close()" >
+              </q-btn>
+              <q-toolbar-title>
+                开户申请
+              </q-toolbar-title>
+              <div style="width: 4rem"></div>
+            </q-toolbar>
           </div>
           <div class="content-flex">
             <pull-to>
@@ -60,33 +76,35 @@
                             :options="serverList"
                   />
                 </q-field>
-                <q-field :error="validation.hasError('apply.leverage')"
+                <q-field  :error="validation.hasError('apply.leverage')"
                          :error-label="validation.firstError('apply.leverage')">
-                  <q-input float-label="杠杆" v-model="apply.leverage" type="text" clearable align="right"></q-input>
+                  <!--<q-slider markers label-always :label-value="LeverageList[leverageIndex]" v-model="leverageIndex" :min="0" :max="LeverageList.length-1"  :step="1"  snap />-->
+                  <q-select float-label="杠杆" align="right" v-model="apply.leverage" :options="LeverageList"></q-select>
+                  <!--<q-input float-label="杠杆" v-model="apply.leverage" type="text" clearable align="right"></q-input>-->
                 </q-field>
                 </div>
               <div class="padding-content bg-white" style="margin-top: 1rem;">
                 <q-field style="margin-top: 0" :error="validation.hasError('apply.name')"
                          :error-label="validation.firstError('apply.name')">
-                  <q-input float-label="开户名" v-model="apply.name" type="text" clearable align="right"></q-input>
+                  <q-input float-label="开户名" v-model="apply.name" type="text" clearable align="right" readonly disable></q-input>
                 </q-field>
 
                 <q-field :error="validation.hasError('apply.email')"
                          :error-label="validation.firstError('apply.email')">
-                  <q-input float-label="邮箱" v-model="apply.email" type="text" clearable align="right"></q-input>
+                  <q-input float-label="邮箱" v-model="apply.email" type="text" clearable align="right" readonly disable></q-input>
                 </q-field>
                 <q-field :error="validation.hasError('apply.phone')"
                          :error-label="validation.firstError('apply.phone')">
-                  <q-input float-label="手机号" v-model="apply.phone" type="number" clearable align="right"></q-input>
+                  <q-input float-label="手机号" v-model="apply.phone" type="number" clearable align="right" readonly disable></q-input>
                 </q-field>
                 <q-field :error="validation.hasError('apply.address')"
                          :error-label="validation.firstError('apply.address')">
-                  <q-input float-label="地址"  v-model="apply.address" type="text" clearable align="right"></q-input>
+                  <q-input float-label="地址"  v-model="apply.address" type="text" clearable align="right" ></q-input>
                 </q-field>
 
               </div>
               <div class="padding-content">
-                <q-btn class="my-button full-width" @click="saveApply">提交申请</q-btn>
+                <q-btn big class="my-button full-width" @click="saveApply">提交申请</q-btn>
               </div>
             </pull-to>
           </div>
@@ -95,7 +113,14 @@
       <q-modal ref="bindingMTModal" maximized>
         <div class="content-wrapper" style="background: rgb(247, 247, 247)">
           <div class="content-title">
-            账号绑定
+            <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+              <q-btn flat icon="keyboard_arrow_left" @click="$refs.bindingMTModal.close()" >
+              </q-btn>
+              <q-toolbar-title>
+                账户绑定
+              </q-toolbar-title>
+              <div style="width: 4rem"></div>
+            </q-toolbar>
           </div>
           <div class="content-flex">
             <pull-to>
@@ -120,7 +145,7 @@
 
               </div>
               <div class="padding-content text-center">
-                <q-btn class="my-button full-width"  @click="bindingMT">绑定</q-btn>
+                <q-btn big class="my-button full-width"  @click="bindingMT">绑定</q-btn>
               </div>
             </pull-to>
           </div>
@@ -145,9 +170,9 @@
     QListHeader, Dialog,
     QItem,
     QItemSeparator,
-    QItemSide,
-    QItemMain,
-    QItemTile,QChip,QSlider
+    QItemSide,QSlider,
+    QItemMain,QToolbar,QToolbarTitle,
+    QItemTile,QChip
   } from 'quasar'
   import Vue from 'vue'
 
@@ -171,6 +196,8 @@
         mtList: [],
         mtKey: '',
         serverList: [],
+        LeverageList:[],
+        leverageIndex:0,
         apply: {
           mt4_server_id: '',
           name: '',
@@ -191,9 +218,9 @@
       QListHeader, Dialog,
       QItem,
       QItemSeparator,
-      QItemSide,
-      QItemMain,
-      QItemTile,QChip,QSlider
+      QItemSide,QSlider,
+      QItemMain,QToolbar,QToolbarTitle,
+      QItemTile,QChip
     },
     filters: {
       currencyFilter: function (value) {
@@ -229,19 +256,37 @@
         return Validator.value(value).required();
       },
       'apply.leverage': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if (Validator.isEmpty(value)) {
+
+              return '请选择杠杆！'
+            }
+
+        })
       },
       'apply.name': function (value) {
         return Validator.value(value).required();
       },
       'apply.mt4_server_id': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if (Validator.isEmpty(value)) {
+            return '请选择服务器！'
+          }
+        })
       },
       'apply.loginid': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if (Validator.isEmpty(value)) {
+            return '请选择MT账号！'
+          }
+        })
       },
       'apply.mtpassword': function (value) {
-        return Validator.value(value).required();
+        return Validator.custom(function () {
+          if (Validator.isEmpty(value)) {
+            return '请输入MT密码！'
+          }
+        })
       }
     },
     methods: {
@@ -320,13 +365,22 @@
       getMtList: function () {
         return this.$http.post(this.$api.url.mtDetail, {type:1});
       },
+      getLeverageList:function () {
+        return this.$http.post(this.$api.url.getLeverageList,{});
+      },
+      getPersonalData:function () {
+        return this.$http.post(this.$api.url.personalData,{});
+
+      },
+
       refresh: function (done) {
         this.$showloading();
         let self = this;
-        self.serverList = [];
+        self.serverList =[];
+        self.LeverageList= [];
         setTimeout(() => {
 
-          self.$http.all([self.getServerList(), self.getMtList()]).then(self.$http.spread(function (_serverList, _mtList) {
+          self.$http.all([self.getServerList(), self.getMtList(),self.getLeverageList(),self.getPersonalData()]).then(self.$http.spread(function (_serverList, _mtList,_leverageList,_personalData) {
             if (_serverList && _serverList.data.code == 1) {
               _serverList.data.data.forEach((item) => {
                 self.serverList.push({label: item.mt4_name, value: item.id});
@@ -339,6 +393,37 @@
             } else {
               Toast.create.info({html: _mtList.data.message})
             }
+
+            if(_leverageList&&_leverageList.data.code==1){
+              _leverageList.data.data.forEach((item)=>{
+                self.LeverageList.push({label:item,value:item});
+              });
+            }else{
+              Toast.create.info({html: _leverageList.data.message})
+            }
+            if(_personalData&&_personalData.data.code==1){
+                self.apply.name=_personalData.data.data.nickname;
+                self.apply.email=_personalData.data.data.email;
+                self.apply.phone=_personalData.data.data.phone;
+                self.apply.address=_personalData.data.data.address;
+
+                //   apply: {
+                // mt4_server_id: '',
+                //   name: '',
+                //   email: '',
+                //   leverage: '',
+                //   phone: '',
+                //   address: '',
+                //   loginid: '',
+                //   mtpassword: ''
+
+
+
+            }else{
+              Toast.create.info({html: _personalData.data.message})
+            }
+
+
             self.$hideloading();
           })).catch(err => {
             self.$hideloading();
