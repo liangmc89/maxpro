@@ -101,26 +101,17 @@
 			QList,
 			QItem
 		},
+    watch:{
+		  mt:function () {
+        this.refresh();
+      }
+    },
 		methods: {
 
       changeMt:function (mt) {
         this.$refs.popover.close();
         if(mt!=this.mt){
            this.mt=mt;
-          this.$showloading({message:'正在切换MT账号…'})
-          setTimeout(()=>{
-            this.$http.post(this.$api.url.mtProfit,{loginid:this.mt}).then(response=>{
-              this.$hideloading();
-              if(response&&response.data.code==1){
-                this.top=response.data.data;
-              }else{
-                Toast.create.info({html:response.data.message})
-              }
-            }).catch(err=>{
-              this.$hideloading();
-              Toast.create.negative({html:err.message});
-            })
-          },1000)
 
         }
       },
@@ -146,12 +137,21 @@
       },
 			refresh() {
 				let self = this;
-				self.$http.post(self.$api.url.myProperty, {}).then(response => {
-					if(response.data.code == 1) {
-
-						self.top = response.data.data;
-					}
-				}).catch(err => {});
+				if(self.mt=='')return;
+        this.$showloading({message:'正在切换MT账号…'})
+        setTimeout(()=>{
+          this.$http.post(this.$api.url.mtProfit,{loginid:self.mt}).then(response=>{
+            this.$hideloading();
+            if(response&&response.data.code==1){
+              this.top=response.data.data;
+            }else{
+              Toast.create.info({html:response.data.message})
+            }
+          }).catch(err=>{
+            this.$hideloading();
+            Toast.create.negative({html:err.message});
+          })
+        },1000)
 			}
 		},
 		filters: {
@@ -160,8 +160,9 @@
 			}
 		},
 		created: function() {
+      this.getMtList();
 			this.refresh();
-			this.getMtList();
+
 		}
 		//		props: ['userInfo']
 	}

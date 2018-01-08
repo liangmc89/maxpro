@@ -22,8 +22,8 @@
               </div>
               <div class="account-detail">
                 <div class="detail-item" v-ripple>
-                  <h5>盈亏</h5>
-                  <p class="amount">{{top.mtprofit|currencyFilter}}</p>
+                  <h5>平仓</h5>
+                  <p class="amount">{{top.totalprofit|currencyFilter}}</p>
                 </div>
                 <hr />
                 <div class="detail-item" v-ripple>
@@ -68,7 +68,7 @@
                 <router-link to='/maxpro/myProperty/commissionList' exact>
                   <div class="detail-item" v-ripple>
                     <h5>返佣</h5>
-                    <p class="amount">{{top.amount|currencyFilter}}</p>
+                    <p class="amount">{{top.AMOUNT|currencyFilter}}</p>
                   </div>
                 </router-link>
               </div>

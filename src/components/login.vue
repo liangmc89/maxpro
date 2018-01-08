@@ -224,11 +224,11 @@
                     }).then(response => {
                       if(response.data.code == 1) {
                         setCookie('token',response.data.data,'h1.5');
-                        // setCookie('loginid',response.data.data.)
                         if(self.isNewUser){
                           self.$router.push('/maxpro/member/settings?menu=personData');
                         }else{
-                          self.$router.push('/maxpro');
+                            let redirect = decodeURIComponent(self.$route.query.redirect || '/maxpro');
+                            self.$router.push({path:redirect});
                         }
                         self.$hideloading();
 

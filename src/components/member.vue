@@ -205,7 +205,6 @@
               }else{
                 self.negative(MyProperty.data.message);
               }
-
               self.$hideloading();
 
             })).catch(err=>{
