@@ -90,7 +90,7 @@
         this.isModifyAvatar=false;
       }
     }
-  ]"  extensions=".gif,.jpg,.jpeg,.png" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
+  ]"  extensions="image/*" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
                 </div>
               <div class=" bg-white" style="padding: 1rem 1.6rem">
                 <q-field style="margin-top: 0">
@@ -315,7 +315,7 @@
                               this.isUpload=false;
                             }
                           }
-                        ]"  extensions=".gif,.jpg,.jpeg,.png" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
+                        ]"  extensions="image/*" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
                    </div>
                    <div class="row">
                      <div class="col-6" >
@@ -415,7 +415,11 @@
           identityOpposite:'',
           identityBack:'',
           bankCard:'',
-          addressProof:''}
+          addressProof:''},
+          canModify_identityOpposite:'',
+          canModify_identityBack:'',
+          canModify_bankCard:'',
+          canModify_addressProof:''
 
         },
         pwd: {
@@ -678,7 +682,12 @@
          this.isModifyAvatar=true;
         }
         else{
-          this.isUpload=true;
+
+          if(this.personData['canModify_'+proof]==''){
+
+            this.isUpload=true;
+          }
+
         }
       },
       isSavePersonData:function(){
@@ -942,6 +951,10 @@
               self.personData.phone=person.phone;
               self.personData.province=person.province;
               self.personData.sex=person.sex;
+              self.canModify_identityOpposite=person.identityOpposite,
+                self.canModify_identityBack=person.identityBack,
+                self.canModify_bankCard=person.bankCard,
+                self.canModify_addressProof=person.addressProof
 
             } else if (!_personalData) {
               Toast.create.negative({html: '未登录，请登录！'})

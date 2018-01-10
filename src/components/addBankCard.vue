@@ -36,7 +36,7 @@
           <div class="info-legend">附件资料</div>
           <div class="add-avatar" v-ripple>
             <q-field :error="validation.hasError('bankCard')" :error-label="validation.firstError('bankCard')">
-            <q-uploader  extensions=".gif,.jpg,.jpeg,.png" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
+            <q-uploader  extensions="image/*" @add="getUploloadUrl"  @uploaded="uploaded" :url="uploadUrl" />
             </q-field>
           </div>
         </div>

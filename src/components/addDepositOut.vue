@@ -1,35 +1,43 @@
 <template>
-  <div id="doDepositOut">
-
-  <pull-to :top-load-method="refresh" >
-    <div class="h-bg my-bg">
-      <h5 class="page-title">出金账号</h5>
+  <div class="content-wrapper">
+    <div class="content-title">
+      <q-toolbar class="text-center" style="background: transparent;height: 4.8rem">
+        <q-btn flat icon="keyboard_arrow_left" @click="$router.back()" >
+        </q-btn>
+        <q-toolbar-title>
+          出金账号
+        </q-toolbar-title>
+        <div style="width: 4rem"></div>
+      </q-toolbar>
     </div>
-    <div class="mtItem bg-white relative-position" v-ripple v-for="(item,index) in list" :key="index">
-      <div class="row no-wrap">
-        <div class="col-4 order-num">MT账号：</div>
-        <div class="col-4 order-content">{{item.loginid}}</div>
-        <div class="col-4 mt-action">
-          <q-btn class="my-button mt-action-btn " small @click="$router.push({ name:'doDepositOut',params:{mtItem:item}})">出金</q-btn>
+    <div class="content-flex">
+      <pull-to :top-load-method="refresh" >
+        <div class="mtItem bg-white relative-position" v-ripple v-for="(item,index) in list" :key="index">
+          <div class="row no-wrap">
+            <div class="col-4 order-num">MT账号：</div>
+            <div class="col-4 order-content">{{item.loginid}}</div>
+            <div class="col-4 mt-action">
+              <q-btn class="my-button mt-action-btn " small @click="$router.push({ name:'doDepositOut',params:{mtItem:item}})">出金</q-btn>
+            </div>
+          </div>
+          <div class="row no-wrap">
+            <div class="col-4 order-num">余额：</div>
+            <div class="col-4 order-content text-primary">{{item.amount|currencys}}</div>
+            <div class="col-4"></div>
+          </div>
+          <div class="row no-wrap">
+            <div class="col-4 order-num">净值：</div>
+            <div class="col-4 order-content text-primary">{{item.EQUITY|currencys}}</div>
+            <div class="col-4"></div>
+          </div>
         </div>
-      </div>
-      <div class="row no-wrap">
-        <div class="col-4 order-num">余额：</div>
-        <div class="col-4 order-content text-primary">{{item.amount|currencys}}</div>
-        <div class="col-4"></div>
-      </div>
-      <div class="row no-wrap">
-        <div class="col-4 order-num">净值：</div>
-        <div class="col-4 order-content text-primary">{{item.EQUITY|currencys}}</div>
-        <div class="col-4"></div>
-      </div>
+      </pull-to>
     </div>
-  </pull-to>
-  </div>
+</div>
 </template>
 
 <script>
-  import {Toast, QBtn,Ripple} from 'quasar'
+  import {Toast, QBtn,Ripple,QToolbar,QToolbarTitle} from 'quasar'
   import PullTo from 'vue-pull-to'
   import {currencys} from '../js/filter'
 
@@ -68,7 +76,7 @@
       }
     },
     components: {
-      PullTo, Toast, QBtn
+      PullTo, Toast, QBtn,QToolbar,QToolbarTitle
     },
     created: function () {
       this.refresh();

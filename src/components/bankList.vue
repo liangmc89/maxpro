@@ -15,7 +15,7 @@
           <div class="bank-body">
             <pull-to :bottom-load-method="refresh" :top-load-method="loadmore" class="bg-white ">
               <div class="padding-content" style="padding-bottom: 8rem">
-                <div v-ripple class="bank-item shadow-5" v-for="(item,index) in bankList" style='background-image: url("../../statics/images/bank.png")'>
+                <div v-ripple class="bank-item shadow-5" v-for="(item,index) in bankList">
                   <div class="row no-wrap">
                     <div class="col-6 accountName">{{item.accountName}}</div>
                     <div class="col-6 addtime">{{item.addtime|dateFormat}}</div>
@@ -133,14 +133,13 @@
     overflow: hidden;
   }
   .bank-item{
-    padding: 1.2rem 1rem 1.2rem 8rem;
-    border-radius: .2rem;
-    background-repeat: no-repeat;
-    background-size: cover;
+    padding: 1.2rem 1rem 1.2rem 1rem;
+    border-radius:1rem;
     color: white;
     margin-bottom: 1.2rem;
     position: relative;
     min-height: 10rem;
+    background: url("../statics/images/bank.png") no-repeat center center/100% 100%;
   }
   .accountName{
     font-size:2.0rem
